@@ -1,0 +1,4 @@
+thirdparty/
+docs/
+*.sw?
+*.log

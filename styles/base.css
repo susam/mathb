@@ -1,0 +1,259 @@
+/* Body */
+body {
+    background: #ffffff;
+    margin: 0;
+    padding: 0em 1em 1em 1em;
+    font-family: helvetica, arial, "trebuchet ms", sans-serif;
+    line-height: 1.5;
+    color: #333333;
+}
+
+a:link, a:visited {
+    color: #0000e0;
+    text-decoration: none;
+}
+
+a:hover, a:active {
+    color: #0000ff;
+    text-decoration: underline;
+}
+
+label {
+    font-weight: bold;
+}
+
+textarea, input {
+    padding: 0.5em;
+}
+
+pre, code {
+    color: #000066;
+}
+
+img {
+    border: 0;
+}
+
+noscript {
+    text-align: center;
+    border: 0.25em double red;
+    color: red;
+    display: block;
+    margin-bottom: 1em;
+    font-size: 1.5em;
+}
+
+
+/* Header */
+#headerPanel {
+    padding: 0.5em 1em;
+    border-bottom: 0.1em dotted gray;
+}
+
+#header {
+    display: inline-block;
+    width: 50%;
+}
+
+#header h1 {
+    margin: 0;
+    font-size: 3em;
+    line-height: 1;
+}
+
+#header h2 {
+    margin: 0;
+    font-size: 1.25em;
+    line-height: 1;
+    color: #aaaaaa;
+}
+
+#header h1 a:link,
+#header h1 a:visited {
+    color: #333333;
+    text-decoration: none;
+}
+
+#header h1 a:hover,
+#header h1 a:active {
+    color: #555555;
+}
+
+#headerPanel #navigation {
+    display: inline-block;
+    text-align: right;
+    line-height: 1;
+    width: 50%;
+}
+
+#headerPanel #navigation span {
+    color: #aaaaaa;
+    margin-left: 1.5em; 
+}
+
+/* Footer */
+#footerPanel {
+    border-top: 0.1em dotted gray;
+    padding: 2em 1em 0em 1em;
+    text-align: center;
+}
+
+#footerPanel #navigation a {
+    padding: 0 1em;
+}
+
+#footerPanel #copyright {
+    display: inline-block;
+    width: 50%;
+}
+
+/* Main */
+#main {
+    padding: 1em;
+    min-width: 40em;
+    overflow: hidden;
+}
+
+.input {
+    float: left;
+    width: 44%;
+    min-width: 15em;
+    vertical-align: top;
+}
+
+.output {
+    float: right;
+    width: 55%;
+    min-width: 15em;
+    vertical-align: top;
+}
+
+
+/* Input form */
+#form {
+    background: #f0f0f0;
+    border: 0.1em solid #bbbbbb;
+    padding: 0.6em;
+}
+
+
+.input label:first-child {
+    margin-top: 0;
+}
+
+.input label {
+    display: block;
+    margin-top: 1em;
+}
+
+.input input, .input textarea {
+    width: 96%;
+}
+
+.input textarea {
+    height: 15em;
+}
+
+#secretURL {
+    margin-top: 1em;
+}
+
+#secretURL label {
+    display: inline; 
+    font-weight: normal; 
+}
+
+#secretURL input {
+    width: auto;
+}
+
+.input #submit {
+    width: 50%;
+    min-width: 15em;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    margin-top: 1em;
+}
+
+.input .errors {
+    border: 0.2em double #f00000;
+    color: #f00000;
+    padding: 1em;
+}
+
+.input .errors *:first-child {
+    margin-top: 0;
+}
+
+.input .errors *:last-child {
+    margin-bottom: 0;
+}
+
+/* Output sheet */
+#sheet {
+    border: 0.1em solid gray;
+    padding: 1em;
+    overflow: auto;
+}
+
+#sheet *:first-child {
+    margin-top: 0;
+}
+
+#sheet *:last-child {
+    margin-bottom: 0;
+}
+
+#outputTitle {
+    text-align: center;
+}
+
+#outputName {
+    text-align: center;
+    font-weight: normal;
+}
+
+#outputCode {
+    min-height: 25em;
+}
+
+#outputDate {
+    text-align: right;
+    font-size: 0.75em;
+    line-height: 1;
+    color: #888888;
+}
+
+.qed {
+    text-align: right;
+    font-size: 150%;
+    margin-top: -1.5em;
+}
+
+.MathJax a {
+    color: #333333;
+}
+
+.MathJax a:hover {
+    color: #0000e0;
+}
+
+#permaurl {
+    margin-top: 1em;
+    text-align: center;
+}
+
+#permaurl input {
+    width: 10em;
+}
+
+/* Error page */
+.errors h1, .errors h2 {
+    margin-bottom: 1em;
+}
+
+/* Special purpose classes */
+.hidden {
+    display: none;
+}
