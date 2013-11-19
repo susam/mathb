@@ -71,6 +71,14 @@ class Configuration
 
 
     /**
+     * An array of regular expressions to blacklist IP addresses
+     *
+     * @var array
+     */
+    public $ipBlacklist;
+
+
+    /**
      * Constructs an instance of this class with default properties
      *
      * This constructor initializes the properties of this class to
@@ -80,6 +88,7 @@ class Configuration
     {
         $docRoot = $_SERVER['DOCUMENT_ROOT'];
         $this->dataDirectory = "$docRoot../mathb-data/";
+        $this->ipBlacklist = array();
     }
 
 
@@ -131,5 +140,26 @@ class Configuration
             $url .= '?key=' . $key;
         }
         return $url;
+    }
+
+
+    /**
+     * Returns true if and only if the client is blacklisted
+     *
+     * This method checks whether the specified IP address matches one
+     * of the regular expressions specified in $this->ipBlacklist. If it
+     * matches, then true is returned; otherwise false is returned.
+     *
+     * @param string $ip IP address of the client
+     *
+     * @return boolean true if IP address is blacklisted;
+     *                 false otherwise
+     */
+    public function clientIsBlacklisted($ip)
+    {
+        foreach ($this->ipBlacklist as $pattern)
+            if (preg_match($pattern, $ip) === 1)
+                return true;
+        return false;
     }
 }

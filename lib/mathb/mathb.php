@@ -247,6 +247,16 @@ class MathB
             return;
         }
 
+        // Check if client is blacklisted
+        $ip = $_SERVER['REMOTE_ADDR'];
+        if ($this->conf->clientIsBlacklisted($ip)) {
+            http_response_code(403);
+            $this->view->inputPage(new Bag($this->conf, $post),
+                                   'Your IP address (' . $ip .
+                                   ') is blacklisted.');
+            return;
+        }
+
         // Write the post to the file system
         try {
             $id = $this->incrementCount();

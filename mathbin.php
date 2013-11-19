@@ -50,7 +50,17 @@ Session::beginSession($_SERVER['DOCUMENT_ROOT'] . '/../usage/mathbin-',
                       'Asia/Kolkata');
 
 use MathB\MathB;
-$mathb = new MathB(null, new MathBinView());
+use MathB\Configuration;
+
+$view = new MathBinView();
+$conf = new Configuration();
+
+// IP addresses of spammers
+$conf->ipBlacklist = array(
+    '/^96\.47\.225\..*$/',
+);
+
+$mathb = new MathB($conf, $view);
 $mathb->run();
 
 Session::endSession();
