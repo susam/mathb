@@ -175,7 +175,7 @@ class Session
                $cookie . ' - ' .
                $_SERVER['HTTP_USER_AGENT'] . ' - ' .
                $_SERVER['SERVER_PROTOCOL'] . ' - ' .
-               $elapsedTime . "\n" .
+               $elapsedTime . "\n";
 
         $logPath = self::$logPathPrefix . date('Y-m-d') . '.log';
 
