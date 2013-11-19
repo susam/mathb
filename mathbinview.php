@@ -134,6 +134,7 @@ class MathBinView extends View
             <div id="fb-widget">
                 <div class="fb-like-box"
                      data-href="http://www.facebook.com/mathbin"
+                     data-height="188"
                      data-colorscheme="light" data-show-faces="true"
                      data-header="false" data-stream="false"
                      data-show-border="true"></div>
