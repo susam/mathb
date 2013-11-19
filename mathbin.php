@@ -58,6 +58,7 @@ $conf = new Configuration();
 // IP addresses of spammers
 $conf->ipBlacklist = array(
     '/^96\.47\.225\..*$/',
+    '/^96\.47\.224\..*$/',
 );
 
 $mathb = new MathB($conf, $view);
