@@ -277,7 +277,6 @@ var MathB = function() {
             var attrName = node.attributes[i].nodeName
 
             // Remove attribute if it is not in the whitelist
-            console.log('check ' + nodeName + ' - ' + attrName)
             console.log(typeof my.htmlWhiteList[nodeName].indexOf)
             if (my.htmlWhiteList[nodeName].indexOf(attrName.toLowerCase()) < 0) {
                 node.removeAttribute(attrName)
