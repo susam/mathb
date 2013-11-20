@@ -280,10 +280,18 @@ class Bag
         $this->inputName = htmlspecialchars($post->name);
         $this->inputCode = htmlspecialchars($post->code);
 
-        // Sanitize HTML:and parse Markdown in code
-        $codeDOM = self::getDOM($post->code);
+        // Parse Markdown in code and sanitize HTML. It is necessary to
+        // parse Markdown before sanitizing HTML because Markdown code
+        // may contain URLs or header files in C code block within angle
+        // brackets (e.g. <http://mathb.in/>, <stdio.h>, etc.) which
+        // look like tags, and they will be removed by the sanitizer if
+        // we sanitize the HTML first. We want Markdown parser to
+        // process them first and convert them to proper HTML entities
+        // or tags before the sanitizer kicks in.
+        $code = Markdown::defaultTransform($post->code);
+        $codeDOM = self::getDOM($code);
         self::sanitizeDOM($codeDOM);
-        $code = Markdown::defaultTransform(self::getHTML($codeDOM));
+        $code = self::getHTML($codeDOM);
 
         // Set output sheet data
         $this->outputTitle = $post->title;
