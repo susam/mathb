@@ -14,16 +14,18 @@ MathB depends on third-party JavaScript libraries to convert users's
 input specified in LaTeX and Markdown into HTML that can be rendered in
 the output. These third-party JavaScript libraries are:
 
-  1. [Pagedown][T1]
-  2. [MathJax][T2]
+  1. [PHP-Markdown][T1]
+  2. [Pagedown][T2]
+  3. [MathJax][T3]
 
 These libraries are not included in the source code. They should be
 downloaded separtely and placed in the following two directories
 relative to this project's top level directory, i.e. the directory that
 contains the favicon.ico file.
 
-  1. thirdparty/pagedown
-  2. thirdparty/MathJax
+  1. thirdparty/php-markdown
+  2. thirdparty/pagedown
+  3. thirdparty/MathJax
 
 There is shell script called setup.sh which can be executed to
 automatically clone these third-party projects from their original
@@ -38,8 +40,9 @@ command:
 This script requires the `git` and `hg` commands to be present. If they
 are absent, install Git and Mercurial before running the script.
 
-  [T1]: http://code.google.com/p/pagedown/
-  [T2]: http://www.mathjax.org/
+  [T1]: http://michelf.ca/projects/php-markdown/
+  [T2]: http://code.google.com/p/pagedown/
+  [T3]: http://www.mathjax.org/
 
 
 License

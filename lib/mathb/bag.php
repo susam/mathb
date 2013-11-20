@@ -46,6 +46,7 @@ namespace MathB;
 
 use DOMDocument;
 use Susam\Pal;
+use Michelf\Markdown;
 
 
 /**
@@ -279,14 +280,15 @@ class Bag
         $this->inputName = htmlspecialchars($post->name);
         $this->inputCode = htmlspecialchars($post->code);
 
+        // Sanitize HTML:and parse Markdown in code
         $codeDOM = self::getDOM($post->code);
         self::sanitizeDOM($codeDOM);
+        $code = Markdown::defaultTransform(self::getHTML($codeDOM));
 
         // Set output sheet data
         $this->outputTitle = $post->title;
         $this->outputName = $post->name;
-        $this->outputCode = self::getHTML($codeDOM);
-
+        $this->outputCode = $code;
         if ($post->title === '')
             $this->outputTitleClass = 'class="hidden"';
 
