@@ -156,7 +156,7 @@ class View
 
 <div id="main">
     <noscript>
-        <p>JavaScript must be enabled to use this website.</p>
+        <p id="noscript">JavaScript must be enabled to use this website.</p>
     </noscript>
 <?php
     }

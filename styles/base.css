@@ -34,13 +34,14 @@ img {
     border: 0;
 }
 
-noscript {
+#noscript  {
     text-align: center;
     border: 0.25em double red;
     color: red;
     display: block;
     margin-bottom: 1em;
     font-size: 1.5em;
+    padding: 1em;
 }
 
 
