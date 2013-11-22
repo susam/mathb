@@ -67,7 +67,7 @@ class Configuration
      *
      * @var string
      */
-    public $dataDirectory;
+    public $contentDirectory;
 
 
     /**
@@ -87,7 +87,7 @@ class Configuration
     public function __construct()
     {
         $docRoot = $_SERVER['DOCUMENT_ROOT'];
-        $this->dataDirectory = "$docRoot../mathb-data/";
+        $this->contentDirectory = "$docRoot../mathb-content/";
         $this->ipBlacklist = array();
     }
 
@@ -104,7 +104,7 @@ class Configuration
      */
     public function getPostFilePath($id)
     {
-        return $this->dataDirectory . $id . '.txt';
+        return $this->contentDirectory . $id . '.txt';
     }
 
 
@@ -118,7 +118,7 @@ class Configuration
      */
     public function getCountFilePath()
     {
-        return $this->dataDirectory . 'count.dat';
+        return $this->contentDirectory . 'count.dat';
     }
 
 
