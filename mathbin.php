@@ -61,6 +61,7 @@ $conf = new Configuration();
 $conf->ipBlacklist = array(
     '/^96\.47\.225\..*$/',
     '/^96\.47\.224\..*$/',
+    '/^209\.234\.85\.98$/',
 );
 
 $mathb = new MathB($conf, $view);
