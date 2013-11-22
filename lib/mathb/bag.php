@@ -319,7 +319,6 @@ class Bag
     }
 
 
-
     /**
      * Sanitizes the attributes in an HTML node
      *
