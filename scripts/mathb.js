@@ -251,7 +251,7 @@ var MathB = function() {
         
         my.html.outputTitle.style.display = s === '' ? 'none' : 'block'
         my.html.outputTitle.innerHTML = s
-
+        sanitizeDOM(my.html.outputTitle)
         MathJax.Hub.Queue(['Typeset', MathJax.Hub, my.html.outputTitle]);
     }
 
@@ -263,6 +263,7 @@ var MathB = function() {
 
         my.html.outputName.style.display = s === '' ? 'none' : 'block'
         my.html.outputName.innerHTML = s
+        sanitizeDOM(my.html.outputName)
     }
 
 
@@ -282,7 +283,6 @@ var MathB = function() {
             var attrName = node.attributes[i].nodeName
 
             // Remove attribute if it is not in the whitelist
-            console.log(typeof my.htmlWhiteList[nodeName].indexOf)
             if (my.htmlWhiteList[nodeName].indexOf(attrName.toLowerCase()) < 0) {
                 node.removeAttribute(attrName)
                 continue

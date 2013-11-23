@@ -274,7 +274,7 @@ class Post
         }
 
         // Title should not contain any tags
-        if (preg_match('/<\w+>/', $this->title) === 1) {
+        if (preg_match('/<\w+/', $this->title) === 1) {
 
             $errors[] = 'Title must not contain HTML tags.';
         }

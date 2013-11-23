@@ -299,18 +299,16 @@ class Bag
         // process them first and convert them to proper HTML entities
         // or tags before the sanitizer kicks in.
         $code = Markdown::defaultTransform($post->code);
-        $codeDOM = self::getDOM($code);
-        self::sanitizeDOM($codeDOM);
-        $code = self::getHTML($codeDOM);
 
         // Set output sheet data
-        $this->outputTitle = $post->title;
-        $this->outputName = $post->name;
-        $this->outputCode = $code;
-        if ($post->title === '')
+        $this->outputTitle = self::sanitize($post->title);
+        $this->outputName = self::sanitize($post->name);
+        $this->outputCode = self::sanitize($code);
+
+        if ($this->outputTitle === '')
             $this->outputTitleClass = 'class="hidden"';
 
-        if ($post->name === '')
+        if ($this->outputName === '')
             $this->outputNameClass = 'class="hidden"';
 
         $preview = new Preview($conf->getCacheDirectoryPath());
@@ -328,6 +326,24 @@ class Bag
         $title = strip_tags($post->title);
         $regex = '/\\\\[$\\[\\]\\(\\)]?/';
         $this->pageTitle = trim(preg_replace($regex, '', $title));
+    }
+
+
+    /**
+     * Sanitizes HTML code
+     *
+     * This method removes all tags and attributes that are not in
+     * self::$htmlWhiteList.
+     *
+     * @param string $html HTML code
+     *
+     * @return string Sanitized HTML code
+     */
+    private static function sanitize($html)
+    {
+        $dom = self::getDOM($html);
+        self::sanitizeDOM($dom);
+        return self::getHTML($dom);
     }
 
 
