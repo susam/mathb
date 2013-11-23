@@ -207,7 +207,7 @@ class Preview
         $pdfPath = $mdPath . '.pdf';
         $templatePath = $_SERVER['DOCUMENT_ROOT'] . 'resource/png.tex';
 
-        $command = 'pandoc -f markdown+tex_math_single_backslash ' .
+        $command = 'pandoc -f markdown ' .
                    "--template=$templatePath $mdPath -o $pdfPath " .
                    '2>&1';
 
@@ -215,7 +215,7 @@ class Preview
 
         if ($status !== 0)
             throw new RuntimeException('Could not create PDF: ' .
-                                       implode(' - ' . $output));
+                                       implode(' - ', $output));
 
         $command = 'convert -density 110 ' .
                    "$pdfPath $pngPath 2>&1";
