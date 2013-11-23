@@ -214,8 +214,8 @@ class Preview
         exec($command, $output, $status);
 
         if ($status !== 0)
-            throw RuntimeException('Could not create PDF: ' .
-                                   implode(' - ' . $output));
+            throw new RuntimeException('Could not create PDF: ' .
+                                       implode(' - ' . $output));
 
         $command = 'convert -density 110 ' .
                    "$pdfPath $pngPath 2>&1";
