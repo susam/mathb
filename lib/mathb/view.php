@@ -301,6 +301,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     {
 ?><!-- MathB\View::styles -->
     <link rel="stylesheet" type="text/css" href="/styles/base.css">
+    <noscript>
+    <link rel="stylesheet" type="text/css" href="/styles/noscript.css">
+    </noscript>
 <?php
     }
 
@@ -477,20 +480,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     {
 ?>
     <div class="output">
-        <!-- Static output sheet -->
-        <noscript>
-        <div id="staticSheet">
-            <div id="outputImage">
-<?php if ($this->bag->previewImageURL !== '') { ?>
-                <img src="<?php echo $this->bag->previewImageURL ?>"
-                     alt="Markdown, LaTeX and HTML rendered as image">
-<?php } ?>
-            </div>
-            <div id="outputDate"><?php echo $this->bag->date ?></div>
-        </div>
-        </noscript>
-
-        <!-- Dynamic output sheet -->
+        <!-- Output sheet -->
         <div id="sheet">
             <h1 id="outputTitle" <?php
                 echo $this->bag->outputTitleClass ?>><?php
@@ -498,6 +488,16 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <h2 id="outputName" <?php
                 echo $this->bag->outputNameClass ?>><?php
                 echo $this->bag->outputName ?></h2>
+
+            <noscript>
+            <div id="outputImage">
+            <?php if ($this->bag->previewImageURL !== '') { ?>
+                <img src="<?php echo $this->bag->previewImageURL ?>"
+                     alt="Markdown, LaTeX and HTML rendered as image">
+            <?php } ?>
+            </div>
+            </noscript>
+
             <div id="outputCode">
                 <?php echo $this->bag->outputCode ?>
             </div>

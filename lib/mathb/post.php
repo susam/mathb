@@ -376,9 +376,7 @@ class Post
      */
     public function getPreviewCode()
     {
-        return '% ' . $this->title . "\n" .
-               '% ' . $this->name . "\n" .
-               $this->code;
+        return $this->code;
     }
 
 

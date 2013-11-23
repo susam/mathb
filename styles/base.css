@@ -181,14 +181,10 @@ img {
 }
 
 /* Output sheet */
-#staticSheet, #sheet {
+#sheet {
     border: 0.1em solid gray;
     padding: 1em;
     overflow: auto;
-}
-
-#sheet {
-    display: none;
 }
 
 #sheet *:first-child {
