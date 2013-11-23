@@ -481,8 +481,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <noscript>
         <div id="staticSheet">
             <div id="outputImage">
+<?php if ($this->bag->previewImageURL !== '') { ?>
                 <img src="<?php echo $this->bag->previewImageURL ?>"
                      alt="Markdown, LaTeX and HTML rendered as image">
+<?php } ?>
             </div>
             <div id="outputDate"><?php echo $this->bag->date ?></div>
         </div>

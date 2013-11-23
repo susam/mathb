@@ -151,6 +151,14 @@ class Bag
 
 
     /**
+     * URL of the preview image
+     *
+     * @var string
+     */
+    public $previewImageURL;
+
+
+    /**
      * URL to the current post
      *
      * @var string
@@ -243,6 +251,7 @@ class Bag
         $this->outputTitleClass = '';
         $this->outputNameClass = '';
         $this->date = '';
+        $this->previewImageURL = '';
         $this->postURL = '';
         $this->actionURL = '';
         $this->secrecyAttribute = '';
