@@ -44,6 +44,7 @@
 
 namespace MathB;
 
+use RuntimeException;
 use Susam\Pal;
 
 
@@ -63,11 +64,11 @@ use Susam\Pal;
 class Configuration
 {
     /**
-     * The directory containing the files for all posts.
+     * Directory containing the files for all posts
      *
      * @var string
      */
-    public $contentDirectory;
+    private $contentDirectoryPath;
 
 
     /**
@@ -79,6 +80,14 @@ class Configuration
 
 
     /**
+     * Directory containing images for server side preview
+     *
+     * @var string
+     */
+    public $cacheDirectoryPath;
+
+
+    /**
      * Constructs an instance of this class with default properties
      *
      * This constructor initializes the properties of this class to
@@ -86,9 +95,88 @@ class Configuration
      */
     public function __construct()
     {
-        $docRoot = $_SERVER['DOCUMENT_ROOT'];
-        $this->contentDirectory = "$docRoot../mathb-content/";
+        $docRootParent = dirname($_SERVER['DOCUMENT_ROOT']);
+        $this->setContentDirectoryPath($docRootParent . '/mathb-content/');
+        $this->setCacheDirectoryPath('/tmp/mathb-cache/');
         $this->ipBlacklist = array();
+    }
+
+
+    /**
+     * Sets the content directory path
+     *
+     * @param string $path Path to the content directory
+     *
+     * @return void
+     */
+    public function setContentDirectoryPath($path)
+    {
+        if ($path[strlen($path) - 1] !== '/')
+            $path .= '/';
+        $this->contentDirectoryPath = $path;
+    }
+
+
+    /**
+     * Sets the cache directory path
+     *
+     * @param string $path Path to the content directory
+     *
+     * @return void
+     */
+    public function setCacheDirectoryPath($path)
+    {
+        if ($path[strlen($path) - 1] !== '/')
+            $path .= '/';
+        $this->cacheDirectoryPath = $path;
+    }
+
+
+    /**
+     * Returns the path to the cache directory
+     *
+     * The directory path is guaranteed to contain a trailing directory
+     * separator.
+     *
+     * @return string Path to the cache directory
+     */
+    public function getCacheDirectoryPath()
+    {
+        return $this->cacheDirectoryPath;
+    }
+
+
+    /**
+     * Creates data directories if they do not exist
+     *
+     * This method creates the content directory and cache directory if
+     * they do not exist.
+     *
+     * @throws RuntimeException If a directory could not be created
+     */
+    public function createDirectories()
+    {
+        self::createDirectory($this->contentDirectoryPath);
+        self::createDirectory($this->cacheDirectoryPath);
+    }
+
+
+    /**
+     * Creates a directory if it does not exist
+     *
+     * @param string $path Path to the directory
+     *
+     * @throws RuntimeException If directory could not be created
+     */
+    private static function createDirectory($path)
+    {
+        $success = true;
+
+        if (! is_dir($path))
+            $success = mkdir($path, 0700, true);
+
+        if ($success === false)
+            throw new RuntimeException("Could not create $path");
     }
 
 
@@ -104,7 +192,7 @@ class Configuration
      */
     public function getPostFilePath($id)
     {
-        return $this->contentDirectory . $id . '.txt';
+        return $this->contentDirectoryPath . $id . '.txt';
     }
 
 
@@ -118,7 +206,7 @@ class Configuration
      */
     public function getCountFilePath()
     {
-        return $this->contentDirectory . 'count.dat';
+        return $this->contentDirectoryPath . 'count.dat';
     }
 
 

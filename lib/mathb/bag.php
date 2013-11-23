@@ -249,6 +249,7 @@ class Bag
         $this->pageTitle = '';
     }
 
+
     /**
      * Sets the string properties of this object
      *
@@ -303,7 +304,9 @@ class Bag
         if ($post->name === '')
             $this->outputNameClass = 'class="hidden"';
 
-        // Set URLs
+        $preview = new Preview($conf->getCacheDirectoryPath());
+        $this->previewImageURL = $preview->getPNGURL($post);
+
         $this->postURL = $post->id !== '' ?
                          $conf->getPostURL($post->id, $post->key) : '';
         $this->actionURL = Pal::getHostURL() . '?post';

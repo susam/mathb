@@ -330,6 +330,75 @@ class Post
 
 
     /**
+     * Writes preview code of this post to a file
+     *
+     * The preview code is a code that can be processed by pandoc. The
+     * code would be saved in a markdown file. This code would be read
+     * by pandoc to convert it into a PDF.
+     *
+     * @param string $path Path of the file where preview code of this
+     *                     post is to be written
+     *
+     * @return void
+     *
+     * @throws RuntimeException If this method fails to write to the
+     *                          specified file
+     */
+    public function writePreview($path)
+    {
+        $file = fopen($path, 'w');
+        if ($file === false)
+            throw new RuntimeException(
+                    "Could not open $path for writing",
+                    self::WRITE_ERROR);
+
+
+        $success = fwrite($file, $this->getPreviewCode());
+        if ($success === false)
+            throw new RuntimeException("Could not write to $path",
+                                       self::WRITE_ERROR);
+
+        $success = fclose($file);
+        if ($success === false)
+            throw new RuntimeException("Could not close $path",
+                                       self::WRITE_ERROR);
+    }
+
+
+    /**
+     * Returns the preview code for this post
+     *
+     * The preview code is a code that can be processed by pandoc. The
+     * code would be saved in a markdown file. This code would be read
+     * by pandoc to convert it into a PDF.
+     *
+     * @return string Preview code
+     */
+    public function getPreviewCode()
+    {
+        return '% ' . $this->title . "\n" .
+               '% ' . $this->name . "\n" .
+               $this->code;
+    }
+
+
+    /**
+     * Returns a hash of the preview code for this post
+     *
+     * The preview code of a post is saved in the cache directory. The
+     * preview hash is used as the key to read preview code saved in the
+     * cache directory. This hash is used in the filenames of the files
+     * saved in the cache directory.
+     *
+     * @return string Preview hash
+     */
+    public function getPreviewHash()
+    {
+        return sha1($this->getPreviewCode());
+    }
+
+
+    /**
      * Normalizes the content of this post
      *    
      * This method normalizes the code submitted in a post to use Unix

@@ -54,6 +54,9 @@ var MathB = function() {
             // Element that contains the author in the input form
             name: null,
 
+            // Dynamic output sheet
+            sheet: null,
+
             // Element that displays the code in the output sheet
             outputCode: null,
 
@@ -139,6 +142,8 @@ var MathB = function() {
         for (elementID in my.html) {
             my.html[elementID] = document.getElementById(elementID)
         }
+
+        my.html.sheet.style.display = 'block';
 
         defineArrayIndexOf()
 

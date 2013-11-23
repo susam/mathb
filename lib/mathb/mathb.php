@@ -87,6 +87,14 @@ class MathB
 
 
     /**
+     * Preview object to send preview files
+     *
+     * @var Preview
+     */
+    private $preview;
+
+
+    /**
      * Constructs an instance of MathB
      *
      * If this constructor is invoked without arguments, a default
@@ -106,6 +114,8 @@ class MathB
         self::splAutoloadRegister(dirname(__DIR__));
         $this->conf = isset($conf) ? $conf : new Configuration();
         $this->view = isset($view) ? $view : new View(); 
+        $this->preview = new Preview($this->conf->getCacheDirectoryPath());
+        $this->conf->createDirectories();
     }
 
 
@@ -166,6 +176,14 @@ class MathB
      */
     private function processGetRequest()
     {
+        // If it's a request for a preview file, send the file and
+        // return
+        $preview = Pal::get($_GET, 'preview', '');
+        if ($preview !== '') {
+            $this->preview->sendFile($preview);
+            return;
+        }
+
         $id = Pal::get($_GET, 'p', '');
         $key = Pal::get($_GET, 'key', '');
 
@@ -181,6 +199,7 @@ class MathB
         try {
             $path = $this->conf->getPostFilePath($id);
             $post = Post::newPostFromFile($id, $path);
+            $this->preview->cachePost($post);
         } catch (RuntimeException $e) {
             $errorCode = $e->getCode();
             if ($errorCode === Post::NOT_FOUND) {
@@ -261,6 +280,7 @@ class MathB
         try {
             $id = $this->incrementCount();
             $post->write($this->conf->getPostFilePath($id));
+            $this->preview->cachePost($post);
         } catch (RuntimeException $e) {
             $this->view->inputPage(new Bag($this->conf, $post),
                                    $e->getMessage());

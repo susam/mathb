@@ -155,9 +155,6 @@ class View
 </div>
 
 <div id="main">
-    <noscript>
-        <p id="noscript">JavaScript must be enabled to use this website.</p>
-    </noscript>
 <?php
     }
 
@@ -480,7 +477,18 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     {
 ?>
     <div class="output">
-        <!-- Output sheet -->
+        <!-- Static output sheet -->
+        <noscript>
+        <div id="staticSheet">
+            <div id="outputImage">
+                <img src="<?php echo $this->bag->previewImageURL ?>"
+                     alt="Markdown, LaTeX and HTML rendered as image">
+            </div>
+            <div id="outputDate"><?php echo $this->bag->date ?></div>
+        </div>
+        </noscript>
+
+        <!-- Dynamic output sheet -->
         <div id="sheet">
             <h1 id="outputTitle" <?php
                 echo $this->bag->outputTitleClass ?>><?php
@@ -488,7 +496,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <h2 id="outputName" <?php
                 echo $this->bag->outputNameClass ?>><?php
                 echo $this->bag->outputName ?></h2>
-            <div id="outputCode"><?php echo $this->bag->outputCode ?></div>
+            <div id="outputCode">
+                <?php echo $this->bag->outputCode ?>
+            </div>
             <div id="outputDate"><?php echo $this->bag->date ?></div>
         </div>
         <?php $this->permanentURL() ?>

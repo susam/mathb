@@ -34,17 +34,6 @@ img {
     border: 0;
 }
 
-#noscript  {
-    text-align: center;
-    border: 0.25em double red;
-    color: red;
-    display: block;
-    margin-bottom: 1em;
-    font-size: 1.5em;
-    padding: 1em;
-}
-
-
 /* Header */
 #headerPanel {
     padding: 0.5em 1em;
@@ -192,10 +181,14 @@ img {
 }
 
 /* Output sheet */
-#sheet {
+#staticSheet, #sheet {
     border: 0.1em solid gray;
     padding: 1em;
     overflow: auto;
+}
+
+#sheet {
+    display: none;
 }
 
 #sheet *:first-child {
@@ -215,7 +208,7 @@ img {
     font-weight: normal;
 }
 
-#outputCode {
+#outputImage, #outputCode {
     min-height: 25em;
 }
 
