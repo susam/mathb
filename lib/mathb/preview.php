@@ -212,12 +212,6 @@ class Preview
                    '2>&1';
         exec($command, $output, $status);
 
-        // The PDF file is no longer required, and the following
-        // statements might result in uncaught exception, so this is a
-        // good time to delete the PDF file
-        if (is_file($pdfPath) === true)
-            unlink($pdfPath);
-
         if ($status !== 0) {
             self::createErrorPNG($pngPath, implode('\n', $output));
             return;
@@ -226,6 +220,12 @@ class Preview
         $command = 'convert -density 110 ' .
                    "$pdfPath $pngPath 2>&1";
         exec($command, $output, $status);
+
+        // The PDF file is no longer required, and the following
+        // statements might result in uncaught exception, so this is a
+        // good time to delete the PDF file
+        if (is_file($pdfPath) === true)
+            unlink($pdfPath);
 
         if ($status !== 0)
             self::createErrorPNG($pngPath, implode('\n', $output));
