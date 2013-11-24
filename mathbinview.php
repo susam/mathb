@@ -159,10 +159,10 @@ class MathBinView extends View
                 Markdown rendering is powered by <a
                 href="http://code.google.com/p/pagedown/">PageDown</a>.
             </p>
-            <a href="/"><img src="/images/mathb.png"
+            <a href="/"><img src="images/mathb.png"
                  title="MathB.in" alt="MathB.in"></a>
             <a href="http://www.mathjax.org"><img
-            src="/images/mathjax/badge-square-2.png" title="MathJax"
+            src="images/mathjax/badge-square-2.png" title="MathJax"
             alt="MathJax"></a>
         </div>
         <div id="copyright">

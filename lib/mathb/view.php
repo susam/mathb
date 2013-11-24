@@ -300,9 +300,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     protected function styles()
     {
 ?><!-- MathB\View::styles -->
-    <link rel="stylesheet" type="text/css" href="/styles/base.css">
+    <link rel="stylesheet" type="text/css" href="styles/base.css">
     <noscript>
-    <link rel="stylesheet" type="text/css" href="/styles/noscript.css">
+    <link rel="stylesheet" type="text/css" href="styles/noscript.css">
     </noscript>
 <?php
     }
@@ -345,9 +345,9 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     protected function scripts()
     {
 ?><!-- MathB\View::scripts -->
-    <script src="/thirdparty/MathJax/MathJax.js?config=TeX-AMS_HTML"></script>
-    <script src="/thirdparty/pagedown/Markdown.Converter.js"></script>
-    <script src="/scripts/mathb.js"></script>
+    <script src="thirdparty/MathJax/MathJax.js?config=TeX-AMS_HTML"></script>
+    <script src="thirdparty/pagedown/Markdown.Converter.js"></script>
+    <script src="scripts/mathb.js"></script>
     <script>window.onload = MathB.init</script>
 <?php
     }
