@@ -8,6 +8,25 @@ HTML.
   [1]: http://mathb.in/
 
 
+System setup
+------------
+This application depends on a few Linux tools to display static preview
+for users who have JavaScript disabled in their browser. The static
+preview is provided by converting the input code to a PNG with the help
+of pandoc and convert commands, and displaying this PNG to the browser.
+The following packages need to be installed:
+
+  1. pandoc
+  2. texlive,
+  3. texlive-latex-extra
+  4. imagemagick.
+
+On Debian, or a Debian based Linux system, these packages can be
+installed by running the following command:
+
+    aptitude install pandoc texlive texlive-latex-extra imagemagick
+
+
 Source code setup
 -----------------
 MathB depends on third-party JavaScript libraries to convert users's
