@@ -210,22 +210,58 @@ class Preview
         $command = 'pandoc -f markdown ' .
                    "--template=$templatePath $mdPath -o $pdfPath " .
                    '2>&1';
-
         exec($command, $output, $status);
 
-        if ($status !== 0)
-            throw new RuntimeException('Could not create PDF: ' .
-                                       implode(' - ', $output));
+        // The PDF file is no longer required, and the following
+        // statements might result in uncaught exception, so this is a
+        // good time to delete the PDF file
+        if (is_file($pdfPath) === true)
+            unlink($pdfPath);
+
+        if ($status !== 0) {
+            self::createErrorPNG($pngPath, implode('\n', $output));
+            return;
+        }
 
         $command = 'convert -density 110 ' .
                    "$pdfPath $pngPath 2>&1";
         exec($command, $output, $status);
 
         if ($status !== 0)
-            throw new RuntimeException('Could not create PDF: ' .
-                                       implode(' - ', $output));
+            self::createErrorPNG($pngPath, implode('\n', $output));
+    }
 
-        unlink($pdfPath);
+
+    /**
+     * Creates a PNG image that displays error
+     *
+     * This method creates a PNG image to display error that occurred
+     * while generating output PNG image for static preview.
+     *
+     * @param string $pngPath Path to the PNG image
+     * @param string $error   Error string
+     *
+     * @return void
+     *
+     * @throws RuntimeException If an error occurs while generating PNG
+     */
+    private static function createErrorPNG($pngPath, $error)
+    {
+        $error = preg_replace('/[\'"]/', '', $error);
+        $error = str_ireplace($_SERVER['DOCUMENT_ROOT'], '_ROOT_',
+                              $error);
+        $error = "ERROR:\n\n" . wordwrap($error, 64, "\n", true);
+
+        $command = 'convert -pointsize 16 -fill red -font helvetica ' .
+                   '-size 600x300 ' .
+                   "-draw 'text 2,16 \"$error\"' " .
+                   "xc:transparent $pngPath 2>&1";
+
+        exec($command, $output, $status);
+
+        if ($status !== 0)
+            throw new RuntimeException('Could not create error PNG: ' .
+                                       implode(' - ', $output));
     }
 
 
@@ -337,7 +373,9 @@ class Preview
      */
     private function rmlock($hash)
     {
-        unlink($this->getLockPath($hash));
+        $path = $this->getLockPath($hash);
+        if (is_file($path) === true)
+            unlink($path);
     }
 
 }
