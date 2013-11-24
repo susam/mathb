@@ -460,6 +460,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 <input type="hidden" id="date" name="date"
                        value="<?php echo $this->bag->date ?>">
 
+                <!-- Preview button -->
+                <noscript>
+                <input type="submit" id="preview" name="preview"
+                       value="<?php $this->previewLabel() ?>">
+                </noscript>
+
                 <!-- Submit button -->
                 <input type="submit" id="submit" name="submit"
                        value="<?php $this->submitLabel() ?>">
@@ -570,6 +576,17 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ?><!-- MathB\View::secrecyTips -->
                         (An URL with a secret component)
 <?php
+    }
+
+
+    /**
+     * Outputs the preview
+     *
+     * @return void
+     */
+    protected function previewLabel()
+    {
+        echo 'Preview';
     }
 
 

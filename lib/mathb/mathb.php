@@ -155,7 +155,8 @@ class MathB
      */
     public static function splAutoloadRegister($includePath)
     {
-        set_include_path(get_include_path() . ':' . $includePath);
+        set_include_path(get_include_path() . PATH_SEPARATOR .
+                         $includePath);
         spl_autoload_register();
     }
 
@@ -258,11 +259,26 @@ class MathB
         // Create new post from HTTP POST data
         $post = Post::newPostFromInput();
 
+        // Cache the post to display preview
+        try {
+            $this->preview->cachePost($post);
+        } catch (RuntimeException $e) {
+            $this->view->inputPage(new Bag($this->conf, $post),
+                                   $e->getMessage());
+            return;
+        }
+
         // Validate and display input page again if there are errors
         $inputErrors = $post->validate();
         if (count($inputErrors) > 0) {
             $bag = new Bag($this->conf, $post);
             $this->view->inputPage($bag, $inputErrors);
+            return;
+        }
+
+        // Check if preview is requested
+        if (Pal::get($_POST, 'preview', '') !== '') {
+            $this->view->inputPage(new Bag($this->conf, $post));
             return;
         }
 
@@ -280,7 +296,6 @@ class MathB
         try {
             $id = $this->incrementCount();
             $post->write($this->conf->getPostFilePath($id));
-            $this->preview->cachePost($post);
         } catch (RuntimeException $e) {
             $this->view->inputPage(new Bag($this->conf, $post),
                                    $e->getMessage());

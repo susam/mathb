@@ -157,7 +157,7 @@ img {
     width: auto;
 }
 
-.input #submit {
+.input #preview, .input #submit {
     width: 50%;
     min-width: 15em;
     margin-left: auto;

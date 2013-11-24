@@ -158,7 +158,7 @@ class Preview
         $lock = $this->lock($hash);
         $mdPath = $this->getMDPath($hash);
         if (is_file($mdPath) === false) {
-            http_response_(404);
+            http_response_code(404);
             return;
         }
 
