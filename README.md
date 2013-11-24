@@ -8,6 +8,19 @@ HTML.
   [1]: http://mathb.in/
 
 
+Features
+--------
+  1. Input can be provided as a free mix of LaTeX, Markdown and HTML
+     code.
+  2. Math is rendered with HTML and CSS on browsers that have JavaScript
+     enabled.
+  3. Math is rendered as PNG image on browsers that have JavaScript
+     disabled.
+  4. Live preview if JavaScript is enabled
+  5. Static preview if JavaScript is disabled
+  6. Secret posts with secret URLs
+
+
 System setup
 ------------
 This application depends on a few Linux tools to display static preview
