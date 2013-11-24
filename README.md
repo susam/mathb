@@ -10,16 +10,20 @@ HTML.
 
 Features
 --------
+The following features are supported by this application.
+
   1. Input can be provided as a free mix of LaTeX, Markdown and HTML
-     code.
+     code
   2. Math is rendered with HTML and CSS on browsers that have JavaScript
-     enabled.
+     enabled
   3. Math is rendered as PNG image on browsers that have JavaScript
-     disabled.
+     disabled
   4. Live preview if JavaScript is enabled
   5. Static preview if JavaScript is disabled
   6. Secret posts with secret URLs
 
+To try out these features, visit <http://mathb.in>, a pastebin for math
+powered by this project.
 
 System setup
 ------------
