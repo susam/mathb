@@ -201,6 +201,13 @@ img {
     margin-top: 0;
 }
 
+#outputCode h1, #outputCode h2, #outputCode h3,
+#outputCode h4, #outputCode h5, #outputCode h6 {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+
 #outputTitle {
     text-align: center;
 }
