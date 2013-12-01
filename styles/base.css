@@ -197,12 +197,8 @@ img {
     overflow: auto;
 }
 
-#sheet *:first-child {
+#outputCode > *:first-child {
     margin-top: 0;
-}
-
-#sheet *:last-child {
-    margin-bottom: 0;
 }
 
 #outputTitle {
@@ -219,6 +215,7 @@ img {
 }
 
 #outputDate {
+    margin-top: 1em;
     text-align: right;
     font-size: 0.75em;
     line-height: 1;
