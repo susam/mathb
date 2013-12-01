@@ -187,7 +187,7 @@ class Preview
         exec($command, $output, $status);
 
         if ($status !== 0) {
-            self::createErrorPNG($pngPath, implode('\n', $output));
+            self::createErrorPNG($pngPath, implode("\n", $output));
             return;
         }
 
@@ -202,7 +202,7 @@ class Preview
             unlink($pdfPath);
 
         if ($status !== 0)
-            self::createErrorPNG($pngPath, implode('\n', $output));
+            self::createErrorPNG($pngPath, implode("\n", $output));
     }
 
 
