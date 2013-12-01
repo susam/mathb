@@ -124,7 +124,7 @@ in the application.
   1. Disable JavaScript in the browser.
   2. Visit the home page and type the following input:
 
-        $$ e^{i \pi} + 1
+        $$ e^{i \pi} + 1 $$
 
   3. Click the preview button.
   4. See if the output is rendered correctly using a PNG image in the
