@@ -110,39 +110,6 @@ class Preview
 
 
     /**
-     * Reads the specified file from cache and sends it to the client
-     *
-     * This method sends the specified file from the cache to the
-     * client. If the file cannot be recognized, then it sends an HTTP
-     * 404 response to the client. If the file is absent and it could
-     * not be generated, then this method throws an exception which
-     * would automatically cause an HTTP 500 response to be sent to the
-     * client.
-     *
-     * @param string $filename Name of the file requested
-     *
-     * @throws RuntimeException If the requested file count not be
-     *                          generated
-     */
-    public function sendFile($filename)
-    {
-        $tokens = explode('.', $filename);
-        if (count($tokens) < 2) {
-            http_response_(404);
-            return;
-        }
-
-        $hash = $tokens[0];
-        $type = $tokens[1];
-
-        if ($type === 'png')
-            $this->sendPNG($hash);
-        else
-            http_response_(404);
-    }
-
-
-    /**
      * Reads PNG file with the specified hash and sends it to the client
      *
      * This method first checks if the PNG file with the given hash
@@ -155,6 +122,11 @@ class Preview
      */
     public function sendPNG($hash)
     {
+        if (preg_match('/^[a-f0-9]*$/', $hash) === 0) {
+            http_response_code(400);
+            return;
+        }
+
         $lock = $this->lock($hash);
         $mdPath = $this->getMDPath($hash);
         if (is_file($mdPath) === false) {
@@ -173,6 +145,9 @@ class Preview
             throw new RuntimeException("Could not read $pngPath\n");
         $this->unlock($lock);
         $this->rmlock($hash);
+
+        header('Content-Length: ' . strval($length));
+        header('Content-Type: image/png');
         echo $content;
     }
 
@@ -186,8 +161,7 @@ class Preview
      */
     public function getPNGURL($post)
     {
-        return Pal::getHostURL() . 'preview/' .
-               $post->getPreviewHash() . '.png';
+        return Pal::getHostURL() . '?png=' .  $post->getPreviewHash();
     }
 
 

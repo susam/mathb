@@ -168,20 +168,24 @@ class MathB
      * post occur in the form of HTTP GET requests. These requests
      * originate from visiting URLs of the form http://mathb.in/,
      * http://mathb.in/1, etc. An URL of the form http://mathb.in/1 is
-     * rewritten http://mathb.in/?p=1. This method reads the value of
+     * rewritten to http://mathb.in/?p=1. This method reads the value of
      * the p parameter to obtain the ID of the post requested and
      * displays it. If the p parameter is absent, then the home page is
      * displayed.
+     *
+     * Requests to PNG preview file is of the form
+     * http://mathb.in/?png=<sha1_hash>. For such requests, this method
+     * sends the corresponding PNG image file as the response.
      *
      * @return void
      */
     private function processGetRequest()
     {
-        // If it's a request for a preview file, send the file and
+        // If it's a request for a PNG preview, send the PNG file and
         // return
-        $preview = Pal::get($_GET, 'preview', '');
-        if ($preview !== '') {
-            $this->preview->sendFile($preview);
+        $png = Pal::get($_GET, 'png', '');
+        if ($png !== '') {
+            $this->preview->sendPNG($png);
             return;
         }
 
