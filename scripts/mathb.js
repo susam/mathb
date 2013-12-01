@@ -232,7 +232,11 @@ var MathB = function() {
 
         my.html.outputCode.innerHTML = s
         sanitizeDOM(my.html.outputCode)
-        MathJax.Hub.Queue(['Typeset', MathJax.Hub, my.html.outputCode]);
+
+        // Reset equation numbers before typsetting, otherwise the
+        // equation numbers increment after every edit
+        MathJax.Hub.Queue(['resetEquationNumbers', MathJax.InputJax.TeX],
+                          ['Typeset', MathJax.Hub, my.html.outputCode])
     }
 
 
@@ -244,7 +248,7 @@ var MathB = function() {
         my.html.outputTitle.style.display = s === '' ? 'none' : 'block'
         my.html.outputTitle.innerHTML = s
         sanitizeDOM(my.html.outputTitle)
-        MathJax.Hub.Queue(['Typeset', MathJax.Hub, my.html.outputTitle]);
+        MathJax.Hub.Queue(['Typeset', MathJax.Hub, my.html.outputTitle])
     }
 
 
@@ -341,7 +345,7 @@ var MathB = function() {
             Array.prototype.indexOf = function(needle) {
                 for (var i=0; i < this.length; i++)
                     if (this[i] == needle)
-                        return i;
+                        return i
                 return -1
             }
         }
