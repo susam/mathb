@@ -80,7 +80,15 @@ class Configuration
 
 
     /**
-     * Directory containing images for server side preview
+     * Whether static preview is enabled
+     *
+     * @var boolean
+     */
+    private $staticPreview;
+
+
+    /**
+     * Directory containing images for static preview
      *
      * @var string
      */
@@ -96,9 +104,51 @@ class Configuration
     public function __construct()
     {
         $docRootParent = dirname($_SERVER['DOCUMENT_ROOT']);
+        $this->disableStaticPreview();
         $this->setContentDirectoryPath($docRootParent . '/mathb-content/');
         $this->setCacheDirectoryPath('/tmp/mathb-cache/');
         $this->ipBlacklist = array();
+    }
+
+
+    /**
+     * Disables static preview
+     *
+     * When static preview is disabled, the application does not
+     * display a preview of the post generated at the static when
+     * JavaScript is disabled in the client.
+     *
+     * @return void
+     */
+    public function disableStaticPreview()
+    {
+        $this->staticPreview = false;
+    }
+
+
+    /**
+     * Enables static preview
+     *
+     * When static preview is enabled, the application displays a
+     * preview of the post generated at the static when JavaScript
+     * is disabled in the client.
+     *
+     * @return void
+     */
+    public function enableStaticPreview()
+    {
+        $this->staticPreview = true;
+    }
+
+
+    /**
+     * Returns true if and only if static preview is enabled
+     *
+     * @return boolean Whether static preview is enabled
+     */
+    public function staticPreviewIsEnabled()
+    {
+        return $this->staticPreview;
     }
 
 
@@ -149,15 +199,18 @@ class Configuration
     /**
      * Creates data directories if they do not exist
      *
-     * This method creates the content directory and cache directory if
-     * they do not exist.
+     * This method creates the content directory if it does not exist.
+     * It creates the cache directory too if it does not exist and
+     * static preview is enabled.
      *
      * @throws RuntimeException If a directory could not be created
      */
     public function createDirectories()
     {
         self::createDirectory($this->contentDirectoryPath);
-        self::createDirectory($this->cacheDirectoryPath);
+
+        if ($this->staticPreviewIsEnabled())
+            self::createDirectory($this->cacheDirectoryPath);
     }
 
 

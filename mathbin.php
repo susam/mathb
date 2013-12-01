@@ -55,6 +55,7 @@ use MathB\Configuration;
 
 $view = new MathBinView();
 $conf = new Configuration();
+$conf->enableStaticPreview();
 
 // IP addresses of spammers
 $conf->ipBlacklist = array(

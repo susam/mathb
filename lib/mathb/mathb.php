@@ -114,7 +114,12 @@ class MathB
         self::splAutoloadRegister(dirname(__DIR__));
         $this->conf = isset($conf) ? $conf : new Configuration();
         $this->view = isset($view) ? $view : new View(); 
-        $this->preview = new Preview($this->conf->getCacheDirectoryPath());
+
+        if ($this->conf->staticPreviewIsEnabled()) {
+            $this->preview = new Preview(
+                    $this->conf->getCacheDirectoryPath());
+        }
+
         $this->conf->createDirectories();
     }
 
@@ -181,10 +186,12 @@ class MathB
      */
     private function processGetRequest()
     {
+        $staticPreview = $this->conf->staticPreviewIsEnabled();
+
         // If it's a request for a PNG preview, send the PNG file and
         // return
         $png = Pal::get($_GET, 'png', '');
-        if ($png !== '') {
+        if ($png !== '' && $staticPreview) {
             $this->preview->sendPNG($png);
             return;
         }
@@ -195,7 +202,9 @@ class MathB
         // If no existing post is requested, display an input page with
         // blank form
         if ($id === '') {
-            $this->view->inputPage(new Bag());
+            $this->view->inputPage(new Bag(),
+                                   array(),
+                                   $staticPreview);
             return;
         }
 
@@ -204,7 +213,9 @@ class MathB
         try {
             $path = $this->conf->getPostFilePath($id);
             $post = Post::newPostFromFile($id, $path);
-            $this->preview->cachePost($post);
+
+            if ($staticPreview)
+                $this->preview->cachePost($post);
         } catch (RuntimeException $e) {
             $errorCode = $e->getCode();
             if ($errorCode === Post::NOT_FOUND) {
@@ -243,7 +254,9 @@ class MathB
         }
 
         // Display post since all checks have passed
-        $this->view->inputPage(new Bag($this->conf, $post));
+        $this->view->inputPage(new Bag($this->conf, $post),
+                               array(),
+                               $staticPreview);
     }
 
 
@@ -263,26 +276,33 @@ class MathB
         // Create new post from HTTP POST data
         $post = Post::newPostFromInput();
 
+        $staticPreview = $this->conf->staticPreviewIsEnabled();
+
         // Cache the post to display preview
         try {
-            $this->preview->cachePost($post);
+            if ($staticPreview)
+                $this->preview->cachePost($post);
         } catch (RuntimeException $e) {
             $this->view->inputPage(new Bag($this->conf, $post),
-                                   $e->getMessage());
+                                   $e->getMessage(),
+                                   $staticPreview);
             return;
         }
 
         // Validate and display input page again if there are errors
         $inputErrors = $post->validate();
         if (count($inputErrors) > 0) {
-            $bag = new Bag($this->conf, $post);
-            $this->view->inputPage($bag, $inputErrors);
+            $this->view->inputPage(new Bag($this->conf, $post),
+                                   $inputErrors,
+                                   $staticPreview);
             return;
         }
 
         // Check if preview is requested
         if (Pal::get($_POST, 'preview', '') !== '') {
-            $this->view->inputPage(new Bag($this->conf, $post));
+            $this->view->inputPage(new Bag($this->conf, $post),
+                                   array(),
+                                   $staticPreview);
             return;
         }
 
@@ -292,7 +312,8 @@ class MathB
             http_response_code(403);
             $this->view->inputPage(new Bag($this->conf, $post),
                                    'Your IP address (' . $ip .
-                                   ') is blacklisted.');
+                                   ') is blacklisted.',
+                                   $staticPreview);
             return;
         }
 
@@ -302,7 +323,8 @@ class MathB
             $post->write($this->conf->getPostFilePath($id));
         } catch (RuntimeException $e) {
             $this->view->inputPage(new Bag($this->conf, $post),
-                                   $e->getMessage());
+                                   $e->getMessage(),
+                                   $staticPreview);
             return;
         }
 

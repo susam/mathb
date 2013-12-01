@@ -66,7 +66,7 @@ class View
      *
      * @var Bag 
      */
-    public $bag;
+    protected $bag;
 
 
     /**
@@ -74,24 +74,37 @@ class View
      *
      * @var array
      */
-    public $errors;
+    protected $errors;
+
+
+    /**
+     * Whether static preview should be displayed
+     *
+     * @var boolean
+     */
+    protected $staticPreview;
 
 
     /**
      * Outputs input page 
      *
-     * @param Bag          $bag    A bag of strings to be used in this
-     *                             view
-     * @param string|array $errors A string or an array of strings with
-     *                             error messages to be displayed
-     * @param string       $type   Type of error
+     * @param Bag          $bag            A bag of strings to be used
+     *                                     in this view
+     * @param string|array $errors         A string or an array of
+     *                                     strings with error messages
+     *                                     to be displayed
+     * @param boolean      $staticPreview  Whether static preview should
+     *                                     be displayed
      *
      * @return void
      */
-    public function inputPage($bag, $errors = array())
+    public function inputPage($bag,
+                              $errors = array(),
+                              $staticPreview = false)
     {
         $this->bag = $bag;
         $this->errors = is_string($errors) ? array($errors) : $errors;
+        $this->staticPreview = $staticPreview;
 
         $this->beginPage();
         $this->inputForm();
@@ -133,7 +146,7 @@ class View
      *
      * @return void
      */
-    public function beginPage()
+    protected function beginPage()
     {
 ?>
 <!DOCTYPE html>
@@ -155,6 +168,7 @@ class View
 </div>
 
 <div id="main">
+    <?php $this->noscriptNotice() ?>
 <?php
     }
 
@@ -167,7 +181,7 @@ class View
      *
      * @return void
      */
-    public function endPage()
+    protected function endPage()
     {
 ?>
 </div> <!-- End main -->
@@ -301,6 +315,24 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     {
 ?><!-- MathB\View::styles -->
     <link rel="stylesheet" type="text/css" href="styles/base.css">
+    <?php $this->staticPreviewStyle() ?>
+<?php
+    }
+
+
+    /**
+     * Outputs the link tag to load style for static preview
+     *
+     * This method outputs a style for static preview if and only
+     * if static preview is enabled.
+     *
+     * @return void
+     */
+    protected function staticPreviewStyle()
+    {
+        if ($this->staticPreview === false)
+            return;
+?><!-- MathB\View::staticPreviewStyle -->
     <noscript>
     <link rel="stylesheet" type="text/css" href="styles/noscript.css">
     </noscript>
@@ -406,6 +438,18 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     }
 
 
+    protected function noscriptNotice()
+    {
+        if ($this->staticPreview === true)
+            return;
+?><!-- MathB\View::noscriptNotice -->
+    <noscript>
+        <p id="noscript">JavaScript must be enabled to use this tool.</p>
+    </noscript>
+<?php
+    }
+
+
     /**
      * Outputs the input form
      *
@@ -414,7 +458,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
      *
      * @return void
      */
-    public function inputForm()
+    protected function inputForm()
     {
 ?>
     <div class="input">
@@ -482,7 +526,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
      * This method outputs the HTML div elements containing the math
      * content rendered by MathJax and PageDown.
      */
-    public function outputSheet()
+    protected function outputSheet()
     {
 ?>
     <div class="output">
@@ -495,14 +539,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 echo $this->bag->outputNameClass ?>><?php
                 echo $this->bag->outputName ?></h2>
 
-            <noscript>
-            <div id="outputImage">
-            <?php if ($this->bag->previewImageURL !== '') { ?>
-                <img src="<?php echo $this->bag->previewImageURL ?>"
-                     alt="Markdown, LaTeX and HTML rendered as image">
-            <?php } ?>
-            </div>
-            </noscript>
+            <?php $this->staticPreview() ?>
 
             <div id="outputCode">
                 <?php echo $this->bag->outputCode ?>
@@ -601,6 +638,39 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             echo 'Save and get URL';
         else
             echo 'Save and get new URL';
+    }
+
+
+    /**
+     * Outputs static preview of the post
+     *
+     * This method outputs static preview if and only if server
+     * side preview is enabled.
+     *
+     * @return void
+     */
+    protected function staticPreview()
+    {
+        if ($this->staticPreview === false)
+            return;
+
+        // The $this->bag->previewImageURL check needs to be there only
+        // for the img tag generation, and not for this entire method
+        // because we want the outputImage div element to be generated
+        // when static preview is enabled and JavaScript is disabled
+        // because this div element provides a minimum height to the
+        // output sheet. Without this element, the output sheet would
+        // look ridiculously short.
+?><!-- MathB\View::staticPreview -->
+            <noscript>
+            <div id="outputImage">
+            <?php if ($this->bag->previewImageURL !== '') { ?><!-- if { -->
+                <img src="<?php echo $this->bag->previewImageURL ?>"
+                     alt="Markdown, LaTeX and HTML rendered as image">
+            <?php } ?><!-- } -->
+            </div>
+            </noscript>
+<?php
     }
 
 

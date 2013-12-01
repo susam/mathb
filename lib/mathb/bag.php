@@ -311,8 +311,10 @@ class Bag
         if ($this->outputName === '')
             $this->outputNameClass = 'class="hidden"';
 
-        $preview = new Preview($conf->getCacheDirectoryPath());
-        $this->previewImageURL = $preview->getPNGURL($post);
+        if ($conf->staticPreviewIsEnabled()) {
+            $preview = new Preview($conf->getCacheDirectoryPath());
+            $this->previewImageURL = $preview->getPNGURL($post);
+        }
 
         $this->postURL = $post->id !== '' ?
                          $conf->getPostURL($post->id, $post->key) : '';
