@@ -143,17 +143,14 @@ var MathB = function() {
         defineArrayIndexOf()
 
         my.html.code.onkeyup = my.codeUpdate.schedule
-        my.html.code.onchange = my.codeUpdate.schedule
         my.html.code.onpaste = my.codeUpdate.schedule
         my.html.code.oncut = my.codeUpdate.schedule
 
         my.html.title.onkeyup = my.titleUpdate.schedule
-        my.html.title.onchange = my.titleUpdate.schedule
         my.html.title.onpaste = my.titleUpdate.schedule
         my.html.title.oncut = my.titleUpdate.schedule
 
         my.html.name.onkeyup = my.nameUpdate.schedule
-        my.html.name.onchange = my.nameUpdate.schedule
         my.html.name.onpaste = my.nameUpdate.schedule
         my.html.name.oncut = my.nameUpdate.schedule
 
