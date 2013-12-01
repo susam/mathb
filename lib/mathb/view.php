@@ -393,7 +393,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <div id="copyright">
             <p>
             MathB <?php echo $this->bag->applicationVersion ?><br>
-            &copy; 2013 <a href="http://susam.in">Susam Pal</a>
+            <?php $this->copyrightNotice() ?>
             </p>
             <p>This is free software. You are permitted to redistribute and
             use it in source and binary forms, with or without modification,
@@ -622,6 +622,18 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                    value="<?php echo $this->bag->postURL ?>">
         </div>
 <?php
+    }
+
+
+    /**
+     * Displays copyright notice
+     *
+     * @return void
+     */
+    protected function copyrightNotice()
+    {
+        echo '&copy; 2012&ndash;2013 ' .
+             '<a href="http://susam.in">Susam Pal</a>';
     }
 }
 ?>

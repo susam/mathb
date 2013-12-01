@@ -168,7 +168,7 @@ class MathBinView extends View
         <div id="copyright">
             <p>
             <a href="/"><?php $this->siteName() ?></a><br>
-            &copy; 2013 <a href="http://susam.in">Susam Pal</a>
+            <?php $this->copyrightNotice() ?>
             </p><p>
             This is free software. You are permitted to redistribute and
             use it in source and binary forms, with or without modification,
