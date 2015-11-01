@@ -165,8 +165,17 @@ class Session
             }
         }
 
+        $code = http_response_code();
+        foreach (headers_list() as $header_line) {
+            if (strpos($header_line, 'Location:') === 0) {
+                $code .= ' ' . $header_line;
+                break;
+            }
+        }
+
         $log = $timestamp . ' - ' .
-               http_response_code() . ' - ' .
+               $_SERVER['REQUEST_METHOD'] . ' - ' . 
+               $code . ' - ' .
                $_SERVER['REMOTE_ADDR'] . ' - ' . 
                Pal::getURL() .  ' - ' .
                $_SERVER['SCRIPT_NAME'] . ' - ' .
