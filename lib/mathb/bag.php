@@ -318,7 +318,7 @@ class Bag
 
         $this->postURL = $post->id !== '' ?
                          $conf->getPostURL($post->id, $post->key) : '';
-        $this->actionURL = Pal::getHostURL() . '?post';
+        $this->actionURL = Pal::getHostURL();
 
         // Set HTML attribute
         if ($post->key !== '')
@@ -513,7 +513,6 @@ class Bag
             "hgroup":     ["class", "id", "style"],
             "hr":         ["class", "id", "style"],
             "i":          ["class", "id", "style"],
-            "img":        ["class", "id", "style", "src", "alt"],
             "kbd":        ["class", "id", "style"],
             "li":         ["class", "id", "style"],
             "ol":         ["class", "id", "style"],
