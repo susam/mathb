@@ -99,7 +99,6 @@ var MathB = function() {
             "hgroup":     ["class", "id", "style"],
             "hr":         ["class", "id", "style"],
             "i":          ["class", "id", "style"],
-            "img":        ["class", "id", "style", "src", "alt"],
             "kbd":        ["class", "id", "style"],
             "li":         ["class", "id", "style"],
             "ol":         ["class", "id", "style"],
