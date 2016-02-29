@@ -41,7 +41,7 @@
  */
 
 
-require __DIR__ . '/thirdparty/php-markdown/Michelf/Markdown.php';
+require __DIR__ . '/thirdparty/php-markdown/Michelf/Markdown.inc.php';
 
 set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__ . '/lib');
 spl_autoload_register();
