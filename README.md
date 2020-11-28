@@ -105,17 +105,19 @@ to pass a configuration object to MathB class that has static preview
 enabled. An example of how to do this can be found in mathbin.php. Here
 is a minimal example of such a script.
 
-    require __DIR__ . '/thirdparty/php-markdown/Michelf/Markdown.php';
-    set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__ . '/lib');
-    spl_autoload_register();
+```php
+require __DIR__ . '/thirdparty/php-markdown/Michelf/Markdown.php';
+set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__ . '/lib');
+spl_autoload_register();
 
-    use MathB\MathB;
-    use MathB\Configuration;
+use MathB\MathB;
+use MathB\Configuration;
 
-    $conf = new Configuration();
-    $conf->enableStaticPreview();
-    $mathb = new MathB($conf);
-    $mathb->run();
+$conf = new Configuration();
+$conf->enableStaticPreview();
+$mathb = new MathB($conf);
+$mathb->run();
+```
 
 To test if static preview is working fine, perform the following steps
 in the application.
