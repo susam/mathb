@@ -28,7 +28,7 @@ powered by this project.
 
 Source code setup
 -----------------
-MathB depends on third-party JavaScript and PHP ibraries to convert
+MathB depends on third-party JavaScript and PHP libraries to convert
 users's input specified in LaTeX and Markdown into HTML that can be
 rendered in the output. These third-party JavaScript libraries are:
 
@@ -37,7 +37,7 @@ rendered in the output. These third-party JavaScript libraries are:
   3. [MathJax][T3]
 
 These libraries are not included in the source code. They should be
-downloaded separtely and placed in the following two directories
+downloaded separately and placed in the following two directories
 relative to this project's top level directory, i.e. the directory that
 contains the favicon.ico file.
 
