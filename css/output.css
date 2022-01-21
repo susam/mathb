@@ -46,3 +46,20 @@
   padding: 0.3em 0.4em;
   text-align: left;
 }
+@media (prefers-color-scheme: dark) {
+  #output pre, #output code, #output samp, #output kbd {
+    color: #6cf;
+  }
+  #output pre kbd {
+    color: #9c6;
+  }
+  #output pre, #output blockquote {
+    background: #000;
+  }
+  #output blockquote {
+    border-color: #333;
+  }
+  #output th, #output td {
+    border-color: #666;
+  }
+}

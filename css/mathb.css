@@ -109,3 +109,37 @@ header nav a:last-child, footer nav a:last-child {
     height: 72vh;
   }
 }
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #111;
+    color: #bbb;
+  }
+  a:link {
+    color: #9bf;
+  }
+  a:visited {
+    color: #caf;
+  }
+  a:focus, a:hover {
+    color: #9cf;
+  }
+  a:active {
+    color: #faa;
+  }
+  header h1 a:link, header h1 a:visited {
+    color: #bbb;
+  }
+  header h1 a:focus, header h1 a:hover {
+    color: #ccf;
+  }
+  form {
+    background: #222;
+  }
+  input, textarea, button {
+    background: #000;
+    color: #bbb;
+  }
+  form, input, textarea, button, #output {
+    border-color: #666;
+  }
+}
