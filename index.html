@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>MathB.in - Share Mathematics with LaTeX and Markdown</title>
+    <script>window.texme = { renderOnLoad: false }</script>
+    <script src="https://cdn.jsdelivr.net/npm/texme@1.0.0"></script>
+    <script src="js/filter.js"></script>
+    <script src="js/mathb.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/mathb.css">
+    <link rel="stylesheet" type="text/css" href="css/output.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <header>
+      <h1><a href="/">MathB.in</a></h1>
+      <div>Share Mathematics on the Web</div>
+      <hr>
+    </header>
+    <main>
+      <form method="post">
+        <textarea id="input" placeholder="Enter LaTeX and Markdown code here. Enclose inline math within $ and $, or \( and \). Enclose displayed math within $$ and $$, or \[ and \]. The following commands work outside math mode: \ref, \eqref, \begin, \end and \$. Put spaces on both sides of less-than sign.">{{ code }}</textarea>
+        <input id="submit" type="submit" name="submit" value="Save &amp; Get URL">
+      </form><div id="output-pane">
+        <div id="output"></div>
+        <input id="url" readonly placeholder="Save post to get URL" value="{{ url }}">
+        <button id="copy">Copy URL</button>
+      </div>
+    </main>
+    <footer>
+      <hr>
+      <div>
+        <nav>
+          <a href="/">New</a>
+          <a href="/1">Demo</a>
+          <a href="/2">Tutorial</a>
+          <a href="/3">About</a>
+        </nav>
+        <p>
+          &copy; 2012-2022 Susam Pal
+        </p>
+        <p>
+          This is free and open source website. The source code of this
+          website is available on
+          <a href="https://github.com/susam/mathb">GitHub</a>. You
+          are welcome to modify and improve this website under the
+          terms of
+          the <a href="https://github.com/susam/mathb/blob/master/LICENSE.md">MIT
+          License</a>.
+        </p>
+        <p>
+          To report bugs, suggest improvements, or ask questions,
+          <a href="https://github.com/susam/mathb/issues">create
+            a new issue</a>.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

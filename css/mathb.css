@@ -1,0 +1,101 @@
+body {
+  color: #333;
+  font-family: georgia, serif;
+  line-height: 1.5;
+  margin: 0 auto;
+  padding: 0 1em;
+}
+a:link {
+  color: #00e;
+}
+a:visited {
+  color: #518;
+}
+a:focus, a:hover {
+  color: #03f;
+}
+a:active {
+  color: #e00;
+}
+header {
+  text-align: center;
+}
+header h1 {
+  margin: 0.5em 0 0 0;
+}
+header h1 a {
+  text-decoration: none;
+}
+header h1 a:link, header h1 a:visited {
+  color: #333;
+}
+header h1 a:focus, header h1 a:hover {
+  color: #669;
+}
+header div {
+  color: #666;
+  font-weight: bold;
+}
+header hr, footer hr {
+  border: none;
+  border-bottom: thin dotted #666;
+  margin: 1em 0;
+}
+form {
+  background: #eee;
+  border: thin solid #ccc;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+textarea {
+  box-sizing: border-box;
+  width: 100%;
+  height: calc(25vh - 4em);
+}
+input, button {
+  display: block;
+  box-sizing: border-box;
+  width: 50%;
+  min-height: 2em;
+  margin: 1em auto 0 auto;
+}
+#output {
+  box-sizing: border-box;
+  border: thin solid #999;
+  height: 25vh;
+  margin-bottom: 1em;
+}
+#copy {
+  width: 25%;
+}
+footer div {
+  max-width: 40em;
+  margin-left: auto;
+  margin-right: auto;
+}
+footer nav, footer nav + p {
+  text-align: center;
+}
+footer nav a {
+  margin-right: 2em;
+}
+footer nav a:last-child {
+  margin-right: 0;
+}
+@media screen and (min-width: 50em) {
+  form, #output-pane {
+    display: inline-block;
+    box-sizing: border-box;
+    width: calc(50% - 0.5em);
+    vertical-align: top;
+  }
+  form {
+    margin-right: 1em;
+  }
+  textarea {
+    height: 70vh;
+  }
+  #output {
+    height: 72vh;
+  }
+}
