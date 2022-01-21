@@ -17,11 +17,9 @@ a:focus, a:hover {
 a:active {
   color: #e00;
 }
-header {
-  text-align: center;
-}
 header h1 {
-  margin: 0.5em 0 0 0;
+  text-align: center;
+  margin: 0.5em 0;
 }
 header h1 a {
   text-decoration: none;
@@ -32,9 +30,8 @@ header h1 a:link, header h1 a:visited {
 header h1 a:focus, header h1 a:hover {
   color: #669;
 }
-header div {
-  color: #666;
-  font-weight: bold;
+header nav {
+  display: none;
 }
 header hr, footer hr {
   border: none;
@@ -76,13 +73,26 @@ footer div {
 footer nav, footer nav + p {
   text-align: center;
 }
-footer nav a {
+header nav a, footer nav a {
   margin-right: 2em;
 }
-footer nav a:last-child {
+header nav a:last-child, footer nav a:last-child {
   margin-right: 0;
 }
 @media screen and (min-width: 50em) {
+  header h1 {
+    display: inline-block;
+    width: 50%;
+    text-align: left;
+  }
+  header nav {
+    display: inline-block;
+    width: 50%;
+    text-align: right;
+  }
+  footer nav {
+    display: none;
+  }
   form, #output-pane {
     display: inline-block;
     box-sizing: border-box;
