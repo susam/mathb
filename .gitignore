@@ -1,4 +1,1 @@
-thirdparty/
-docs/
-*.sw?
-*.log
+texmf/
