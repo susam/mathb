@@ -21,19 +21,18 @@ header h1 {
   text-align: center;
   margin: 0.5em 0;
 }
-header h1 a {
-  text-decoration: none;
-}
 header h1 a:link, header h1 a:visited {
   color: #333;
+  text-decoration: none;
 }
 header h1 a:focus, header h1 a:hover {
-  color: #669;
+  color: #555;
+  text-decoration: underline;
 }
 header nav {
   display: none;
 }
-header hr, footer hr {
+footer hr {
   border: none;
   border-bottom: thin dotted #666;
   margin: 1em 0;
@@ -42,25 +41,41 @@ form {
   background: #eee;
   border: thin solid #ccc;
   padding: 1em;
-  margin-bottom: 1em;
 }
 textarea {
   box-sizing: border-box;
-  width: 100%;
-  height: calc(25vh - 4em);
-}
-input, button {
   display: block;
+  width: 100%;
+  padding: 0.5em;
+  min-height: 5em;
+}
+#view {
   box-sizing: border-box;
+  min-height: calc(100vh - 32em);
+}
+input {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  padding: 0.5em;
+  margin-top: 1rem;
+}
+#submit, #copy {
+  box-sizing: border-box;
+  display: block;
   width: 50%;
-  min-height: 2em;
-  margin: 1em auto 0 auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+#output {
+  margin-top: 1em;
+}
+#sheet {
+  border: thin solid #999;
+  overflow: auto;
 }
 #output {
   box-sizing: border-box;
-  border: thin solid #999;
-  height: 25vh;
-  margin-bottom: 1em;
 }
 #copy {
   width: 25%;
@@ -79,6 +94,27 @@ header nav a, footer nav a {
 header nav a:last-child, footer nav a:last-child {
   margin-right: 0;
 }
+#view {
+  padding: 1em;
+}
+#date {
+  font-size: small;
+  color: #666;
+  line-height: 1.5rem;
+  text-align: right;
+  padding: 0 1rem;
+}
+noscript, #error {
+  font-size: large;
+  color: #f00;
+  border-color: #f00;
+}
+#error {
+  margin-bottom: 1em;
+}
+#widget {
+  display: none;
+}
 @media screen and (min-width: 50em) {
   header h1 {
     display: inline-block;
@@ -93,20 +129,32 @@ header nav a:last-child, footer nav a:last-child {
   footer nav {
     display: none;
   }
-  form, #output-pane {
+  form, #output {
     display: inline-block;
     box-sizing: border-box;
     width: calc(50% - 0.5em);
     vertical-align: top;
   }
+  textarea {
+    min-height: calc(100vh - 18.5rem);
+  }
   form {
     margin-right: 1em;
   }
-  textarea {
-    height: 70vh;
-  }
   #output {
-    height: 72vh;
+    margin-top: 0em;
+  }
+  #url {
+    display: inline-block;
+    width: 75%;
+  }
+  #copy {
+    display: inline-block;
+    margin-left: 1em;
+    width: calc(25% - 1em);
+  }
+  #view {
+    min-height: calc(100vh - 12em);
   }
 }
 @media (prefers-color-scheme: dark) {
@@ -130,7 +178,7 @@ header nav a:last-child, footer nav a:last-child {
     color: #bbb;
   }
   header h1 a:focus, header h1 a:hover {
-    color: #ccf;
+    color: #ddd;
   }
   form {
     background: #222;
@@ -141,5 +189,9 @@ header nav a:last-child, footer nav a:last-child {
   }
   form, input, textarea, button, #output {
     border-color: #666;
+  }
+  noscript, #error {
+    color: #f99;
+    border-color: #f99;
   }
 }

@@ -1,0 +1,72 @@
+#view :first-child {
+  margin-top: 0
+}
+#view :last-child {
+  margin-top: 0
+}
+#view h1.title {
+  margin-top: 0;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+#view h2.author {
+  margin-top: 0;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+#view h1, #view h2, #view h3, #view h4, #view h5, #view h6 {
+  margin: 1.25em 0 0.5em 0;
+  line-height: 1.2;
+}
+#view img {
+  max-width: 100%;
+}
+#view pre, #view code, #view samp, #view kbd {
+  color: #009;
+  font-family: monospace, monospace;
+}
+#view pre kbd {
+  color: #060;
+}
+#view pre, #view blockquote {
+  background: #eee;
+  padding: 0.5em;
+}
+#view pre {
+  overflow: auto;
+}
+#view blockquote {
+  border-left: medium solid #ccc;
+  margin: 1em 0;
+}
+#view blockquote :first-child {
+  margin-top: 0;
+}
+#view blockquote :last-child {
+  margin-bottom: 0;
+}
+#view table {
+  border-collapse: collapse;
+}
+#view th, #view td {
+  border: thin solid #999;
+  padding: 0.3em 0.4em;
+  text-align: left;
+}
+@media (prefers-color-scheme: dark) {
+  #view pre, #view code, #view samp, #view kbd {
+    color: #6cf;
+  }
+  #view pre kbd {
+    color: #9c6;
+  }
+  #view pre, #view blockquote {
+    background: #000;
+  }
+  #view blockquote {
+    border-color: #333;
+  }
+  #view th, #view td {
+    border-color: #666;
+  }
+}

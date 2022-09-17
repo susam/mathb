@@ -4,10 +4,9 @@
     <title>MathB.in - Share Mathematics with LaTeX and Markdown</title>
     <script>window.texme = { renderOnLoad: false }</script>
     <script src="https://cdn.jsdelivr.net/npm/texme@1.0.0"></script>
-    <script src="js/filter.js"></script>
     <script src="js/mathb.js"></script>
     <link rel="stylesheet" type="text/css" href="css/mathb.css">
-    <link rel="stylesheet" type="text/css" href="css/output.css">
+    <link rel="stylesheet" type="text/css" href="css/view.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
   </head>
@@ -21,13 +20,23 @@
       </nav>
     </header>
     <main>
-      <form method="post">
-        <textarea id="input" placeholder="Enter LaTeX and Markdown code here. Enclose inline math within $ and $, or \( and \). Enclose displayed math within $$ and $$, or \[ and \]. The following commands work outside math mode: \ref, \eqref, \begin, \end and \$. Put spaces on both sides of less-than sign.">{{ code }}</textarea>
+      <form id="form" method="post">
+        <textarea id="code" name="code" placeholder="Enter LaTeX and Markdown code here. Enclose inline math within $ and $, or \( and \). Enclose displayed math within $$ and $$, or \[ and \]. The following commands work outside math mode: \ref, \eqref, \begin, \end and \$. Put spaces on both sides of less-than sign." required>{{ code }}</textarea>
+        <input id="title" name="title" value="{{ title }}" placeholder="Title of the post (optional)">
+        <input id="name" name="name" value="{{ name }}" placeholder="Your name (optional)">
         <input id="submit" type="submit" name="submit" value="Save &amp; Get URL">
-      </form><div id="output-pane">
-        <div id="output"></div>
-        <input id="url" readonly placeholder="Save post to get URL" value="{{ url }}">
-        <button id="copy">Copy URL</button>
+      </form><div id="output">
+        <div id="sheet">
+          <div id="view">
+            {{ error }}<noscript>
+              ERROR: JavaScript must be enabled to render input!
+            </noscript>
+          </div>
+          <div id="date">{{ date }}</div>
+        </div>
+        <div id="widget">
+          <input id="url" readonly><input id="copy" type="button" value="Copy URL">
+        </div>
       </div>
     </main>
     <footer>
@@ -40,7 +49,7 @@
           <a href="/3">About</a>
         </nav>
         <p>
-          &copy; 2012-2022 Susam Pal
+          &copy; 2012-{{ current-year }} Susam Pal
         </p>
         <p>
           This is free and open source website. The source code of this
