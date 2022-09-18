@@ -9,6 +9,7 @@ window.onload = function () {
   const widget = document.getElementById('widget')
   const url = document.getElementById('url')
   const copy = document.getElementById('copy')
+  const slug = parseInt(window.location.pathname.substring(1))
 
   let timeout = null
 
@@ -41,6 +42,9 @@ window.onload = function () {
   }
 
   function sanitizeHTML(html) {
+    if (slug < 10) {
+      return html
+    }
     const div = document.createElement('div')
     div.innerHTML = html
     sanitizeDOM(div)
