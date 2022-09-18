@@ -242,7 +242,7 @@
 (defvar *last-post-time* 0
   "The universal-time at which the last post was successfully submitted.")
 
-(defvar *flood-table* (make-hash-table :test #'equal)
+(defvar *flood-table* (make-hash-table :test #'equal :synchronized t)
   "A map of IP addresses to last time they made a successful post.")
 
 (defmacro set-flood-data (ip current-time last-post-time-var flood-table-var)
@@ -256,6 +256,7 @@
   (write-file (slug-to-path directory slug)
               (make-text (current-utc-time-string) title name code))
   (set-flood-data ip current-time *last-post-time* *flood-table*)
+  (write-log "Post ~a written successfully" slug)
   (hunchentoot:redirect (format nil "/~a" slug)))
 
 (defun reject-post (title name code reason)
@@ -316,6 +317,7 @@
                  (when (>= current-time (+ value post-interval))
                    (remhash key flood-table)))
              flood-table)
+    (write-log "Flood table size is ~a" (hash-table-count flood-table))
     (let* ((last-post-time (gethash ip flood-table 0))
            (wait-time (- (+ last-post-time post-interval) current-time)))
       (when (plusp wait-time)
