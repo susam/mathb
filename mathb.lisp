@@ -261,6 +261,7 @@
 
 (defun reject-post (title name code reason)
   "Reject post with an error message."
+  (write-log "Post rejected: ~a" reason)
   (render-html (read-file "mathb.html") "" title name code
                (format nil "<div id=\"error\">ERROR: ~a</div>" reason)))
 
