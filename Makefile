@@ -83,8 +83,11 @@ live: site
 
 site:
 	@echo Setting up site directory ...
-	rm -rf _site/
-	cp -R static/ _site/
+	mkdir -p _site/css/ _site/js/
+	cp -R web/css/* _site/css/
+	cp -R web/js/* _site/js/
+	cp -R web/favicon.png _site/
+	cp -R web/favicon.ico _site/
 	git -C _site/js/ clone -b 1.2.0 --depth 1 https://github.com/susam/texme.git
 	git -C _site/js/ clone -b v4.1.0 --depth 1 https://github.com/markedjs/marked.git
 	git -C _site/js/ clone -b 3.2.2 --depth 1 https://github.com/mathjax/mathjax.git
@@ -103,3 +106,6 @@ checkroot:
 	@echo Checking if current user is root ...
 	[ $$(id -u) = 0 ]
 	@echo Done; echo
+
+pub:
+	ssh -t mathb.in "cd /opt/mathb.in/ && sudo git pull && sudo make live && sudo systemctl restart nginx mathb && sudo systemctl --no-pager status nginx mathb"
