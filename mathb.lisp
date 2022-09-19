@@ -48,11 +48,15 @@
   (with-open-file (f filename :direction :output :if-exists :supersede)
     (write-sequence text f)))
 
+(defun real-ip ()
+  "Return address of the remote client (not of the local reverse-proxy)."
+  (hunchentoot:real-remote-addr))
+
 (defun write-log (fmt &rest args)
   "Log message with specified arguments."
   (when *log-mode*
     (format t "~a - [~a] \"~a ~a\" "
-            (hunchentoot:header-in* :x-real-ip)
+            (real-ip)
             (current-utc-time-string)
             (hunchentoot:request-method*)
             (hunchentoot:request-uri*))
@@ -370,7 +374,7 @@
 (defun post-response (directory)
   "Process submitted post form."
   (let* ((aux (read-aux directory))
-         (ip (hunchentoot:header-in* :x-real-ip))
+         (ip (real-ip))
          (current-time (get-universal-time))
          (title (or (from-post "title") ""))
          (name (or (from-post "name") ""))
