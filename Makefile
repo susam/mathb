@@ -112,5 +112,7 @@ pub: push web
 push:
 	git push
 
-web:
+web: FORCE
 	ssh -t mathb.in "cd /opt/mathb.in/ && sudo git pull && sudo make live && sudo systemctl restart nginx mathb && sudo systemctl --no-pager status nginx mathb"
+
+FORCE:

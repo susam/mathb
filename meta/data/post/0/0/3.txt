@@ -48,8 +48,7 @@ nature will be removed.
 Software
 --------
 
-MathB.in is powered by the following free and open source
-software:
+MathB.in is powered by the following technologies:
 
 - [Common Lisp](https://common-lisp.net/)
 - [SBCL](https://www.sbcl.org/)
@@ -60,6 +59,7 @@ software:
 - [Marked](https://github.com/markedjs/marked)
 - [Nginx](https://www.nginx.com/)
 - [Debian GNU/Linux](https://www.debian.org/)
+- [Linode](https://www.linode.com/)
 
 
 Bug Reports and Suggestions
