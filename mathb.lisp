@@ -170,11 +170,11 @@
   (nth-value 5 (get-decoded-time)))
 
 (defun slug-to-path (directory slug)
-  "Convert a slug like 1234567 to a path like /directory/1/1234/1234567.md"
+  "Convert a slug to path, e.g., 1234567 to /directory/post/1/1234/1234567.txt"
   (let* ((n (parse-integer slug))
          (million (floor n 1000000))
          (thousand (floor n 1000)))
-    (format nil "~a~d/~d/~d.md" directory million thousand n)))
+    (format nil "~apost/~d/~d/~d.txt" directory million thousand n)))
 
 (defun split-text (text)
   "Split text into head and body."
@@ -285,7 +285,7 @@
 
 (defun dodgy-content-p (aux title name code)
   "Check if post content contains banned words."
-  (let ((words (getf aux :words))
+  (let ((words (getf aux :block))
         (text (format nil "~a:~a:~a" title name code)))
     (some (lambda (word) (search word text)) words)))
 
@@ -402,7 +402,7 @@
   "Start HTTP server."
   (let ((acceptor (make-instance 'hunchentoot:easy-acceptor
                                  :address "127.0.0.1" :port 4242)))
-    (setf (hunchentoot:acceptor-document-root acceptor) #p"static/")
+    (setf (hunchentoot:acceptor-document-root acceptor) #p"_live/")
     (hunchentoot:start acceptor)))
 
 (defun main ()
