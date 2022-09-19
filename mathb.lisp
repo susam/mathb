@@ -266,7 +266,7 @@
 (defun reject-post (title name code reason)
   "Reject post with an error message."
   (write-log "Post rejected: ~a" reason)
-  (render-html (read-file "mathb.html") "" title name code
+  (render-html (read-file "html/mathb.html") "" title name code
                (format nil "<div id=\"error\">ERROR: ~a</div>" reason)))
 
 (defun process-post (ip current-time directory title name code)
@@ -361,11 +361,11 @@
 
 (defun home-page ()
   "Return HTML of the home page."
-  (render-html (read-file "mathb.html") "" "" "" "" ""))
+  (render-html (read-file "html/mathb.html") "" "" "" "" ""))
 
 (defun math-page (directory)
   "Return page to client."
-  (let* ((html (read-file "mathb.html"))
+  (let* ((html (read-file "html/mathb.html"))
          (slug (subseq (hunchentoot:script-name*) 1))
          (path (slug-to-path directory slug))
          (exists (probe-file path)))
@@ -400,7 +400,7 @@
 
 (defmethod hunchentoot:acceptor-status-message (acceptor http-status-code &key)
   "Custom error page."
-  (let ((html (read-file "error.html"))
+  (let ((html (read-file "html/error.html"))
         (reason-phrase (hunchentoot:reason-phrase http-status-code)))
     (setf html (string-replace "{{ status-code }}" http-status-code html))
     (setf html (string-replace "{{ reason-phrase }}" reason-phrase html))
