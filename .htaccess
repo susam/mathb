@@ -1,9 +1,0 @@
-RewriteEngine On
-
-# Canonicalize www.mathb.in to mathb.in
-RewriteCond %{HTTP_HOST} ^www.mathb.in$ [NC]
-RewriteRule (.*) http://mathb.in/$1 [R=301,L]
-
-# Canonicalize /12/ to /12.
-RewriteRule ^(\d*)/$ http://%{HTTP_HOST}/$1
-RewriteRule ^(\d*)$ /mathbin.php?p=$1 [QSA]
