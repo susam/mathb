@@ -107,5 +107,10 @@ checkroot:
 	[ $$(id -u) = 0 ]
 	@echo Done; echo
 
-pub:
+pub: push web
+
+push:
+	git push
+
+web:
 	ssh -t mathb.in "cd /opt/mathb.in/ && sudo git pull && sudo make live && sudo systemctl restart nginx mathb && sudo systemctl --no-pager status nginx mathb"
