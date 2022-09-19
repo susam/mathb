@@ -35,7 +35,7 @@ setup:
 https: http
 	@echo Setting up HTTPS website ...
 	certbot certonly -n --agree-tos -m '$(MAIL)' --webroot \
-	                 -w '/var/www/$(FQDN)' -d '$(FQDN),www.$(FQDN),susam.in'
+	                 -w '/opt/$(FQDN)/_live' -d '$(FQDN),www.$(FQDN)'
 	(crontab -l | sed '/::::/d'; cat etc/crontab) | crontab
 	ln -snf "$$PWD/etc/nginx/https.$(FQDN)" '/etc/nginx/sites-enabled/$(FQDN)'
 	systemctl reload nginx
@@ -43,7 +43,6 @@ https: http
 
 http: rm live mathb
 	@echo Setting up HTTP website ...
-	ln -snf "$$PWD/_live" '/var/www/$(FQDN)'
 	ln -snf "$$PWD/etc/nginx/http.$(FQDN)" '/etc/nginx/sites-enabled/$(FQDN)'
 	systemctl reload nginx
 	echo 127.0.0.1 '$(NAME)' >> /etc/hosts
@@ -51,7 +50,9 @@ http: rm live mathb
 
 mathb:
 	@echo Setting up mathb ...
+	mkdir -p /opt/cache
 	mkdir -p /opt/data/mathb
+	chown -R www-data:www-data /opt/cache
 	chown -R www-data:www-data /opt/data/mathb
 	systemctl enable "/opt/mathb.in/etc/mathb.service"
 	systemctl daemon-reload
@@ -61,7 +62,6 @@ mathb:
 rm: checkroot
 	@echo Removing website ...
 	rm -f '/etc/nginx/sites-enabled/$(FQDN)'
-	rm -f '/var/www/$(FQDN)'
 	systemctl reload nginx
 	sed -i '/$(NAME)/d' /etc/hosts
 	@echo
