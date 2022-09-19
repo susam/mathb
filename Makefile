@@ -55,7 +55,7 @@ mathb:
 	chown -R www-data:www-data /opt/data/mathb
 	systemctl enable "/opt/mathb/etc/mathb.service"
 	systemctl daemon-reload
-	systemctl start form
+	systemctl start mathb
 	@echo Done; echo
 
 rm: checkroot
@@ -65,9 +65,9 @@ rm: checkroot
 	systemctl reload nginx
 	sed -i '/$(NAME)/d' /etc/hosts
 	@echo
-	@echo Removing form ...
-	-systemctl stop form
-	-systemctl disable form
+	@echo Removing mathb ...
+	-systemctl stop mathb
+	-systemctl disable mathb
 	systemctl daemon-reload
 	@echo
 	@echo Following crontab entries left intact:
