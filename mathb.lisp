@@ -367,9 +367,12 @@
   "Return page to client."
   (let* ((html (read-file "mathb.html"))
          (slug (subseq (hunchentoot:script-name*) 1))
-         (path (slug-to-path directory slug)))
-    (multiple-value-bind (date title name code) (parse-text (read-file path))
-      (render-html html (simple-date date) title name code ""))))
+         (path (slug-to-path directory slug))
+         (exists (probe-file path)))
+    (if exists
+        (multiple-value-bind (date title name code) (parse-text (read-file path))
+          (render-html html (simple-date date) title name code ""))
+        (progn (setf (hunchentoot:return-code*) 404) nil))))
 
 (defun post-response (directory)
   "Process submitted post form."
