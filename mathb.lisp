@@ -409,7 +409,8 @@
 (defun main ()
   "Set up HTTP request handlers and start server."
   (define-handlers)
-  (start-server))
+  (start-server)
+  (sleep most-positive-fixnum))
 
 (when *main-mode*
   (main))
