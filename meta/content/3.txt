@@ -5,13 +5,15 @@ Name:
 [MathB.in](1) is a website meant for sharing snippets of
 mathematical text with others on the web. This is a pastebin for
 mathematics. This website was born out of a one night hack on
-Sunday, March 25, 2012.
+Sunday, March 25, 2012. It was initially written in PHP and then
+later rewritten in Common Lisp. The source code of MathB.in is
+available at <https://github.com/susam/mathb>.
 
 
-Posting and sharing
+Posting and Sharing
 -------------------
 
-A new post can be composed by visiting the [home page][1] and
+A new post can be composed by visiting the [home page](/) and
 writing or pasting code in the box on the left hand pane of the
 page. Once a post is composed and submitted, the page is saved
 and it becomes accessible with a new unique URL. The new page
@@ -20,13 +22,44 @@ The URL can be shared with anyone on the web and they will be
 able to visit your post.
 
 
-Code
-----
+Post Format
+-----------
 
-The post can be composed in a mixture of LaTeX and Markdown
-text. For a demonstration on how LaTeX and Markdown is rendered,
-see the [demo page](1). To quickly get started with posting
+A post can be composed in a mixture of LaTeX and Markdown text.
+For a demonstration on how LaTeX and Markdown is rendered, see
+the [demo page](1). To quickly get started with posting
 mathematical snippets, see the [tutorial](2).
+
+The main content of each post can have a maximum of 10,000
+characters. The optional title field and name field can have a
+maximum of 120 characters each.
+
+
+Usage
+-----
+
+This website is meant for creating mathematical snippets.
+Science and technical posts are also welcome on this website.
+Any other type of post should not be posted to this website. Any
+post that is not mathematical, scientific, or technical in
+nature will be removed.
+
+
+Software
+--------
+
+MathB.in is powered by the following free and open source
+software:
+
+- [Common Lisp](https://common-lisp.net/)
+- [SBCL](https://www.sbcl.org/)
+- [Hunchentoot](https://edicl.github.io/hunchentoot/)
+- [MathB](https://github.com/susam/texme)
+- [TeXMe](https://github.com/susam/texme)
+- [MathJax](https://www.mathjax.org/)
+- [Marked](https://github.com/markedjs/marked)
+- [Nginx](https://www.nginx.com/)
+- [Debian GNU/Linux](https://www.debian.org/)
 
 
 Bug Reports and Suggestions
