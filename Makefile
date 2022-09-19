@@ -53,7 +53,7 @@ mathb:
 	@echo Setting up mathb ...
 	mkdir -p /opt/data/mathb
 	chown -R www-data:www-data /opt/data/mathb
-	systemctl enable "/opt/mathb/etc/mathb.service"
+	systemctl enable "/opt/mathb.in/etc/mathb.service"
 	systemctl daemon-reload
 	systemctl start mathb
 	@echo Done; echo
