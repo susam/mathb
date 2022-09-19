@@ -98,3 +98,8 @@ run:
 
 test:
 	sbcl --noinform --eval "(defvar *quit* t)" --load test.lisp
+
+checkroot:
+	@echo Checking if current user is root ...
+	[ $$(id -u) = 0 ]
+	@echo Done; echo
