@@ -41,7 +41,7 @@ https: http
 	systemctl reload nginx
 	@echo Done; echo
 
-http: rm live form
+http: rm live mathb
 	@echo Setting up HTTP website ...
 	ln -snf "$$PWD/_live" '/var/www/$(FQDN)'
 	ln -snf "$$PWD/etc/nginx/http.$(FQDN)" '/etc/nginx/sites-enabled/$(FQDN)'
@@ -52,7 +52,7 @@ http: rm live form
 mathb:
 	@echo Setting up mathb ...
 	mkdir -p /opt/data/mathb
-	chown www-data:www-data /opt/data/mathb
+	chown -R www-data:www-data /opt/data/mathb
 	systemctl enable "/opt/mathb/etc/mathb.service"
 	systemctl daemon-reload
 	systemctl start form

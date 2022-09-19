@@ -1,0 +1,30 @@
+# https://mathb.in/
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name mathb.in mathb;
+    ssl_certificate /etc/letsencrypt/live/mathb.in/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/mathb.in/privkey.pem;
+    location / {
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://127.0.0.1:4242;
+    }
+}
+
+# https://www.mathb.in/ => https://mathb.in/
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name www.mathb.in mathb.in;
+    ssl_certificate /etc/letsencrypt/live/mathb.in/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/mathb.in/privkey.pem;
+    return 301 https://mathb.in$request_uri;
+}
+
+# http://mathb.in/, http://www.mathb.in/ => https://mathb.in/
+server {
+    listen 80;
+    listen [::]:80;
+    server_name www.mathb.in mathb.in;
+    return 301 https://mathb.in$request_uri;
+}

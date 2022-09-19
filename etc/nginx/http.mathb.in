@@ -1,0 +1,18 @@
+# http://mathb.in/
+server {
+    listen 80;
+    listen [::]:80;
+    server_name mathb.in mathb;
+    location / {
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_pass http://127.0.0.1:4242;
+    }
+}
+
+# http://www.mathb.in/ => http://mathb.in/
+server {
+    listen 80;
+    listen [::]:80;
+    server_name www.mathb.in mathb.in;
+    return 301 http://mathb.in$request_uri;
+}

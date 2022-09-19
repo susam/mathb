@@ -1,0 +1,2 @@
+0 0 * * * (date; certbot renew -n; date; echo ::::) >> /var/log/certbot-renew.log 2>&1
+0 1 * * * (date; systemctl reload nginx; date; echo ::::) >> /var/log/nginx-reload.log 2>&1
