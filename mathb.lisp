@@ -176,9 +176,9 @@
 (defun slug-to-path (directory slug)
   "Convert a slug to path, e.g., 1234567 to /directory/post/1/1234/1234567.txt"
   (let* ((n (parse-integer slug))
-         (million (floor n 1000000))
-         (thousand (floor n 1000)))
-    (format nil "~apost/~d/~d/~d.txt" directory million thousand n)))
+         (short-prefix (floor n 1000000))
+         (long-prefix (floor n 1000)))
+    (format nil "~apost/~d/~d/~d.txt" directory short-prefix long-prefix n)))
 
 (defun split-text (text)
   "Split text into head and body."
@@ -330,9 +330,9 @@
 
 (defun reject-post-p (options ip current-time title name code token)
   "Validate post and return error message if validation fails."
-  (let ((max-code-length 10000)
-        (max-title-length 120)
-        (max-name-length 120)
+  (let ((max-code-length (getf options :max-code-length 10000))
+        (max-title-length (getf options :max-title-length 120))
+        (max-name-length (getf options :max-name-length 120))
         (result))
     (cond ((read-only-p options)
            "New posts have been disabled temporarily!")
