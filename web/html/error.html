@@ -2,6 +2,14 @@
 <html lang="en">
   <head>
     <title>{{ status-code }} {{ reason-phrase }}</title>
+    <style>
+      @media (prefers-color-scheme: dark) {
+        body {background: #111; color: #bbb}
+        a:link {color: #9bf}
+        a:visited {color: #caf}
+        a:active {color: #faa}
+      }
+    </style>
   </head>
   <body style="text-align: center">
     <h1>{{ status-code }} {{ reason-phrase }}</h1>
