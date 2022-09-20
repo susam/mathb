@@ -115,4 +115,9 @@ push:
 web: FORCE
 	ssh -t mathb.in "cd /opt/mathb.in/ && sudo git pull && sudo make live && sudo systemctl restart nginx mathb && sudo systemctl --no-pager status nginx mathb"
 
+data:
+	sudo mkdir -p /opt/data/mathb/
+	sudo cp -R meta/data/* /opt/data/mathb/
+	sudo chown -R "$$USER" /opt/data/mathb/
+
 FORCE:
