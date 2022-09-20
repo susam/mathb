@@ -144,9 +144,9 @@
 (defvar *data-directory* "/opt/data/mathb/"
   "Directory where post files and data are written to and read from.")
 
-(defun read-aux (directory)
-  "Read auxilliary data file."
-  (read-from-string (read-file (merge-pathnames "aux.lisp" directory))))
+(defun read-options (directory)
+  "Read options file."
+  (read-from-string (read-file (merge-pathnames "opt.lisp" directory))))
 
 (defun from-post (name)
   "Get the value of a POST parameter."
@@ -280,17 +280,17 @@
 ;;; Validators
 ;;; ----------
 
-(defun read-only-p (aux)
+(defun read-only-p (options)
   "Check if read-only mode is enabled."
-  (getf aux :read-only))
+  (getf options :read-only))
 
 (defun empty-content-p (code)
   "Check if code in the post is empty."
   (string= (string-trim-whitespace code) ""))
 
-(defun dodgy-content-p (aux title name code)
+(defun dodgy-content-p (options title name code)
   "Check if post content contains banned words."
-  (let ((words (getf aux :block))
+  (let ((words (getf options :block))
         (text (format nil "~a:~a:~a" title name code)))
     (some (lambda (word) (search word text)) words)))
 
@@ -308,16 +308,16 @@
          (xx (calc-token a)))
     (or (< x 123) (/= x xx))))
 
-(defun global-flood-p (aux current-time last-post-time)
+(defun global-flood-p (options current-time last-post-time)
   "Compute number of seconds before next post will be accepted."
-  (let* ((post-interval (getf aux :global-post-interval 0))
+  (let* ((post-interval (getf options :global-post-interval 0))
          (wait-time (- (+ last-post-time post-interval) current-time)))
     (when (plusp wait-time)
       wait-time)))
 
-(defun client-flood-p (aux ip current-time flood-table)
+(defun client-flood-p (options ip current-time flood-table)
   "Compute number of seconds client must wait to avoid client flooding."
-  (let ((post-interval (or (getf aux :client-post-interval) 0)))
+  (let ((post-interval (or (getf options :client-post-interval) 0)))
     (maphash #'(lambda (key value)
                  (when (>= current-time (+ value post-interval))
                    (remhash key flood-table)))
@@ -328,13 +328,13 @@
       (when (plusp wait-time)
         wait-time))))
 
-(defun reject-post-p (aux ip current-time title name code token)
+(defun reject-post-p (options ip current-time title name code token)
   "Validate post and return error message if validation fails."
-  (let ((max-title-length 10000)
+  (let ((max-code-length 10000)
+        (max-title-length 120)
         (max-name-length 120)
-        (max-code-length 120)
         (result))
-    (cond ((read-only-p aux)
+    (cond ((read-only-p options)
            "New posts have been disabled temporarily!")
           ((empty-content-p code)
            "Empty content!")
@@ -344,14 +344,14 @@
            (format nil "Name length exceeds ~a characters" max-name-length))
           ((> (length code) max-code-length)
            (format nil "Code length exceeds ~a characters" max-code-length))
-          ((dodgy-content-p aux title name code)
+          ((dodgy-content-p options title name code)
            "Dodgy content!")
           ((dodgy-post-p token)
            "Dodgy post!")
-          ((setf result (global-flood-p aux current-time *last-post-time*))
+          ((setf result (global-flood-p options current-time *last-post-time*))
            (format nil "~@{~a~}" "Global post interval enforced! Wait for "
                    result " s before submitting again."))
-          ((setf result (client-flood-p aux ip current-time *flood-table*))
+          ((setf result (client-flood-p options ip current-time *flood-table*))
            (format nil "~@{~a~}" "Client post interval enforced! Wait for "
                    result " s before submitting again.")))))
 
@@ -376,14 +376,14 @@
 
 (defun post-response (directory)
   "Process submitted post form."
-  (let* ((aux (read-aux directory))
+  (let* ((options (read-options directory))
          (ip (real-ip))
          (current-time (get-universal-time))
          (title (or (from-post "title") ""))
          (name (or (from-post "name") ""))
          (code (or (from-post "code") ""))
          (token (or (from-post "token") ""))
-         (reject (reject-post-p aux ip current-time title name code token)))
+         (reject (reject-post-p options ip current-time title name code token)))
     (if reject
         (reject-post title name code reject)
         (process-post ip current-time directory title name code))))

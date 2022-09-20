@@ -335,40 +335,40 @@ Bar"))
   (assert (dodgy-content-p '(:block ("foo" "bar" "baz")) "" "foobarbaz" ""))
   (assert (dodgy-content-p '(:block ("foo" "bar" "baz")) "" "" "foobarbaz")))
 
-(test-case client-flood-p-no-aux
+(test-case client-flood-p-no-options
   (let ((table (make-hash-table :test #'equal)))
     (assert (not (client-flood-p nil "ip1" 1000 table)))))
 
 (test-case client-flood-p-no-interval
   (let ((table (make-hash-table :test #'equal))
-        (aux '(:client-post-interval nil)))
-    (assert (not (client-flood-p aux "ip1" 1000 table)))))
+        (options '(:client-post-interval nil)))
+    (assert (not (client-flood-p options "ip1" 1000 table)))))
 
 (test-case client-flood-p-one-client
   (let ((table (make-hash-table :test #'equal))
-        (aux '(:client-post-interval 10)))
-    (assert (not (client-flood-p aux "ip1" 1000 table)))
+        (options '(:client-post-interval 10)))
+    (assert (not (client-flood-p options "ip1" 1000 table)))
     (setf (gethash "ip1" table) 1000)
-    (assert (= (client-flood-p aux "ip1" 1001 table) 9))
-    (assert (= (client-flood-p aux "ip1" 1005 table) 5))
-    (assert (= (client-flood-p aux "ip1" 1009 table) 1))
-    (assert (not (client-flood-p aux "ip1" 1010 table)))))
+    (assert (= (client-flood-p options "ip1" 1001 table) 9))
+    (assert (= (client-flood-p options "ip1" 1005 table) 5))
+    (assert (= (client-flood-p options "ip1" 1009 table) 1))
+    (assert (not (client-flood-p options "ip1" 1010 table)))))
 
 (test-case client-flood-p-two-clients
   (let ((table (make-hash-table :test #'equal))
-        (aux '(:client-post-interval 10)))
-    (assert (not (client-flood-p aux "ip1" 1000 table)))
-    (assert (not (client-flood-p aux "ip2" 1003 table)))
+        (options '(:client-post-interval 10)))
+    (assert (not (client-flood-p options "ip1" 1000 table)))
+    (assert (not (client-flood-p options "ip2" 1003 table)))
     (setf (gethash "ip1" table) 1000)
     (setf (gethash "ip2" table) 1003)
-    (assert (= (client-flood-p aux "ip1" 1001 table) 9))
-    (assert (= (client-flood-p aux "ip1" 1005 table) 5))
-    (assert (= (client-flood-p aux "ip1" 1009 table) 1))
-    (assert (not (client-flood-p aux "ip1" 1010 table)))
-    (assert (= (client-flood-p aux "ip2" 1001 table) 12))
-    (assert (= (client-flood-p aux "ip2" 1005 table) 8))
-    (assert (= (client-flood-p aux "ip2" 1009 table) 4))
-    (assert (not (client-flood-p aux "ip2" 1013 table)))))
+    (assert (= (client-flood-p options "ip1" 1001 table) 9))
+    (assert (= (client-flood-p options "ip1" 1005 table) 5))
+    (assert (= (client-flood-p options "ip1" 1009 table) 1))
+    (assert (not (client-flood-p options "ip1" 1010 table)))
+    (assert (= (client-flood-p options "ip2" 1001 table) 12))
+    (assert (= (client-flood-p options "ip2" 1005 table) 8))
+    (assert (= (client-flood-p options "ip2" 1009 table) 4))
+    (assert (not (client-flood-p options "ip2" 1013 table)))))
 
 (test-case reject-post-p-not
   (clrhash *flood-table*)
@@ -396,15 +396,15 @@ Bar"))
 
 (test-case reject-post-p-client-post-interval
   (clrhash *flood-table*)
-  (let ((aux '(:client-post-interval 10))
+  (let ((options '(:client-post-interval 10))
         (x (write-to-string (calc-token 123)))
         (msg (format nil "~@{~a~}" "Client post interval enforced! "
                      "Wait for ~a s before submitting again.")))
-    (assert (not (reject-post-p aux "ip1" 1000 "foo" "bar" "baz" x)))
+    (assert (not (reject-post-p options "ip1" 1000 "foo" "bar" "baz" x)))
     (setf (gethash "ip1" *flood-table*) 1000)
-    (assert (string= (reject-post-p aux "ip1" 1000 "foo" "bar" "baz" x)
+    (assert (string= (reject-post-p options "ip1" 1000 "foo" "bar" "baz" x)
                      (format nil msg 10)))
-    (assert (string= (reject-post-p aux "ip1" 1001 "foo" "bar" "baz" x)
+    (assert (string= (reject-post-p options "ip1" 1001 "foo" "bar" "baz" x)
                      (format nil msg 9)))))
 
 ;; End test cases.
