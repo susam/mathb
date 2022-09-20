@@ -42,7 +42,7 @@ window.onload = function () {
   }
 
   function sanitizeHTML(html) {
-    if (slug <= 10) {
+    if (slug < 10) {
       return html
     }
     const div = document.createElement('div')
