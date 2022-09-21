@@ -259,8 +259,10 @@
                  (list (cons "b" "ball") (cons "a" "apple"))))
   (assert (equal (parse-headers (format nil "a: apple~%b: ball~%"))
                  (list (cons "b" "ball") (cons "a" "apple"))))
-  (assert (equal (parse-headers (format nil "a: ~%"))
+  (assert (equal (parse-headers (format nil "a:~%"))
                  (list (cons "a" ""))))
+  (assert (equal (parse-headers (format nil "a:~%b:~%c: cat~%"))
+                 (list (cons "c" "cat") (cons "b" "") (cons "a" ""))))
   (assert (equal (parse-headers (format nil "a: ~%b: ~%c: cat~%"))
                  (list (cons "c" "cat") (cons "b" "") (cons "a" "")))))
 
@@ -295,7 +297,7 @@ Bar"))
 
 (test-case make-text
   (assert (string= (make-text "" "" "" "")
-                   (format nil "Date: ~%Title: ~%Name: ~%~%~%")))
+                   (format nil "Date:~%Title:~%Name:~%~%~%")))
   (assert (string= (make-text "date" "title" "name" "body")
                    (format nil "Date: date~%Title: title~%Name: name~%~%body~%")))
   (assert (string= (make-text "date" "  title  " "  name  " "  body  ")

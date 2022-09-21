@@ -194,8 +194,9 @@
       (let* ((sep-index (search ":" head :start2 next-index))
              (end-index (search (format nil "~%") head :start2 sep-index))
              (key (subseq head next-index sep-index))
-             (val (subseq head (+ 2 sep-index) end-index)))
-        (push (cons key val) headers)
+             (tail (subseq head (1+ sep-index) end-index))
+             (value (if (string= tail "") "" (subseq tail 1))))
+        (push (cons key value) headers)
         (setf next-index (1+ end-index))
         (when (= next-index (length head))
           (return))))
@@ -222,12 +223,16 @@
       (unlock directory)
       (format nil "~a" slug))))
 
+(defun format-header-value (s)
+  "Format header value to make is suitable for writing to text file."
+  (if (string= s "") "" (format nil " ~a" s)))
+
 (defun make-text (date title name code)
   "Convert post fields to text to be written to post file."
-  (format nil "Date: ~a~%Title: ~a~%Name: ~a~%~%~a~%"
-          (string-trim-whitespace date)
-          (string-trim-whitespace title)
-          (string-trim-whitespace name)
+  (format nil "Date:~a~%Title:~a~%Name:~a~%~%~a~%"
+          (format-header-value (string-trim-whitespace date))
+          (format-header-value (string-trim-whitespace title))
+          (format-header-value (string-trim-whitespace name))
           (string-trim-whitespace code)))
 
 (defun render-html (html date title name code error)

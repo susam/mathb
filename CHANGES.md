@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.1.0 (UNRELEASED)
+------------------
+
+### Changed
+
+- An empty header value in post text file no longer has a trailing space.
+
 
 1.0.0 (2022-09-20)
 ------------------
