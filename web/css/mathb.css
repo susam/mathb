@@ -46,18 +46,18 @@ textarea {
   box-sizing: border-box;
   display: block;
   width: 100%;
-  padding: 0.5em;
-  min-height: 5em;
+  padding: 0.5rem;
+  min-height: 10rem;
 }
 #view {
   box-sizing: border-box;
-  min-height: calc(100vh - 32em);
+  min-height: calc(100vh - 38em);
 }
 input {
   box-sizing: border-box;
   display: block;
   width: 100%;
-  padding: 0.5em;
+  padding: 0.5rem;
   margin-top: 1rem;
 }
 #submit, #copy {
@@ -126,9 +126,6 @@ noscript, #error {
     width: 50%;
     text-align: right;
   }
-  footer nav {
-    display: none;
-  }
   form, #output {
     display: inline-block;
     box-sizing: border-box;
@@ -136,12 +133,10 @@ noscript, #error {
     vertical-align: top;
   }
   textarea {
-    min-height: calc(100vh - 18.5rem);
-  }
-  form {
-    margin-right: 1em;
+    min-height: calc(100vh - 19rem);
   }
   #output {
+    margin-left: 1em;
     margin-top: 0em;
   }
   #url {
