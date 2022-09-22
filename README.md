@@ -1,15 +1,12 @@
 MathB
 =====
 
-MathB is a mathematics pastebin software that powers
-[MathB.in](https://mathb.in/). It is a web-based service meant for
-sharing snippets of mathematical text with others on the world wide
-web. This software and the website was born out of a one night hack on
-Sunday, March 25, 2012. It was initially written in PHP and then later
-rewritten in Common Lisp.
+MathB is a mathematics pastebin software that powers [MathB.in]. It is
+a web-based service meant for sharing snippets of mathematical text
+with others on the world wide web. Visit https://mathb.in/ to use the
+mathematics pastebin.
 
-Visit https://mathb.in/ to use the mathematics pastebin.
-
+[MathB.in]: https://mathb.in/
 
 Contents
 --------
@@ -21,6 +18,7 @@ Contents
 * [Templates Files](#template-files)
 * [Static Files](#static-files)
 * [Live Directory](#live-directory)
+* [History](#history)
 * [License](#license)
 * [Support](#support)
 * [Channels](#channels)
@@ -294,6 +292,60 @@ The live directory should never be modified directly because every
 `make live` run deletes the entire directory and creates it from
 scratch again. Any modification necessary should be made to the
 template files or static files explained in the previous two sections.
+
+
+History
+-------
+
+[MathB.in] is the oldest mathematics pastebin that is still online and
+serving its community of users. It isn't the first mathematics
+pastebin though. It's the second. The first pastebin was written by
+Mark A. Stratman. It was hosted at the domain `mathbin.net`
+until 2020. It was very popular in the `#math` and `#physics` channels
+on IRC networks between 2005 and 2013. It did not have live preview.
+It used an actual LaTeX system for rendering mathematical formulas
+into images, so the output was of great quality. It served IRC users
+very well for sharing problems and solutions quickly with each other.
+
+MathB.in was born on Sunday, 25 March 2012, after a single night of
+furious coding in PHP. The previous night, I happened to stumble upon
+[math.stackexchange.com] and I noticed that it seemed to have a decent
+LaTeX support. As I dove deeper into the HTML source code of the pages
+of this website, I realized that the rendered LaTeX was not made of
+image files. They were rendered as text with quite complicated styling
+done with CSS to make the rendered mathematics formula look as good as
+a PDF rendered by an actual LaTeX system. On further investigation I
+realized that this Stack Exchange website was using [MathJax] to
+produce high-quality typography from LaTeX code. As a frequent
+participant in the `#math` channels on various IRC networks, I
+immediately realized that using MathJax would lead to a modern
+mathematics pastebin with live preview and beautiful mathematics
+rendering right within the web browser without requiring a LaTeX
+system in the backend.
+
+Thanks to that chance encounter with MathJax, I spent the rest of the
+Saturday night coding a new mathematics pastebin using MathJax and
+PHP. After coding all through the night, registering a new domain
+name, and setting up a website, [MathB.in] was released early Sunday
+morning. I shared the link to the website with some of my friends who
+were fond of sharing mathematics puzzles and solutions. They shared
+the link with their similar friends and it got about a dozen faithful
+users pretty quickly. Since then word about the website spread to
+various IRC communities and it soon became popular too.
+
+The website of the original mathematics pastebin at `mathbin.net`
+disappeared sometime in 2020. [MathB.in] itself has been through some
+changes in all these years. MathB.in was rewritten in Common Lisp.
+Support for GitHub Flavoured Markdown (GFM) was added. The [TeXMe]
+renderer was introduced to robustly parse and render a mix of Markdown
+and LaTeX. Despite these changes and improvements, the user interface
+has remained mostly the same except for minor improvements like adding
+support for dark colour scheme and adding a rudimentary user interface
+layout for small screen devices.
+
+[math.stackexchange.com]: https://math.stackexchange.com/
+[MathJax]: https://www.mathjax.org/
+[TeXMe]: https://github.com/susam/texme
 
 
 License
