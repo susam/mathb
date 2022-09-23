@@ -4,4 +4,5 @@
  :max-name-length 120
  :global-post-interval 0
  :client-post-interval 60
- :block ("berk" "naff" "xxx"))
+ :block ("berk" "naff" "xxx")
+ :ban ())

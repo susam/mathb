@@ -63,6 +63,11 @@
     (apply #'format t fmt args)
     (terpri)))
 
+(defun string-starts-with (prefix string)
+  "Test that string starts with the given prefix."
+  (and (<= (length prefix) (length string))
+       (string= prefix string :end2 (length prefix))))
+
 (defun string-replace (old new string)
   "Replace non-empty old substring in string with new substring."
   (with-output-to-string (s)
@@ -313,6 +318,17 @@
          (xx (calc-token a)))
     (or (< x 123) (/= x xx))))
 
+(defun dodgy-ip-p (options ip)
+  "Check if given IP address is not allowed to post."
+  (let ((prefixes (getf options :ban))
+        (formatted-ip (format nil "~a$" ip))
+        (result))
+    (dolist (prefix prefixes)
+      (when (string-starts-with prefix formatted-ip)
+        (setf result ip)
+        (return)))
+    result))
+
 (defun global-flood-p (options current-time last-post-time)
   "Compute number of seconds before next post will be accepted."
   (let* ((post-interval (getf options :global-post-interval 0))
@@ -353,6 +369,8 @@
            "Dodgy content!")
           ((dodgy-post-p token)
            "Dodgy post!")
+          ((setf result (dodgy-ip-p options ip))
+           (format nil "IP address ~a is banned!" result))
           ((setf result (global-flood-p options current-time *last-post-time*))
            (format nil "~@{~a~}" "Global post interval enforced! Wait for "
                    result " s before submitting again."))

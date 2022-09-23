@@ -4,9 +4,13 @@ Changelog
 1.1.0 (UNRELEASED)
 ------------------
 
+### Added
+
+- Runtime property `:ban` to reject posts from specific IP addresses.
+
 ### Changed
 
-- An empty header value in post text file no longer has a trailing space.
+- Empty header value in post text file no longer has a trailing space.
 
 
 1.0.0 (2022-09-20)
@@ -17,6 +21,7 @@ Changelog
 - The first major release of MathB since 2012.
 - Common Lisp source code is made available in this release.
 - Dark colour scheme for clients that prefer dark colour scheme.
+- Responsive layout to adapt the user interface to narrow screens.
 - Use TeXMe to render Markdown + LaTeX.
 - Add post interval features to control flooding.
 - Control runtime behaviour with `opt.lisp`.

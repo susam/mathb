@@ -115,6 +115,15 @@
 (test-case write-log
   (write-log "~a, ~a" "hello" "world"))
 
+(test-case string-starts-with
+  (assert (eq (string-starts-with "" "") t))
+  (assert (eq (string-starts-with "foo" "foo") t))
+  (assert (eq (string-starts-with "foo" "foobar") t))
+  (assert (eq (string-starts-with "foo" "bazfoobar") nil))
+  (assert (eq (string-starts-with "foo" "fo") nil))
+  (assert (eq (string-starts-with "foo" "fox") nil))
+  (assert (eq (string-starts-with "foo" "foO") nil)))
+
 (test-case string-replace-single
   (assert (string= (string-replace "foo" "foo" "foo") "foo"))
   (assert (string= (string-replace "foo" "bar" "") ""))
@@ -337,6 +346,21 @@ Bar"))
   (assert (dodgy-content-p '(:block ("foo" "bar" "baz")) "" "foobarbaz" ""))
   (assert (dodgy-content-p '(:block ("foo" "bar" "baz")) "" "" "foobarbaz")))
 
+(test-case dodgy-ip-p
+  (assert (not (dodgy-ip-p nil "ip1")))
+  (assert (not (dodgy-ip-p '(:ban nil) "ip1")))
+  (assert (not (dodgy-ip-p '(:ban ("ip1$")) "ip12")))
+  (assert (not (dodgy-ip-p '(:ban ("ip2")) "ip1")))
+  (assert (not (dodgy-ip-p '(:ban ("ip2" "ip3")) "ip1")))
+  (assert (not (dodgy-ip-p '(:ban ("ip1" "ip2")) "xip123")))
+  (assert (string= (dodgy-ip-p '(:ban ("ip1")) "ip1") "ip1"))
+  (assert (string= (dodgy-ip-p '(:ban ("ip1$")) "ip1") "ip1"))
+  (assert (string= (dodgy-ip-p '(:ban ("ip1")) "ip12") "ip12"))
+  (assert (string= (dodgy-ip-p '(:ban ("ip1")) "ip123") "ip123"))
+  (assert (string= (dodgy-ip-p '(:ban ("ip1" "ip2" "ip3$")) "ip1") "ip1"))
+  (assert (string= (dodgy-ip-p '(:ban ("ip1" "ip2" "ip3$")) "ip2") "ip2"))
+  (assert (string= (dodgy-ip-p '(:ban ("ip1" "ip2" "ip3$")) "ip3") "ip3")))
+
 (test-case client-flood-p-no-options
   (let ((table (make-hash-table :test #'equal)))
     (assert (not (client-flood-p nil "ip1" 1000 table)))))
@@ -381,20 +405,26 @@ Bar"))
 (test-case reject-post-p-read-only
   (clrhash *flood-table*)
   (let ((x (write-to-string (calc-token 123))))
-    (assert (string= (reject-post-p '(:read-only t) 0 "ip1" "foo" "bar" "baz" x)
+    (assert (string= (reject-post-p '(:read-only t) "ip1" 0 "foo" "bar" "baz" x)
                      "New posts have been disabled temporarily!"))))
 
 (test-case reject-post-p-empty
   (clrhash *flood-table*)
   (let ((x (write-to-string (calc-token 123))))
-    (assert (string= (reject-post-p nil 0 "ip1" "foo" "bar" "" x)
+    (assert (string= (reject-post-p nil "ip1" 0 "foo" "bar" "" x)
                      "Empty content!"))))
 
 (test-case reject-post-p-words
   (clrhash *flood-table*)
   (let ((x (write-to-string (calc-token 123))))
-    (assert (string= (reject-post-p '(:block ("xy")) 0 "ip1" "xy" "yz" "zx" x)
+    (assert (string= (reject-post-p '(:block ("xy")) "ip1" 0 "xy" "yz" "zx" x)
                      "Dodgy content!"))))
+
+(test-case! reject-post-p-ban
+  (clrhash *flood-table*)
+  (let ((x (write-to-string (calc-token 123))))
+    (assert (string= (reject-post-p '(:ban ("ip1")) "ip1xy" 0 "xy" "yz" "zx" x)
+                     "IP address ip1xy is banned!"))))
 
 (test-case reject-post-p-client-post-interval
   (clrhash *flood-table*)
