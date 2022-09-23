@@ -4,8 +4,15 @@ server {
     listen [::]:80;
     server_name mathb.in mathb;
     location / {
-        proxy_set_header X-Forwarded-For $remote_addr;
         proxy_pass http://127.0.0.1:4242;
+        proxy_pass_request_headers off;
+        proxy_set_header Accept $http_accept;
+        proxy_set_header Content-Length $http_content_length;
+        proxy_set_header Content-Type $http_content_type;
+        proxy_set_header If-Modified-Since $http_if_modified_since;
+        proxy_set_header Referer $http_referer;
+        proxy_set_header User-Agent $http_user_agent;
+        proxy_set_header X-Forwarded-For $remote_addr;
     }
 }
 
