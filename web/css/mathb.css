@@ -88,6 +88,9 @@ footer div {
 footer nav, footer nav + p {
   text-align: center;
 }
+footer nav a {
+  line-height: 2.5em;
+}
 header nav a, footer nav a {
   margin-right: 2em;
 }
