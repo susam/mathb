@@ -312,7 +312,7 @@
 
 (defun dodgy-post-p (token)
   "Check if post content contains invalid token."
-  (let* ((digits (every #'digit-char-p token))
+  (let* ((digits (and (string/= token "") (every #'digit-char-p token)))
          (x (if digits (parse-integer token) 0))
          (a (floor x 1000000))
          (xx (calc-token a)))
