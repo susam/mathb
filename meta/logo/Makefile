@@ -16,7 +16,7 @@ favicon:
 	ls -l favicon*png favicon.ico
 
 dist:
-	cp favicon.png favicon.ico ../static/
+	cp favicon.png favicon.ico ../../web/img/
 
 deps:
 	if command -v brew; then brew install --cask imageoptim; fi
