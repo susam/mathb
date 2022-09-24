@@ -7,10 +7,13 @@ Changelog
 ### Added
 
 - Runtime property `:ban` to reject posts from specific IP addresses.
+- Nginx configuration to work around Hunchentoot memory leakage issue.
+
 
 ### Changed
 
 - Empty header value in post text file no longer has a trailing space.
+- Table rows disappearing from rendered output.
 
 
 1.0.0 (2022-09-20)

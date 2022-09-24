@@ -17,7 +17,7 @@ window.onload = function () {
     "#text", "blockquote", "br", "code", "div", "em",
     "h1", "h2", "h3", "h4", "h5", "h6",
     "hr", "li", "ol", "p", "pre", "strong",
-    "table", "tbody", "td", "tfoot", "th", "thead", "ul"
+    "table", "tbody", "td", "tfoot", "th", "thead", "tr", "ul"
   ]
 
   function removeMarkup(s) {
