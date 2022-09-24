@@ -32,60 +32,60 @@ This section explains how to run MathB locally. The steps assume a
 macOS, Debian, or Debian-based Linux distribution.
 
  1. Install SBCL and Git.
- 
+
     On macOS, enter the following command if you have Homebrew:
-    
+
     ```sh
     brew install sbcl git
     ```
-    
+
     On Debian, Ubuntu, or another Debian-based Linux system, enter the
     following command:
-    
+
     ```sh
     sudo apt-get update && sudo apt-get install sbcl git
     ```
-    
+
  2. Install Quicklisp with the following commands:
- 
+
     ```sh
     curl -O https://beta.quicklisp.org/quicklisp.lisp
     sbcl --load quicklisp.lisp --eval "(quicklisp-quickstart:install)" --quit
     sbcl --load ~/quicklisp/setup.lisp --eval "(ql:add-to-init-file)" --quit
     ```
-    
+
  3. From here on, we assume that all commands are being run in the
     top-level directory of this project. Set up dependencies necessary
     to run MathB by running this command within the top-level
     directory of this project:
- 
+
     ```sh
     make live
     ```
-    
+
     This creates a `_live` directory within the current directory and
     copies all necessary dependencies to it.
-    
+
  4. Create MathB data directory:
- 
+
     ```sh
     sudo mkdir -p /opt/data/mathb/
     sudo cp -R meta/data/* /opt/data/mathb/
     sudo chown -R "$USER" /opt/data/mathb/
     ```
-    
+
     By default, MathB reads post data from and writes post to
     `/opt/data/mathb/`. The next section explains how to make MathB
     use a custom data directory path.
- 
+
  4. Run MathB with the following command:
- 
+
     ```sh
     sbcl --load mathb.lisp
     ```
-    
+
  5. Visit http://localhost:4242/ with a web browser to use MathB.
- 
+
 After starting MathB in this manner, click on the various navigation
 links and make a new post to confirm that MathB is working as
 expected.
@@ -101,20 +101,20 @@ the data directory, set the variable named `*data-directory*` before
 loading MathB. The following steps explain how to do this:
 
  1. Create MathB data directory at a custom path, say, at `~/data`:
- 
+
     ```sh
     mkdir -p ~/data/
     cp -R meta/data/* ~/data/
     ```
-    
+
  2. Run MathB with the following command:
- 
+
     ```sh
     sbcl --eval '(defvar *data-directory* "~/data/")' --load mathb.lisp
     ```
-    
+
  3. Visit http://localhost:4242/ with a web browser to use MathB.
- 
+
 After starting MathB in this manner, click on the various navigation
 links and make a new post to confirm that MathB is working as
 expected.
@@ -128,14 +128,14 @@ The data directory contains the following files:
  - `opt.lisp`: This file contains a property list that can be modified
    to alter the behaviour of MathB. This is explained in detail in the
    next section.
-   
+
  - `slug.txt`: This file contains the ID of the latest post
    successfully saved.
-   
+
  - `post/X/Y/*.txt`: These files contain the actual posts submitted by
    users where `X` and `Y` are placeholders for two integers explained
    shortly. Each `.txt` file contains a post submitted by a user.
-   
+
 In the last point, the placeholder `X` is the post ID divided
 by 1000000. The placeholder `Y` is the post ID divided by 1000. For
 example, for a post with ID 1, `X` is `0` and `Y` is `0`, so a post
@@ -165,22 +165,20 @@ provided below.
     read-only mode, i.e., old posts can be viewed but new posts cannot
     be made. A value of `nil` makes MathB run normally in read-write
     mode.
-    
-    Example: If this value is `t`, new posts are rejected.
-    
+
   - `:max-title-length` (default is `120`): The maximum number of
     characters allowed in the title field.
-    
+
   - `:max-name-length` (default is `120`): The maximum number of
     characters allowed in the name field.
-    
+
   - `:max-code-length` (default is `10000`): The maximum number of
     characters allowed in the code field.
-  
+
   - `:global-post-interval` (default is `0`): The minimum interval (in
     seconds) between two consecutive successful posts allowed on
     MathB.
-    
+
     Example: If this value is `10` and one client submits a new post
     at 10:00:00 and another client submits a post at 10:00:07, the
     post of the second client is rejected with an error message that
@@ -188,29 +186,48 @@ provided below.
     attempt to submit the post at 10:00:10 or later would succeed,
     provided that no other client submitted another post between
     10:00:10 and the second client's attempt to make a post.
-    
+
   - `:client-post-interval` (default is `0`): The minimum interval (in
     seconds) between two consecutive successful posts allowed from the
     same client.
-    
+
     Example: If this value is `10` and one client submits a new post
-    at 10:00:00, then the same client is be allowed to make the next
+    at 10:00:00, then the same client is allowed to make the next
     successful post submission at 10:00:10 or later. If the same
     client submits another post at 10:00:07, the post is rejected with
     an error message that they must wait for 3 more seconds before
     submitting the post. This does not affect the posting behaviour
     for other clients. For example, another client can successfully
-    submit their post at 10:00:07 while the first client could not.
-    
+    submit their post at 10:00:07 while the first client cannot.
+
   - `:block` (default is `nil`): A list of strings that are not
     allowed in a post. If a post contains any string in this list, the
     post is rejected and the input form is returned intact to the
     client.
-    
+
     Example: If this value is `("berk" "naff" "xxx")` and a client
     posts content which contains the string `xxx` in any field (code,
     title, or name), the post is rejected.
-    
+
+  - `:ban` (default is `nil`): A list of IPv4 or IPv6 address
+    prefixes. If the address of the remote client (as it appears in
+    the MathB logs) matches any prefix in this list, the post from the
+    client is rejected. The prefixes must be expressed as simple
+    string literals. CIDRs, globs, regular expressions, etc. are not
+    supported. A dollar sign (`$`) at the end of a prefix string
+    matches the end of the client's address string.
+
+    Example: Let us consider a value of `("10.1." "10.2.0.2"
+    "10.3.0.2$")` for this property. If a client from IP address
+    `10.1.2.3` submits a post, it is rejected because the prefix
+    `10.1.` matches this IP address. If a client from IP address
+    `10.2.0.23` submits a post, it is rejected because the prefix
+    `10.2.0.2` matches this IP address. If a client from IP address
+    `10.3.0.2` submits a post, it is rejected because the prefix
+    `10.3.0.2$` matches this IP address. If a client from IP address
+    `10.3.0.23` submits a post, it is accepted because none of the
+    prefixes match this IP address.
+
 If a property name is missing from this file or if the file itself is
 missing, then MathB defaults to the default value of the property
 mentioned within parentheses above.
@@ -236,7 +253,7 @@ clients:
     generate the HTML response for the home page, a mathematical
     snippet page, as well as an HTTP response page when the post is
     rejected due to a validation error.
-  
+
   - [web/error.html](web/error.html): This template file is used to
     generate HTTP error pages.
 
@@ -255,7 +272,7 @@ pages:
   - [web/js/](web/js): This directory contains the JavaScript files
     that perform input rendering as a user types out content in the
     input form.
-    
+
   - [web/css/](web/css): This directory contains the stylesheets for
     the HTML pages generated by MathB.
 
