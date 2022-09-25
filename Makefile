@@ -113,7 +113,15 @@ push:
 	git push
 
 web: FORCE
-	ssh -t mathb.in "cd /opt/mathb.in/ && sudo git pull && sudo make live && sudo systemctl restart nginx mathb && sudo systemctl --no-pager status nginx mathb"
+	ssh -t mathb.in "cd /opt/mathb.in/ && sudo make update-web"
+
+update-web:
+	git pull
+	cp meta/data/post/0/0/*.txt /opt/data/mathb/post/0/0/
+	chown -R www-data:www-data meta/data/post/0/0/*.txt
+	make live
+	systemctl restart nginx mathb
+	systemclt --no-pager status nginx mathb
 
 data:
 	sudo mkdir -p /opt/data/mathb/
