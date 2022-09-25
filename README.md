@@ -264,7 +264,7 @@ clients:
 
 A template file may be modified at any time, even while MathB is
 running. It is not necessary to restart MathB after changing a
-template file. MathB automtaically picks up the template changes while
+template file. MathB automatically picks up the template changes while
 processing the next HTTP request.
 
 [`web/html/mathb.html`]: web/html/mathb.html
@@ -330,52 +330,24 @@ History
 [MathB.in] is the oldest mathematics pastebin that is still online and
 serving its community of users. It isn't the first mathematics
 pastebin though. It's the second. The first pastebin was written by
-Mark A. Stratman. It was hosted at the domain `mathbin.net`
-until 2020. It was very popular in the `#math` and `#physics` channels
-on IRC networks between 2005 and 2013. It did not have live preview.
-It used an actual LaTeX system for rendering mathematical formulas
-into images, so the output was of great quality. It served IRC users
-very well for sharing problems and solutions quickly with each other.
+Mark A. Stratman. It was hosted at the domain *mathbin.net* until
+2020.
 
 MathB.in was born on Sunday, 25 March 2012, after a single night of
-furious coding in PHP. The previous night, I happened to stumble upon
-[math.stackexchange.com] and I noticed that it seemed to have a decent
-LaTeX support. As I dove deeper into the HTML source code of the pages
-of this website, I realized that the rendered LaTeX was not made of
-image files. They were rendered as text with quite complicated styling
-done with CSS to make the rendered mathematics formula look as good as
-a PDF rendered by an actual LaTeX system. On further investigation I
-realized that this Stack Exchange website was using [MathJax] to
-produce high-quality typography from LaTeX code. As a frequent
-participant in the `#math` channels on various IRC networks, I
-immediately realized that using MathJax would lead to a modern
-mathematics pastebin with live preview and beautiful mathematics
-rendering right within the web browser without requiring a LaTeX
-system in the backend.
+furious coding. This was a result of stumbling upon
+[math.stackexchange.com] the previous night which used MathJax to
+render mathematics formula on the web browser. Thanks to that chance
+encounter with MathJax, the rest of the Saturday night was spent in
+coding a new mathematics pastebin using MathJax and PHP. After coding
+all through the night, registering a new domain name, and setting up a
+website, [MathB.in] was released early Sunday morning.
 
-Thanks to that chance encounter with MathJax, I spent the rest of the
-Saturday night coding a new mathematics pastebin using MathJax and
-PHP. After coding all through the night, registering a new domain
-name, and setting up a website, [MathB.in] was released early Sunday
-morning. I shared the link to the website with some of my friends who
-were fond of sharing mathematics puzzles and solutions. They shared
-the link with their similar friends and it got about a dozen faithful
-users pretty quickly. Since then word about the website spread to
-various IRC communities and it soon became popular too.
-
-The website of the original mathematics pastebin at `mathbin.net`
-disappeared sometime in 2020. [MathB.in] itself has been through some
-changes in all these years. MathB.in was rewritten in Common Lisp.
-Support for GitHub Flavoured Markdown (GFM) was added. The [TeXMe]
-renderer was introduced to robustly parse and render a mix of Markdown
-and LaTeX. Despite these changes and improvements, the user interface
-has remained mostly the same except for minor improvements like adding
-support for dark colour scheme and adding a rudimentary user interface
-layout for small screen devices.
+The current version of MathB.in no longer runs on PHP. It has been
+rewritten in Common Lisp since then. See the blog post [MathB.in Turns
+10] for more details about the history of MathB.in.
 
 [math.stackexchange.com]: https://math.stackexchange.com/
-[MathJax]: https://www.mathjax.org/
-[TeXMe]: https://github.com/susam/texme
+[MathB.in Turns 10]: https://susam.net/blog/mathbin-turns-10.html
 
 
 License

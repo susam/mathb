@@ -90,7 +90,6 @@ MathB.in is powered by the following software:
 - [Marked](https://github.com/markedjs/marked)
 - [Nginx](https://www.nginx.com/)
 - [Debian GNU/Linux](https://www.debian.org/)
-- [Linode](https://www.linode.com/)
 
 
 Bug Reports and Suggestions
