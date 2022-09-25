@@ -107,21 +107,26 @@ checkroot:
 	[ $$(id -u) = 0 ]
 	@echo Done; echo
 
-pub: push web
-
-push:
+pub:
 	git push
+	ssh -t mathb.in "cd /opt/mathb.in/ && sudo make live-update"
 
-web: FORCE
-	ssh -t mathb.in "cd /opt/mathb.in/ && sudo make update-web"
+force-pub:
+	git push -f
+	ssh -t mathb.in "cd /opt/mathb.in/ && sudo make live-reset-update"
 
-update-web:
+live-reset-update: live-reset live-update
+
+live-reset:
+	git reset --hard HEAD~5
+
+live-update:
 	git pull
 	cp meta/data/post/0/0/*.txt /opt/data/mathb/post/0/0/
 	chown -R www-data:www-data meta/data/post/0/0/*.txt
 	make live
 	systemctl restart nginx mathb
-	systemclt --no-pager status nginx mathb
+	systemctl --no-pager status nginx mathb
 
 data:
 	sudo mkdir -p /opt/data/mathb/
