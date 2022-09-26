@@ -279,12 +279,17 @@
   (render-html (read-file "web/html/mathb.html") "" title name code
                (format nil "<div id=\"error\">ERROR: ~a</div>" reason)))
 
-(defun process-post (ip current-time directory title name code)
+(defun process-post (options ip current-time directory title name code)
   "Process post and either accept it or reject it."
   (let ((slug (increment-slug directory)))
-    (if slug
-        (accept-post ip current-time directory slug title name code)
-        (reject-post title name code "Internal error! Cannot acquire lock!"))))
+    (cond ((not slug)
+           (reject-post title name code
+                        "Internal error! Cannot acquire lock!"))
+          ((<= (parse-integer slug) (getf options :protect 0))
+           (reject-post title name code
+                        (format nil "Internal error! Invalid slug ~a!" slug)))
+          (t
+           (accept-post ip current-time directory slug title name code)))))
 
 
 ;;; Validators
@@ -409,7 +414,7 @@
          (reject (reject-post-p options ip current-time title name code token)))
     (if reject
         (reject-post title name code reject)
-        (process-post ip current-time directory title name code))))
+        (process-post options ip current-time directory title name code))))
 
 (defun define-handlers ()
   "Define handlers for HTTP requests"

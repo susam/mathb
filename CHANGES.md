@@ -7,6 +7,7 @@ Changelog
 ### Added
 
 - Runtime property `:ban` to reject posts from specific IP addresses.
+- Runtime property `:protect` to protect posts in case of data corruption.
 - Nginx configuration to work around Hunchentoot memory leakage issue.
 
 

@@ -233,6 +233,27 @@ provided below.
     `10.3.0.23` submits a post, it is accepted because none of the
     prefixes match this IP address.
 
+  - `:protect` (default is `0`): The maximum ID of protected posts. If
+    MathB determines that the post ID of the next post is less than or
+    equal to this value, then it rejects the post. Setting this
+    property is almost never required. However, it is provided for
+    paranoid administrators of MathB who might worry what would happen
+    if the data file `slug.txt` ever becomes corrupt. This property
+    ensures that in case this data file ever becomes corrupt, MathB
+    would never ever overwrite older posts with IDs less than or equal
+    to the number set for this property.
+
+    Example: Let us assume that the current value in `slug.txt`
+    is 1200. Now normally, the next time a client submits a new post,
+    their post would be saved with an ID of 1201 and the value in
+    `slug.txt` would be incremented to 1201. But instead, let us
+    assume that due to an unforeseen scenario (say, a bug in MathB or
+    a hardware failure), the value in `slug.txt` is corrupted to `12`.
+    With a value of `0` for `:protect`, MathB would overwrite an
+    existing post at `post/0/0/12.txt`. However, with a value of say,
+    `100` for `:protect`, MathB would refuse to overwrite the existing
+    port.
+
 If a property name is missing from this file or if the file itself is
 missing, then MathB defaults to the default value of the property
 mentioned within parentheses above.
