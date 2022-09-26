@@ -213,13 +213,35 @@
   (assert (not (home-request-p (make-mock-request :head "/foo"))))
   (assert (not (home-request-p (make-mock-request :post "/foo")))))
 
+(test-case meta-request-p
+  (assert (meta-request-p (make-mock-request :get "/0")))
+  (assert (meta-request-p (make-mock-request :head "/0")))
+  (assert (not (meta-request-p (make-mock-request :post "/0"))))
+  (assert (not (meta-request-p (make-mock-request :get "/"))))
+  (assert (not (meta-request-p (make-mock-request :head "/"))))
+  (assert (not (meta-request-p (make-mock-request :post "/"))))
+  (assert (not (meta-request-p (make-mock-request :get "/-1"))))
+  (assert (not (meta-request-p (make-mock-request :head "/-1"))))
+  (assert (not (meta-request-p (make-mock-request :post "/-1"))))
+  (assert (not (meta-request-p (make-mock-request :get "/123"))))
+  (assert (not (meta-request-p (make-mock-request :post "/123"))))
+  (assert (not (meta-request-p (make-mock-request :post "/123")))))
+
 (test-case math-request-p
+  (assert (math-request-p (make-mock-request :get "/1")))
+  (assert (math-request-p (make-mock-request :head "/1")))
   (assert (math-request-p (make-mock-request :get "/123")))
   (assert (math-request-p (make-mock-request :head "/123")))
   (assert (not (math-request-p (make-mock-request :post "/123"))))
   (assert (not (math-request-p (make-mock-request :get "/"))))
   (assert (not (math-request-p (make-mock-request :head "/"))))
-  (assert (not (math-request-p (make-mock-request :post "/")))))
+  (assert (not (math-request-p (make-mock-request :post "/"))))
+  (assert (not (math-request-p (make-mock-request :get "/0"))))
+  (assert (not (math-request-p (make-mock-request :head "/0"))))
+  (assert (not (math-request-p (make-mock-request :post "/0"))))
+  (assert (not (math-request-p (make-mock-request :get "/-1"))))
+  (assert (not (math-request-p (make-mock-request :head "/-1"))))
+  (assert (not (math-request-p (make-mock-request :post "/-1")))))
 
 (test-case post-request-p
   (assert (not (post-request-p (make-mock-request :get "/"))))
@@ -420,7 +442,7 @@ Bar"))
     (assert (string= (reject-post-p '(:block ("xy")) "ip1" 0 "xy" "yz" "zx" x)
                      "Dodgy content!"))))
 
-(test-case! reject-post-p-ban
+(test-case reject-post-p-ban
   (clrhash *flood-table*)
   (let ((x (write-to-string (calc-token 123))))
     (assert (string= (reject-post-p '(:ban ("ip1")) "ip1xy" 0 "xy" "yz" "zx" x)

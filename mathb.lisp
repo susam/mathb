@@ -162,10 +162,16 @@
   (and (member (hunchentoot:request-method request) '(:head :get))
        (string= (hunchentoot:script-name request) "/")))
 
+(defun meta-request-p (request)
+  "Return true iff the meta page is requested."
+  (and (member (hunchentoot:request-method request) '(:head :get))
+       (string= (hunchentoot:script-name request) "/0")))
+
 (defun math-request-p (request)
   "Return true iff a mathematics post is requested."
   (and (member (hunchentoot:request-method request) '(:head :get))
-       (> (length (hunchentoot:script-name request)) 1)
+       (string/= (hunchentoot:script-name request) "/")
+       (string/= (hunchentoot:script-name request) "/0")
        (every #'digit-char-p (subseq (hunchentoot:script-name request) 1))))
 
 (defun post-request-p (request)
@@ -216,17 +222,34 @@
               (alist-get "Name" headers)
               body))))
 
+(defun read-slug (directory)
+  "Read slug if it exists."
+  (let ((filename (merge-pathnames "slug.txt" directory)))
+    (when (probe-file filename)
+      (parse-integer (read-file filename)))))
+
 (defun increment-slug (directory)
   "Acquire data lock, increment slug, and return t iff successful."
   (let ((filename (merge-pathnames "slug.txt" directory))
-        (slug))
+        (slug 0))
     (when (lock directory)
-      (if (probe-file filename)
-          (setf slug (parse-integer (read-file filename)))
-          (setf slug 0))
+      (when (probe-file filename)
+        (setf slug (parse-integer (read-file filename))))
       (write-file filename (format nil "~a~%" (incf slug)))
       (unlock directory)
       (format nil "~a" slug))))
+
+(defun meta-code (directory last-post-time flood-table)
+  "Return post code for meta page."
+  (let ((slug (read-slug directory)))
+    (format nil "- Current time: ~a
+- Last post time: ~a
+- Last post slug: [~a](~a)
+- Flood table size: ~a"
+            (current-utc-time-string)
+            (universal-time-string last-post-time)
+            slug slug
+            (hash-table-count flood-table))))
 
 (defun format-header-value (s)
   "Format header value to make is suitable for writing to text file."
@@ -391,6 +414,13 @@
   "Return HTML of the home page."
   (render-html (read-file "web/html/mathb.html") "" "" "" "" ""))
 
+(defun meta-page (directory)
+  "Return HTML of meta page."
+  (let ((html (read-file "web/html/mathb.html"))
+        (date (simple-date (current-utc-time-string)))
+        (code (meta-code directory *last-post-time* *flood-table*)))
+    (render-html html date "Metadata" "" code "")))
+
 (defun math-page (directory)
   "Return page to client."
   (let* ((html (read-file "web/html/mathb.html"))
@@ -421,6 +451,8 @@
   (let ((directory *data-directory*))
     (hunchentoot:define-easy-handler (home-handler :uri #'home-request-p) ()
       (home-page))
+    (hunchentoot:define-easy-handler (home-handler :uri #'meta-request-p) ()
+      (meta-page directory))
     (hunchentoot:define-easy-handler (math-handler :uri #'math-request-p) ()
       (math-page directory))
     (hunchentoot:define-easy-handler (post-handler :uri #'post-request-p) ()
