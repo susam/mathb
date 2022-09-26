@@ -108,25 +108,10 @@ checkroot:
 	@echo Done; echo
 
 pub:
-	git push
-	ssh -t mathb.in "cd /opt/mathb.in/ && sudo make live-update"
+	ssh -t mathb.in "cd /opt/mathb.in/ && sudo git pull && sudo cp meta/data/post/0/0/*.txt /opt/data/mathb/post/0/0/ && sudo chown -R www-data:www-data meta/data/post/0/0/*.txt && sudo make live && sudo systemctl restart nginx mathb && sudo systemctl --no-pager status nginx mathb"
 
 force-pub:
-	git push -f
-	ssh -t mathb.in "cd /opt/mathb.in/ && sudo make live-reset-update"
-
-live-reset-update: live-reset live-update
-
-live-reset:
-	git reset --hard HEAD~5
-
-live-update:
-	git pull
-	cp meta/data/post/0/0/*.txt /opt/data/mathb/post/0/0/
-	chown -R www-data:www-data meta/data/post/0/0/*.txt
-	make live
-	systemctl restart nginx mathb
-	systemctl --no-pager status nginx mathb
+	ssh -t mathb.in "cd /opt/mathb.in/ && sudo git reset --hard HEAD~5 && sudo git pull && sudo cp meta/data/post/0/0/*.txt /opt/data/mathb/post/0/0/ && sudo chown -R www-data:www-data meta/data/post/0/0/*.txt && sudo make live && sudo systemctl restart nginx mathb && sudo systemctl --no-pager status nginx mathb"
 
 data:
 	sudo mkdir -p /opt/data/mathb/
