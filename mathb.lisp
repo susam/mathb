@@ -451,7 +451,7 @@
   (let ((directory *data-directory*))
     (hunchentoot:define-easy-handler (home-handler :uri #'home-request-p) ()
       (home-page))
-    (hunchentoot:define-easy-handler (home-handler :uri #'meta-request-p) ()
+    (hunchentoot:define-easy-handler (meta-handler :uri #'meta-request-p) ()
       (meta-page directory))
     (hunchentoot:define-easy-handler (math-handler :uri #'math-request-p) ()
       (math-page directory))
