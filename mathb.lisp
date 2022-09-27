@@ -241,15 +241,18 @@
 
 (defun meta-code (directory last-post-time flood-table)
   "Return post code for meta page."
-  (let ((slug (read-slug directory)))
+  (let ((slug (read-slug directory))
+        (options (read-options directory)))
     (format nil "- Current time: ~a
 - Last post time: ~a
 - Last post slug: [~a](~a)
-- Flood table size: ~a"
+- Flood table size: ~a
+- Read only: ~a"
             (current-utc-time-string)
             (universal-time-string last-post-time)
             slug slug
-            (hash-table-count flood-table))))
+            (hash-table-count flood-table)
+            (getf options :read-only))))
 
 (defun format-header-value (s)
   "Format header value to make is suitable for writing to text file."
