@@ -15,7 +15,12 @@ Changelog
 ### Changed
 
 - Empty header value in post text file no longer has a trailing space.
+
+
+### Fixed
+
 - Table rows disappearing from rendered output.
+- Incorrect zero top margin for display math.
 
 
 1.0.0 (2022-09-20)

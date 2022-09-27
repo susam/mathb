@@ -1,8 +1,8 @@
-#view :first-child {
+#view > :first-child {
   margin-top: 0
 }
-#view :last-child {
-  margin-top: 0
+#view > :last-child {
+  margin-bottom: 0
 }
 #view h1.title {
   margin-top: 0;
