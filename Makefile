@@ -120,4 +120,10 @@ data:
 	sudo cp -R meta/data/* /opt/data/mathb/
 	sudo chown -R "$$USER" /opt/data/mathb/
 
+backup:
+	tar -caf "/opt/cache/mathb-$$(date "+%Y-%m-%d_%H-%M-%S").tgz" -C /opt/data/ mathb/
+	ls -1 /opt/cache/mathb-*.tgz | sort -r | tail -n +100 | xargs rm -vf
+	ls -lh /opt/cache/
+	df -h /
+
 FORCE:
