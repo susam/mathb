@@ -126,4 +126,9 @@ backup:
 	ls -lh /opt/cache/
 	df -h /
 
+pull-backup:
+	mkdir -p ~/bkp/
+	ssh mathb.in "tar -czf - -C /opt/data/ mathb/" > ~/bkp/mathb-$$(date "+%Y-%m-%d_%H-%M-%S").tgz
+	ls -lh ~/bkp/
+
 FORCE:
