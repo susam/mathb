@@ -105,7 +105,7 @@ follow-log:
 	sudo journalctl -fu mathb | grep -ivE "\.(css|js|png|ico|woff)|bot"
 
 follow-post:
-	sudo journalctl -fu mathb | grep -ivE "\.(css|js|png|ico|woff)|bot" | grep POST
+	sudo journalctl -fu mathb | grep --line-buffered -ivE "\.(css|js|png|ico|woff)|bot" | grep POST
 
 
 # Low-Level Targets
