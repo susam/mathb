@@ -32,20 +32,25 @@ setup:
 	     --quit
 	chown -R www-data:www-data /opt/quicklisp
 
-https: http
+https: http wait-http
 	@echo Setting up HTTPS website ...
 	certbot certonly -n --agree-tos -m '$(MAIL)' --webroot \
 	                 -w '/opt/$(FQDN)/_live' -d '$(FQDN),www.$(FQDN)'
 	(crontab -l | sed '/::::/d'; cat etc/crontab) | crontab
 	ln -snf "$$PWD/etc/nginx/https.$(FQDN)" '/etc/nginx/sites-enabled/$(FQDN)'
-	systemctl reload nginx
+	systemctl restart nginx
 	@echo Done; echo
 
 http: rm live mathb
 	@echo Setting up HTTP website ...
 	ln -snf "$$PWD/etc/nginx/http.$(FQDN)" '/etc/nginx/sites-enabled/$(FQDN)'
-	systemctl reload nginx
+	systemctl restart nginx
 	echo 127.0.0.1 '$(NAME)' >> /etc/hosts
+	@echo Done; echo
+
+wait-http:
+	@echo Waiting for HTTP website to start ...
+	while ! curl http://localhost:4242/; do sleep 1; echo Retrying ...; done
 	@echo Done; echo
 
 mathb:
@@ -62,7 +67,7 @@ mathb:
 rm: checkroot
 	@echo Removing website ...
 	rm -f '/etc/nginx/sites-enabled/$(FQDN)'
-	systemctl reload nginx
+	systemctl restart nginx
 	sed -i '/$(NAME)/d' /etc/hosts
 	@echo
 	@echo Removing mathb ...
