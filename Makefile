@@ -5,22 +5,33 @@ MAIL = $(FQDN)@yahoo.com
 help:
 	@echo 'Usage: make [target]'
 	@echo
-	@echo 'High-level targets:'
-	@echo '  setup       Install Debian packages.'
-	@echo '  https       Reinstall live website and serve with Nginx via HTTPS.'
-	@echo '  http        Reinstall live website and serve with Nginx via HTTP.'
-	@echo '  rm          Uninstall live website.'
+	@echo 'Targets to run on live server:'
+	@echo '  setup        Install Debian packages and Quicklisp for website.'
+	@echo '  https        Reinstall live website and serve with Nginx via HTTPS.'
+	@echo '  http         Reinstall live website and serve with Nginx via HTTP.'
+	@echo '  rm           Uninstall live website.'
+	@echo '  backup       Create live server data backup.'
+	@echo '  follow-log   Follow logs on live server.'
+	@echo '  follow-post  Follow POST logs on live server.'
 	@echo
 	@echo 'Low-level targets:'
-	@echo '  live        Generate live website.'
-	@echo '  site        Generate local website.'
-	@echo '  pull        Pull latest Git commits but do not update live website.'
+	@echo '  live         Generate live website.'
+	@echo '  site         Generate local website.'
 	@echo
-	@echo 'Test targets:'
-	@echo '  test        Test Common Lisp program.'
+	@echo 'Development targets:'
+	@echo '  data         Create a development data directory for testing.'
+	@echo '  run          Run application.'
+	@echo '  test         Test application code.'
+	@echo '  pub          Publish updated website on live server.'
+	@echo '  force-pub    Reset website on live server and publish website.'
+	@echo '  pull-backup  Pull a backup of data from live server.'
 	@echo
 	@echo 'Default target:'
 	@echo '  help        Show this help message.'
+
+
+# Targets for Live Server
+# -----------------------
 
 setup:
 	apt-get update
@@ -79,6 +90,27 @@ rm: checkroot
 	crontab -l | grep -v "^#" || :
 	@echo Done; echo
 
+checkroot:
+	@echo Checking if current user is root ...
+	[ $$(id -u) = 0 ]
+	@echo Done; echo
+
+backup:
+	tar -caf "/opt/cache/mathb-$$(date "+%Y-%m-%d_%H-%M-%S").tgz" -C /opt/data/ mathb/
+	ls -1 /opt/cache/mathb-*.tgz | sort -r | tail -n +100 | xargs rm -vf
+	ls -lh /opt/cache/
+	df -h /
+
+follow-log:
+	sudo journalctl -fu mathb | grep -ivE "\.(css|js|png|ico|woff)|bot"
+
+follow-post:
+	sudo journalctl -fu mathb | grep -ivE "\.(css|js|png|ico|woff)|bot" | grep POST
+
+
+# Low-Level Targets
+# -----------------
+
 live: site
 	@echo Setting up live directory ...
 	mv _live _gone || :
@@ -101,16 +133,20 @@ site:
 	rm -rf _site/js/mathjax/.git/
 	@echo Done; echo
 
+
+# Development Targets
+# -------------------
+
+data:
+	sudo mkdir -p /opt/data/mathb/
+	sudo cp -R meta/data/* /opt/data/mathb/
+	sudo chown -R "$$USER" /opt/data/mathb/
+
 run:
 	sbcl --load mathb.lisp
 
 test:
 	sbcl --noinform --eval "(defvar *quit* t)" --load test.lisp
-
-checkroot:
-	@echo Checking if current user is root ...
-	[ $$(id -u) = 0 ]
-	@echo Done; echo
 
 pub:
 	git push
@@ -120,20 +156,7 @@ force-pub:
 	git push -f
 	ssh -t mathb.in "cd /opt/mathb.in/ && sudo git reset --hard HEAD~5 && sudo git pull && sudo cp meta/data/post/0/0/*.txt /opt/data/mathb/post/0/0/ && sudo chown -R www-data:www-data meta/data/post/0/0/*.txt && sudo make live && sudo systemctl restart nginx mathb && sudo systemctl --no-pager status nginx mathb"
 
-data:
-	sudo mkdir -p /opt/data/mathb/
-	sudo cp -R meta/data/* /opt/data/mathb/
-	sudo chown -R "$$USER" /opt/data/mathb/
-
-backup:
-	tar -caf "/opt/cache/mathb-$$(date "+%Y-%m-%d_%H-%M-%S").tgz" -C /opt/data/ mathb/
-	ls -1 /opt/cache/mathb-*.tgz | sort -r | tail -n +100 | xargs rm -vf
-	ls -lh /opt/cache/
-	df -h /
-
 pull-backup:
 	mkdir -p ~/bkp/
 	ssh mathb.in "tar -czf - -C /opt/data/ mathb/" > ~/bkp/mathb-$$(date "+%Y-%m-%d_%H-%M-%S").tgz
 	ls -lh ~/bkp/
-
-FORCE:
