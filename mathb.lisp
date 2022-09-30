@@ -151,7 +151,9 @@
 
 (defun read-options (directory)
   "Read options file."
-  (read-from-string (read-file (merge-pathnames "opt.lisp" directory))))
+  (let ((path (merge-pathnames "opt.lisp" directory)))
+    (when (probe-file path)
+      (read-from-string (read-file path)))))
 
 (defun from-post (name)
   "Get the value of a POST parameter."
@@ -247,12 +249,12 @@
 - Last post time: ~a
 - Last post slug: [~a](~a)
 - Flood table size: ~a
-- Read only: ~a"
+- Options: ~a"
             (current-utc-time-string)
             (universal-time-string last-post-time)
             slug slug
             (hash-table-count flood-table)
-            (getf options :read-only))))
+            (floor (length options) 2))))
 
 (defun format-header-value (s)
   "Format header value to make is suitable for writing to text file."
@@ -450,7 +452,7 @@
         (process-post options ip current-time directory title name code))))
 
 (defun define-handlers ()
-  "Define handlers for HTTP requests"
+  "Define handlers for HTTP requests."
   (let ((directory *data-directory*))
     (hunchentoot:define-easy-handler (home-handler :uri #'home-request-p) ()
       (home-page))

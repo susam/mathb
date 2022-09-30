@@ -21,6 +21,7 @@ Changelog
 
 - Table rows disappearing from rendered output.
 - Incorrect zero top margin for display math.
+- HTTP 500 error on post submission when options file is missing.
 
 
 1.0.0 (2022-09-20)
