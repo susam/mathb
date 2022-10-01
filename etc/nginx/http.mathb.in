@@ -9,6 +9,7 @@ server {
     server_name mathb.in mathb;
     root /var/www/mathb.in;
     location ~ ^/[0-9]*$ {
+        limit_req zone=passlimit burst=10 nodelay;
         proxy_pass http://127.0.0.1:4242;
         proxy_pass_request_headers off;
         proxy_set_header Accept $http_accept;
