@@ -1,11 +1,16 @@
+# Rate limit
+limit_req_zone $binary_remote_addr zone=passlimit:10m rate=4r/m;
+limit_req_status 429;
+
 # https://mathb.in/
 server {
     listen 443 ssl;
     listen [::]:443 ssl;
-    server_name mathb.in mathb;
     ssl_certificate /etc/letsencrypt/live/mathb.in/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/mathb.in/privkey.pem;
-    location / {
+    server_name mathb.in mathb;
+    root /var/www/mathb.in;
+    location ~ ^/[0-9]*$ {
         proxy_pass http://127.0.0.1:4242;
         proxy_pass_request_headers off;
         proxy_set_header Accept $http_accept;
@@ -22,9 +27,9 @@ server {
 server {
     listen 443 ssl;
     listen [::]:443 ssl;
-    server_name www.mathb.in mathb.in;
     ssl_certificate /etc/letsencrypt/live/mathb.in/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/mathb.in/privkey.pem;
+    server_name www.mathb.in mathb.in;
     return 301 https://mathb.in$request_uri;
 }
 

@@ -22,6 +22,7 @@ help:
 	@echo '  data         Create a development data directory for testing.'
 	@echo '  run          Run application.'
 	@echo '  test         Test application code.'
+	@echo '  checks       Validate consistency within configuration.'
 	@echo '  pub          Publish updated website on live server.'
 	@echo '  force-pub    Reset website on live server and publish website.'
 	@echo '  pull-backup  Pull a backup of data from live server.'
@@ -46,7 +47,7 @@ setup:
 https: http wait-http
 	@echo Setting up HTTPS website ...
 	certbot certonly -n --agree-tos -m '$(MAIL)' --webroot \
-	                 -w '/opt/$(FQDN)/_live' -d '$(FQDN),www.$(FQDN)'
+	                 -w '/var/www/$(FQDN)' -d '$(FQDN),www.$(FQDN)'
 	(crontab -l | sed '/::::/d'; cat etc/crontab) | crontab
 	ln -snf "$$PWD/etc/nginx/https.$(FQDN)" '/etc/nginx/sites-enabled/$(FQDN)'
 	systemctl restart nginx
@@ -54,6 +55,7 @@ https: http wait-http
 
 http: rm live mathb
 	@echo Setting up HTTP website ...
+	ln -snf "$$PWD/_live" '/var/www/$(FQDN)'
 	ln -snf "$$PWD/etc/nginx/http.$(FQDN)" '/etc/nginx/sites-enabled/$(FQDN)'
 	systemctl restart nginx
 	echo 127.0.0.1 '$(NAME)' >> /etc/hosts
@@ -78,6 +80,7 @@ mathb:
 rm: checkroot
 	@echo Removing website ...
 	rm -f '/etc/nginx/sites-enabled/$(FQDN)'
+	rm -f '/var/www/$(FQDN)'
 	systemctl restart nginx
 	sed -i '/$(NAME)/d' /etc/hosts
 	@echo
@@ -102,10 +105,10 @@ backup:
 	df -h /
 
 follow-log:
-	sudo journalctl -fu mathb | grep -ivE "\.(css|js|png|ico|woff)|bot"
+	sudo journalctl -fu mathb
 
 follow-post:
-	sudo journalctl -fu mathb | grep --line-buffered -ivE "\.(css|js|png|ico|woff)|bot" | grep POST
+	sudo journalctl -fu mathb | grep POST
 
 
 # Low-Level Targets
@@ -147,6 +150,16 @@ run:
 
 test:
 	sbcl --noinform --eval "(defvar *quit* t)" --load test.lisp
+
+checks:
+	# Ensure http.mathb.in and https.mathb.in are consistent.
+	sed -n '1,/limit_req_status/p' etc/nginx/http.mathb.in > /tmp/http.mathb.in
+	sed -n '1,/limit_req_status/p' etc/nginx/https.mathb.in > /tmp/https.mathb.in
+	diff -u /tmp/http.mathb.in /tmp/https.mathb.in
+	sed -n '/server_name [^w]/,/^}/p' etc/nginx/http.mathb.in > /tmp/http.mathb.in
+	sed -n '/server_name [^w]/,/^}/p' etc/nginx/https.mathb.in > /tmp/https.mathb.in
+	diff -u /tmp/http.mathb.in /tmp/https.mathb.in
+	@echo Done; echo
 
 pub:
 	git push
