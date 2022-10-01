@@ -393,11 +393,11 @@
           ((empty-content-p code)
            "Empty content!")
           ((> (length title) max-title-length)
-           (format nil "Title length exceeds ~a characters" max-title-length))
+           (format nil "Title length exceeds ~a characters!" max-title-length))
           ((> (length name) max-name-length)
-           (format nil "Name length exceeds ~a characters" max-name-length))
+           (format nil "Name length exceeds ~a characters!" max-name-length))
           ((> (length code) max-code-length)
-           (format nil "Code length exceeds ~a characters" max-code-length))
+           (format nil "Code length exceeds ~a characters!" max-code-length))
           ((dodgy-content-p options title name code)
            "Dodgy content!")
           ((dodgy-post-p token)
@@ -405,11 +405,9 @@
           ((setf result (dodgy-ip-p options ip))
            (format nil "IP address ~a is banned!" result))
           ((setf result (global-flood-p options current-time *last-post-time*))
-           (format nil "~@{~a~}" "Global post interval enforced! Wait for "
-                   result " s before submitting again."))
+           (format nil "Wait for ~a s before submitting!" result))
           ((setf result (client-flood-p options ip current-time *flood-table*))
-           (format nil "~@{~a~}" "Client post interval enforced! Wait for "
-                   result " s before submitting again.")))))
+           (format nil "Wait for ~a s before resubmitting!" result)))))
 
 
 ;;; HTTP Request Handlers
