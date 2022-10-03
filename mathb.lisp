@@ -268,14 +268,18 @@
           (format-header-value (string-trim-whitespace name))
           (string-trim-whitespace code)))
 
-(defun render-html (html date title name code error)
+(defun render-html (html options date title name code error)
   "Render HTML for a page."
-  (setf html (string-replace "{{ date }}" date html))
-  (setf html (string-replace "{{ title }}" title html))
-  (setf html (string-replace "{{ name }}" name html))
-  (setf html (string-replace "{{ code }}" code html))
-  (setf html (string-replace "{{ error }}" error html))
-  (setf html (string-replace "{{ current-year }}" (current-year) html)))
+  (let ((initial-year (getf options :initial-year 2012))
+        (owner (getf options :copyright-owner "MathB")))
+    (setf html (string-replace "{{ date }}" date html))
+    (setf html (string-replace "{{ title }}" title html))
+    (setf html (string-replace "{{ name }}" name html))
+    (setf html (string-replace "{{ code }}" code html))
+    (setf html (string-replace "{{ error }}" error html))
+    (setf html (string-replace "{{ initial-year }}" initial-year html))
+    (setf html (string-replace "{{ current-year }}" (current-year) html))
+    (setf html (string-replace "{{ copyright-owner }}" owner html))))
 
 
 ;;; Post Control
@@ -296,25 +300,26 @@
 (defun accept-post (ip current-time directory slug title name code)
   "Accept post, update flood data, and redirect client to saved post."
   (write-file (slug-to-path directory slug)
-              (make-text (current-utc-time-string) title name code))
+              (make-text (universal-time-string current-time) title name code))
   (set-flood-data ip current-time *last-post-time* *flood-table*)
   (write-log "Post ~a written successfully" slug)
   (hunchentoot:redirect (format nil "/~a" slug)))
 
-(defun reject-post (title name code reason)
+(defun reject-post (options title name code reason)
   "Reject post with an error message."
-  (write-log "Post rejected: ~a" reason)
-  (render-html (read-file "web/html/mathb.html") "" title name code
-               (format nil "<div id=\"error\">ERROR: ~a</div>" reason)))
+  (let ((html (read-file "web/html/mathb.html"))
+        (error-html (format nil "<div id=\"error\">ERROR: ~a</div>" reason)))
+    (write-log "Post rejected: ~a" reason)
+    (render-html html options "" title name code error-html)))
 
 (defun process-post (options ip current-time directory title name code)
   "Process post and either accept it or reject it."
   (let ((slug (increment-slug directory)))
     (cond ((not slug)
-           (reject-post title name code
+           (reject-post options title name code
                         "Internal error! Cannot acquire lock!"))
           ((<= (parse-integer slug) (getf options :protect 0))
-           (reject-post title name code
+           (reject-post options title name code
                         (format nil "Internal error! Invalid slug ~a!" slug)))
           (t
            (accept-post ip current-time directory slug title name code)))))
@@ -413,26 +418,30 @@
 ;;; HTTP Request Handlers
 ;;; ---------------------
 
-(defun home-page ()
+(defun home-page (directory)
   "Return HTML of the home page."
-  (render-html (read-file "web/html/mathb.html") "" "" "" "" ""))
+  (let ((html (read-file "web/html/mathb.html"))
+        (options (read-options directory)))
+    (render-html html options "" "" "" "" "")))
 
 (defun meta-page (directory)
   "Return HTML of meta page."
   (let ((html (read-file "web/html/mathb.html"))
+        (options (read-options directory))
         (date (simple-date (current-utc-time-string)))
         (code (meta-code directory *last-post-time* *flood-table*)))
-    (render-html html date "Metadata" "" code "")))
+    (render-html html options date "Metadata" "" code "")))
 
 (defun math-page (directory)
   "Return page to client."
   (let* ((html (read-file "web/html/mathb.html"))
+         (options (read-options directory))
          (slug (subseq (hunchentoot:script-name*) 1))
          (path (slug-to-path directory slug))
          (exists (probe-file path)))
     (if exists
         (multiple-value-bind (date title name code) (parse-text (read-file path))
-          (render-html html (simple-date date) title name code ""))
+          (render-html html options (simple-date date) title name code ""))
         (progn (setf (hunchentoot:return-code*) 404) nil))))
 
 (defun post-response (directory)
@@ -446,14 +455,14 @@
          (token (or (from-post "token") ""))
          (reject (reject-post-p options ip current-time title name code token)))
     (if reject
-        (reject-post title name code reject)
+        (reject-post options title name code reject)
         (process-post options ip current-time directory title name code))))
 
 (defun define-handlers ()
   "Define handlers for HTTP requests."
   (let ((directory *data-directory*))
     (hunchentoot:define-easy-handler (home-handler :uri #'home-request-p) ()
-      (home-page))
+      (home-page directory))
     (hunchentoot:define-easy-handler (meta-handler :uri #'meta-request-p) ()
       (meta-page directory))
     (hunchentoot:define-easy-handler (math-handler :uri #'math-request-p) ()

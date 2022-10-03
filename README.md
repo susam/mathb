@@ -166,6 +166,13 @@ that property. This property list may be used to alter the behaviour
 of MathB. A list of all supported properties and their descriptions is
 provided below.
 
+  - `:initial-year` (default is `2012`): The initial year that appears
+    in the copyright message in the footer.
+
+  - `:copyright-owner` (default is `"MathB"`): The name of the
+    copyright owner that appears in the copyright message in the
+    footer.
+
   - `:read-only` (default is `nil`): A value of `t` makes MathB run in
     read-only mode, i.e., old posts can be viewed but new posts cannot
     be made. A value of `nil` makes MathB run normally in read-write

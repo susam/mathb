@@ -6,6 +6,8 @@ Changelog
 
 ### Added
 
+- Runtime property `:initial-year` to customize the initial yearin footer.
+- Runtime property `:copyright-owner` to customize the owner name in footer.
 - Runtime property `:ban` to reject posts from specific IP addresses.
 - Runtime property `:protect` to protect posts in case of data corruption.
 - Nginx configuration to work around Hunchentoot memory leakage issue.
