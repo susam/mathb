@@ -188,10 +188,9 @@
 
 (defun slug-to-path (directory slug)
   "Convert a slug to path, e.g., 1234567 to /directory/post/1/1234/1234567.txt"
-  (let* ((n (parse-integer slug))
-         (short-prefix (floor n 1000000))
-         (long-prefix (floor n 1000)))
-    (format nil "~apost/~d/~d/~d.txt" directory short-prefix long-prefix n)))
+  (let* ((short-prefix (floor slug 1000000))
+         (long-prefix (floor slug 1000)))
+    (format nil "~apost/~d/~d/~d.txt" directory short-prefix long-prefix slug)))
 
 (defun split-text (text)
   "Split text into head and body."
@@ -230,16 +229,27 @@
     (when (probe-file filename)
       (parse-integer (read-file filename)))))
 
-(defun increment-slug (directory)
+(defun valid-slug (new-slug protected-slug)
+  "Check if new slug is protected."
+  (if (<= new-slug protected-slug)
+      (write-log "Slug ~a is protected" new-slug)
+      t))
+
+(defun increment-slug (directory protected-slug)
   "Acquire data lock, increment slug, and return t iff successful."
   (let ((filename (merge-pathnames "slug.txt" directory))
         (slug 0))
     (when (lock directory)
       (when (probe-file filename)
         (setf slug (parse-integer (read-file filename))))
-      (write-file filename (format nil "~a~%" (incf slug)))
+      (incf slug)
+      (when (<= slug protected-slug)
+        (write-log "Cannot use protected slug ~a" slug)
+        (setf slug nil))
+      (when slug
+        (write-file filename (format nil "~a~%" slug)))
       (unlock directory)
-      (format nil "~a" slug))))
+      slug)))
 
 (defun meta-code (directory last-post-time flood-table)
   "Return post code for meta page."
@@ -314,13 +324,9 @@
 
 (defun process-post (options ip current-time directory title name code)
   "Process post and either accept it or reject it."
-  (let ((slug (increment-slug directory)))
+  (let ((slug (increment-slug directory (getf options :protect 0))))
     (cond ((not slug)
-           (reject-post options title name code
-                        "Internal error! Cannot acquire lock!"))
-          ((<= (parse-integer slug) (getf options :protect 0))
-           (reject-post options title name code
-                        (format nil "Internal error! Invalid slug ~a!" slug)))
+           (reject-post options title name code "Cannot make slug!"))
           (t
            (accept-post ip current-time directory slug title name code)))))
 
@@ -436,7 +442,7 @@
   "Return page to client."
   (let* ((html (read-file "web/html/mathb.html"))
          (options (read-options directory))
-         (slug (subseq (hunchentoot:script-name*) 1))
+         (slug (parse-integer (subseq (hunchentoot:script-name*) 1)))
          (path (slug-to-path directory slug))
          (exists (probe-file path)))
     (if exists

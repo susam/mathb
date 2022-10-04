@@ -252,14 +252,14 @@
   (assert (not (post-request-p (make-mock-request :post "/foo")))))
 
 (test-case slug-to-path
-  (assert (string= (slug-to-path "/x/" "1") "/x/post/0/0/1.txt"))
-  (assert (string= (slug-to-path "/x/" "12") "/x/post/0/0/12.txt"))
-  (assert (string= (slug-to-path "/x/" "123") "/x/post/0/0/123.txt"))
-  (assert (string= (slug-to-path "/x/" "1234") "/x/post/0/1/1234.txt"))
-  (assert (string= (slug-to-path "/x/" "12345") "/x/post/0/12/12345.txt"))
-  (assert (string= (slug-to-path "/x/" "123456") "/x/post/0/123/123456.txt"))
-  (assert (string= (slug-to-path "/x/" "1234567") "/x/post/1/1234/1234567.txt"))
-  (assert (string= (slug-to-path "/x/" "12345678") "/x/post/12/12345/12345678.txt")))
+  (assert (string= (slug-to-path "/x/" 1) "/x/post/0/0/1.txt"))
+  (assert (string= (slug-to-path "/x/" 12) "/x/post/0/0/12.txt"))
+  (assert (string= (slug-to-path "/x/" 123) "/x/post/0/0/123.txt"))
+  (assert (string= (slug-to-path "/x/" 1234) "/x/post/0/1/1234.txt"))
+  (assert (string= (slug-to-path "/x/" 12345) "/x/post/0/12/12345.txt"))
+  (assert (string= (slug-to-path "/x/" 123456) "/x/post/0/123/123456.txt"))
+  (assert (string= (slug-to-path "/x/" 1234567) "/x/post/1/1234/1234567.txt"))
+  (assert (string= (slug-to-path "/x/" 12345678) "/x/post/12/12345/12345678.txt")))
 
 (test-case split-text
   (let ((text (format nil "foo~%~%")))
@@ -317,14 +317,21 @@ Bar"))
       (assert (string= body (format nil "Foo~%Bar"))))))
 
 (test-case increment-slug
-  (assert (string= (increment-slug "test-tmp/") "1"))
-  (assert (string= (increment-slug "test-tmp/") "2"))
-  (assert (string= (increment-slug "test-tmp/") "3"))
+  (assert (= (increment-slug "test-tmp/" 0) 1))
+  (assert (= (increment-slug "test-tmp/" 0) 2))
+  (assert (= (increment-slug "test-tmp/" 0) 3))
   (lock "test-tmp/")
-  (assert (not (increment-slug "test-tmp/")))
+  (assert (not (increment-slug "test-tmp/" 0)))
   (unlock "test-tmp/")
-  (assert (string= (increment-slug "test-tmp/") "4"))
-  (assert (string= (increment-slug "test-tmp/") "5")))
+  (assert (= (increment-slug "test-tmp/" 0) 4))
+  (assert (= (increment-slug "test-tmp/" 0) 5)))
+
+(test-case increment-slug-protected
+  (assert (= (increment-slug "test-tmp/" 0) 1))
+  (assert (= (increment-slug "test-tmp/" 1) 2))
+  (assert (not (increment-slug "test-tmp/" 3)))
+  (assert (not (increment-slug "test-tmp/" 4)))
+  (assert (= (increment-slug "test-tmp/" 2) 3)))
 
 (test-case make-text
   (assert (string= (make-text "" "" "" "")
