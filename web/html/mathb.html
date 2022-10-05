@@ -23,8 +23,8 @@
     <main>
       <form id="form" method="post">
         <textarea id="code" name="code" placeholder="Enter LaTeX and Markdown code here. Enclose inline math within $ and $, or \( and \). Enclose displayed math within $$ and $$, or \[ and \]. The following commands work outside math mode: \ref, \eqref, \begin, \end and \$. Put spaces on both sides of less-than sign." required>{{ code }}</textarea>
-        <input id="title" name="title" value="{{ title }}" placeholder="Title of the post (optional)">
-        <input id="name" name="name" value="{{ name }}" placeholder="Your name (optional)">
+        <input id="title" name="title" value="{{ title }}" placeholder="Title (optional)">
+        <input id="name" name="name" value="{{ name }}" placeholder="Name or subtitle (optional)">
         <input id="submit" type="submit" name="submit" value="Save &amp; Get URL">
       </form><div id="output">
         <div id="sheet">
