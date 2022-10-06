@@ -4,6 +4,7 @@ Changelog
 1.2.0 (UNRELEASED)
 ------------------
 
+- Runtime property `:lock-down` to disable post viewing and post submission.
 - Runtime property `:min-title-length` to specify minimum title length.
 - Runtime property `:min-name-length` to specify minimum name length.
 - Runtime property `:min-code-length` to specify minimum code length.

@@ -1,4 +1,5 @@
-(:read-only nil
+(:lock-down nil
+ :read-only nil
  :min-title-length 0
  :max-title-length 120
  :min-name-length 0

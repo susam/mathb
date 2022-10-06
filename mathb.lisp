@@ -288,6 +288,10 @@
     (setf html (string-replace "{{ current-year }}" (current-year) html))
     (setf html (string-replace "{{ copyright-owner }}" owner html))))
 
+(defun error-html (reason)
+  "Return HTML for an error message."
+  (format nil "<div id=\"error\">ERROR: ~a</div>" reason))
+
 
 ;;; Post Control
 ;;; ------------
@@ -314,10 +318,9 @@
 
 (defun reject-post (options title name code reason)
   "Reject post with an error message."
-  (let ((html (read-file "web/html/mathb.html"))
-        (error-html (format nil "<div id=\"error\">ERROR: ~a</div>" reason)))
+  (let ((html (read-file "web/html/mathb.html")))
     (write-log "Post rejected: ~a" reason)
-    (render-html html options "" title name code error-html)))
+    (render-html html options "" title name code (error-html reason))))
 
 (defun process-post (options ip current-time directory title name code)
   "Process post and either accept it or reject it."
@@ -330,10 +333,6 @@
 
 ;;; Validators
 ;;; ----------
-
-(defun read-only-p (options)
-  "Check if read-only mode is enabled."
-  (getf options :read-only))
 
 (defun bad-length-p (string min-length max-length)
   "Check if the length of the given string is within a specified range."
@@ -404,9 +403,10 @@
         (min-code-length (getf options :min-code-length 1))
         (max-code-length (getf options :max-code-length 10000))
         (result))
-    (cond ((read-only-p options)
+    (cond ((getf options :lock-down)
+           "Site is locked down!")
+          ((getf options :read-only)
            "New posts have been disabled temporarily!")
-
           ((setf result (bad-length-p title min-title-length max-title-length))
            (format nil "Title ~a!" result))
           ((setf result (bad-length-p name min-name-length max-name-length))
@@ -447,12 +447,14 @@
   (let* ((html (read-file "web/html/mathb.html"))
          (options (read-options directory))
          (slug (parse-integer (subseq (hunchentoot:script-name*) 1)))
-         (path (slug-to-path directory slug))
-         (exists (probe-file path)))
-    (if exists
-        (multiple-value-bind (date title name code) (parse-text (read-file path))
-          (render-html html options (simple-date date) title name code ""))
-        (progn (setf (hunchentoot:return-code*) 404) nil))))
+         (path (slug-to-path directory slug)))
+    (cond ((getf options :lock-down)
+           (render-html html options "" "" "" "" (error-html "Site is locked down!")))
+          ((probe-file path)
+           (multiple-value-bind (date title name code) (parse-text (read-file path))
+             (render-html html options (simple-date date) title name code "")))
+          (t
+           (progn (setf (hunchentoot:return-code*) 404) nil)))))
 
 (defun post-response (directory)
   "Process submitted post form."

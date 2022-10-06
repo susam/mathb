@@ -166,6 +166,11 @@ that property. This property list may be used to alter the behaviour
 of MathB. A list of all supported properties and their descriptions is
 provided below.
 
+  - `:lock-down` (default is `nil`): A value of `t` makes MathB run in
+    lock-down mode, i.e., existing posts cannot be viewed and new
+    posts cannot be submitted. A value of `nil` makes MathB run
+    normally in read-write mode.
+
   - `:read-only` (default is `nil`): A value of `t` makes MathB run in
     read-only mode, i.e., old posts can be viewed but new posts cannot
     be made. A value of `nil` makes MathB run normally in read-write
