@@ -166,23 +166,25 @@ that property. This property list may be used to alter the behaviour
 of MathB. A list of all supported properties and their descriptions is
 provided below.
 
-  - `:initial-year` (default is `2012`): The initial year that appears
-    in the copyright message in the footer.
-
-  - `:copyright-owner` (default is `"MathB"`): The name of the
-    copyright owner that appears in the copyright message in the
-    footer.
-
   - `:read-only` (default is `nil`): A value of `t` makes MathB run in
     read-only mode, i.e., old posts can be viewed but new posts cannot
     be made. A value of `nil` makes MathB run normally in read-write
     mode.
 
+  - `:min-title-length` (default is `0`): The minimum number of
+    characters allowed in the title field.
+
   - `:max-title-length` (default is `120`): The maximum number of
     characters allowed in the title field.
 
+  - `:min-name-length` (default is `0`): The minimum number of
+    characters allowed in the name field.
+
   - `:max-name-length` (default is `120`): The maximum number of
     characters allowed in the name field.
+
+  - `:min-code-length` (default is `1`): The minimum number of
+    characters allowed in the code field.
 
   - `:max-code-length` (default is `10000`): The maximum number of
     characters allowed in the code field.
@@ -260,6 +262,13 @@ provided below.
     existing post at `post/0/0/12.txt`. However, with a value of say,
     `100` for `:protect`, MathB would refuse to overwrite the existing
     port.
+
+  - `:initial-year` (default is `2012`): The initial year that appears
+    in the copyright message in the footer.
+
+  - `:copyright-owner` (default is `"MathB"`): The name of the
+    copyright owner that appears in the copyright message in the
+    footer.
 
 If a property name is missing from this file or if the file itself is
 missing, then MathB defaults to the default value of the property

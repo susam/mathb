@@ -1,13 +1,21 @@
 Changelog
 =========
 
+1.2.0 (UNRELEASED)
+------------------
+
+- Runtime property `:min-title-length` to specify minimum title length.
+- Runtime property `:min-name-length` to specify minimum name length.
+- Runtime property `:min-code-length` to specify minimum code length.
+- Runtime property `:initial-year` to customize the initial yearin footer.
+- Runtime property `:copyright-owner` to customize the owner name in footer.
+
+
 1.1.0 (2022-09-30)
 ------------------
 
 ### Added
 
-- Runtime property `:initial-year` to customize the initial yearin footer.
-- Runtime property `:copyright-owner` to customize the owner name in footer.
 - Runtime property `:ban` to reject posts from specific IP addresses.
 - Runtime property `:protect` to protect posts in case of data corruption.
 - Nginx configuration to work around Hunchentoot memory leakage issue.
@@ -38,6 +46,15 @@ Changelog
 - Use TeXMe to render Markdown + LaTeX.
 - Add post interval features to control flooding.
 - Control runtime behaviour with `opt.lisp`.
+- Runtime property `:read-only` to run MathB in read-only mode.
+- Runtime property `:max-title-length` to specify maximum title length.
+- Runtime property `:max-name-length` to specify maximum name length.
+- Runtime property `:max-code-length` to specify maximum code length.
+- Runtime property `:global-post-interval` to specify minimum interval
+  between two posts from arbitrary clients.
+- Runtime property `:client-post-interval` to specify minimum interval
+  between two posts from the same client.
+- Runtime property `:block` to specify blocked strings in post.
 
 
 ### Removed

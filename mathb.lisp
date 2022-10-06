@@ -266,17 +266,14 @@
             (hash-table-count flood-table)
             (floor (length options) 2))))
 
-(defun format-header-value (s)
+(defun header-value (s)
   "Format header value to make is suitable for writing to text file."
   (if (string= s "") "" (format nil " ~a" s)))
 
 (defun make-text (date title name code)
   "Convert post fields to text to be written to post file."
   (format nil "Date:~a~%Title:~a~%Name:~a~%~%~a~%"
-          (format-header-value (string-trim-whitespace date))
-          (format-header-value (string-trim-whitespace title))
-          (format-header-value (string-trim-whitespace name))
-          (string-trim-whitespace code)))
+          (header-value date) (header-value title) (header-value name) code))
 
 (defun render-html (html options date title name code error)
   "Render HTML for a page."
@@ -338,9 +335,14 @@
   "Check if read-only mode is enabled."
   (getf options :read-only))
 
-(defun empty-content-p (code)
-  "Check if code in the post is empty."
-  (string= (string-trim-whitespace code) ""))
+(defun bad-length-p (string min-length max-length)
+  "Check if the length of the given string is within a specified range."
+  (cond ((< (length string) min-length)
+         (format nil "must contain at least ~a character~a"
+                 min-length (if (= 1 min-length) "" "s")))
+        ((> (length string) max-length)
+         (format nil "must not contain more than ~a character~a"
+                 max-length (if (= 1 max-length) "" "s")))))
 
 (defun dodgy-content-p (options title name code)
   "Check if post content contains banned words."
@@ -395,20 +397,22 @@
 
 (defun reject-post-p (options ip current-time title name code token)
   "Validate post and return error message if validation fails."
-  (let ((max-code-length (getf options :max-code-length 10000))
+  (let ((min-title-length (getf options :min-title-length 0))
         (max-title-length (getf options :max-title-length 120))
+        (min-name-length (getf options :min-name-length 0))
         (max-name-length (getf options :max-name-length 120))
+        (min-code-length (getf options :min-code-length 1))
+        (max-code-length (getf options :max-code-length 10000))
         (result))
     (cond ((read-only-p options)
            "New posts have been disabled temporarily!")
-          ((empty-content-p code)
-           "Empty content!")
-          ((> (length title) max-title-length)
-           (format nil "Title length exceeds ~a characters!" max-title-length))
-          ((> (length name) max-name-length)
-           (format nil "Name length exceeds ~a characters!" max-name-length))
-          ((> (length code) max-code-length)
-           (format nil "Code length exceeds ~a characters!" max-code-length))
+
+          ((setf result (bad-length-p title min-title-length max-title-length))
+           (format nil "Title ~a!" result))
+          ((setf result (bad-length-p name min-name-length max-name-length))
+           (format nil "Name ~a!" result))
+          ((setf result (bad-length-p code min-code-length max-code-length))
+           (format nil "Code ~a!" result))
           ((dodgy-content-p options title name code)
            "Dodgy content!")
           ((dodgy-post-p token)
@@ -455,9 +459,9 @@
   (let* ((options (read-options directory))
          (ip (real-ip))
          (current-time (get-universal-time))
-         (title (or (from-post "title") ""))
-         (name (or (from-post "name") ""))
-         (code (or (from-post "code") ""))
+         (title (string-trim-whitespace (or (from-post "title") "")))
+         (name (string-trim-whitespace (or (from-post "name") "")))
+         (code (string-trim-whitespace (or (from-post "code") "")))
          (token (or (from-post "token") ""))
          (reject (reject-post-p options ip current-time title name code token)))
     (if reject

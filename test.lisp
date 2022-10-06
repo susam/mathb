@@ -336,9 +336,15 @@ Bar"))
 (test-case make-text
   (assert (string= (make-text "" "" "" "")
                    (format nil "Date:~%Title:~%Name:~%~%~%")))
+  (assert (string= (make-text "date" "" "" "")
+                   (format nil "Date: date~%Title:~%Name:~%~%~%")))
+  (assert (string= (make-text "" "title" "" "")
+                   (format nil "Date:~%Title: title~%Name:~%~%~%")))
+  (assert (string= (make-text "" "" "name" "")
+                   (format nil "Date:~%Title:~%Name: name~%~%~%")))
+  (assert (string= (make-text "" "" "" "code")
+                   (format nil "Date:~%Title:~%Name:~%~%code~%")))
   (assert (string= (make-text "date" "title" "name" "body")
-                   (format nil "Date: date~%Title: title~%Name: name~%~%body~%")))
-  (assert (string= (make-text "date" "  title  " "  name  " "  body  ")
                    (format nil "Date: date~%Title: title~%Name: name~%~%body~%"))))
 
 (test-case set-flood-data
@@ -352,10 +358,6 @@ Bar"))
   (assert (not (read-only-p nil)))
   (assert (not (read-only-p '(:read-only nil))))
   (assert (read-only-p '(:read-only t))))
-
-(test-case empty-content-p
-  (assert (empty-content-p ""))
-  (assert (not (empty-content-p "foo"))))
 
 (test-case dodgy-content-p
   (assert (not (dodgy-content-p nil "foo" "bar" "qux")))
@@ -425,38 +427,67 @@ Bar"))
     (assert (= (client-flood-p options "ip2" 1009 table) 4))
     (assert (not (client-flood-p options "ip2" 1013 table)))))
 
-(test-case reject-post-p-not
-  (clrhash *flood-table*)
+(test-case reject-post-p-good
   (let ((x (write-to-string (calc-token 123))))
     (assert (not (reject-post-p nil "ip1" 0 "foo" "bar" "baz" x)))
     (assert (not (reject-post-p '(:block ("quux")) "ip1" 0 "foo" "bar" "baz" x)))))
 
 (test-case reject-post-p-read-only
-  (clrhash *flood-table*)
   (let ((x (write-to-string (calc-token 123))))
     (assert (string= (reject-post-p '(:read-only t) "ip1" 0 "foo" "bar" "baz" x)
                      "New posts have been disabled temporarily!"))))
 
-(test-case reject-post-p-empty
-  (clrhash *flood-table*)
-  (let ((x (write-to-string (calc-token 123))))
+(test-case reject-post-p-title-length
+  (let ((x (write-to-string (calc-token 123)))
+        (opt '(:min-title-length 2 :max-title-length 4)))
+    (assert (not (reject-post-p nil "ip1" 0 "" "bar" "baz" x)))
+    (assert (string= (reject-post-p opt "ip1" 0 "" "bar" "baz" x)
+                     "Title must contain at least 2 characters!"))
+    (assert (string= (reject-post-p opt "ip1" 0 "a" "bar" "baz" x)
+                     "Title must contain at least 2 characters!"))
+    (assert (not (reject-post-p opt "ip1" 0 "ab" "bar" "baz" x)))
+    (assert (not (reject-post-p opt "ip1" 0 "abcd" "bar" "baz" x)))
+    (assert (string= (reject-post-p opt "ip1" 0 "abcde" "bar" "baz" x)
+                     "Title must not contain more than 4 characters!"))))
+
+(test-case reject-post-p-name-length
+  (let ((x (write-to-string (calc-token 123)))
+        (opt '(:min-name-length 2 :max-name-length 4)))
+    (assert (not (reject-post-p nil "ip1" 0 "foo" "" "baz" x)))
+    (assert (string= (reject-post-p opt "ip1" 0 "foo" "" "baz" x)
+                     "Name must contain at least 2 characters!"))
+    (assert (string= (reject-post-p opt "ip1" 0 "foo" "a" "baz" x)
+                     "Name must contain at least 2 characters!"))
+    (assert (not (reject-post-p opt "ip1" 0 "foo" "ab" "baz" x)))
+    (assert (not (reject-post-p opt "ip1" 0 "foo" "abcd" "baz" x)))
+    (assert (string= (reject-post-p opt "ip1" 0 "foo" "abcde" "baz" x)
+                     "Name must not contain more than 4 characters!"))))
+
+(test-case reject-post-p-code-length
+  (let ((x (write-to-string (calc-token 123)))
+        (opt '(:min-code-length 2 :max-code-length 4)))
     (assert (string= (reject-post-p nil "ip1" 0 "foo" "bar" "" x)
-                     "Empty content!"))))
+                     "Code must contain at least 1 character!"))
+    (assert (string= (reject-post-p opt "ip1" 0 "foo" "bar" "" x)
+                     "Code must contain at least 2 characters!"))
+    (assert (string= (reject-post-p opt "ip1" 0 "foo" "bar" "a" x)
+                     "Code must contain at least 2 characters!"))
+    (assert (not (reject-post-p opt "ip1" 0 "foo" "bar" "ab" x)))
+    (assert (not (reject-post-p opt "ip1" 0 "foo" "bar" "abcd" x)))
+    (assert (string= (reject-post-p opt "ip1" 0 "foo" "bar" "abcde" x)
+                     "Code must not contain more than 4 characters!"))))
 
 (test-case reject-post-p-words
-  (clrhash *flood-table*)
   (let ((x (write-to-string (calc-token 123))))
     (assert (string= (reject-post-p '(:block ("xy")) "ip1" 0 "xy" "yz" "zx" x)
                      "Dodgy content!"))))
 
 (test-case reject-post-p-ban
-  (clrhash *flood-table*)
   (let ((x (write-to-string (calc-token 123))))
     (assert (string= (reject-post-p '(:ban ("ip1")) "ip1xy" 0 "xy" "yz" "zx" x)
                      "IP address ip1xy is banned!"))))
 
 (test-case reject-post-p-client-post-interval
-  (clrhash *flood-table*)
   (let ((options '(:client-post-interval 10))
         (x (write-to-string (calc-token 123)))
         (msg "Wait for ~a s before resubmitting!"))
@@ -465,7 +496,8 @@ Bar"))
     (assert (string= (reject-post-p options "ip1" 1000 "foo" "bar" "baz" x)
                      (format nil msg 10)))
     (assert (string= (reject-post-p options "ip1" 1001 "foo" "bar" "baz" x)
-                     (format nil msg 9)))))
+                     (format nil msg 9))))
+  (clrhash *flood-table*))
 
 ;; End test cases.
 (test-done)

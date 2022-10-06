@@ -1,9 +1,14 @@
 (:read-only nil
- :max-code-length 10000
+ :min-title-length 0
  :max-title-length 120
+ :min-name-length 0
  :max-name-length 120
+ :min-code-length 1
+ :max-code-length 10000
  :global-post-interval 0
- :client-post-interval 60
+ :client-post-interval 0
  :block ("berk" "naff" "xxx")
  :ban nil
- :protect 9)
+ :protect 0
+ :initial-year 2012
+ :copyright-owner "MathB")
