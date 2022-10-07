@@ -1,22 +1,120 @@
-Date: 2012-03-25 00:00:00 +0000
-Title: MIT License
-Name: Copyright (c) 2012-2022 Susam Pal
+Date: 2012-09-20 00:00:00 +0000
+Title: Privacy Notice
+Name:
 
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
+[MathB.in] (this website) is a community website
+maintained by one or more volunteers. This privacy
+notice explains how this website uses the data it
+collects from you when you use this website.
 
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
+[MathB.in]: ./
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+## Data Items
+
+This website collects the following data:
+
+- The text submitted by you while submitting a new
+  post using this website. This text may contain a
+  post title, your name, and arbitrary code
+  written in LaTeX and Markdown format. This text
+  is written by you, so you are in complete
+  control of what you submit in the text. You must
+  not submit sensitive personal data to this
+  website.
+
+- Your Internet Protocol (IP) address used to
+  visit this website.
+
+- HTTP referrer URL sent by your web browser or
+  client software while connecting to this
+  website. A web browser or a client software
+  typically, but not necessarily, sends the URL of
+  the web page or website where you clicked on a
+  link to visit this website as the HTTP referrer
+  value.
+
+- User agent string sent by your web browser or
+  client software while visiting this website. A
+  web browser or a client software typically, but
+  not necessarily, sends your device name and
+  version, operating system name and version, and
+  your web browser or client software name and
+  version as the user agent string.
+
+
+## Data Collection
+
+When you visit this website, your IP address,
+referrer data, and user agent string are
+automatically recorded in web server log files.
+
+When you submit a new post to this website
+successfully, your text is written to a file on
+the web server and your text is published at a new
+URL that is shown to you immediately after you
+successfully submit the post. If the post
+submission fails due to errors, then your text is
+neither saved nor published.
+
+
+## Data Usage
+
+The IP address, referrer data, and user agent
+string is used to monitor abuse of this website
+such as submitting spam posts, submitting
+non-mathematical posts, sending too many requests
+to reduce the availability of this website, etc.
+This data is also used to mitigate abuse of this
+website by blocking certain combinations of IP
+address, referrer data, and/or user agent from
+accessing this website or by limiting the number
+of requests such a combination may send to this
+website.
+
+The post text is saved in a text file for an
+indefinitely long period of time. The post text is
+published at a new URL. This post text is
+available publicly to anyone who visits this URL.
+This URL is shown to you immediately after you
+successfully submit a new post. You must not
+submit sensitive personal data to this website.
+
+
+## Data Storage
+
+The IP address, referrer data, and user agent
+string are stored in web server log files. This
+data is retained for 14 days. this
+data is automatically deleted.
+
+The post text is saved in text files and made
+available publicly on this website via unique
+URLs. Anyone with the URL of your post can view
+the post text. You must not submit sensitive
+personal data to this website.
+
+
+## Marketing
+
+The data collected from you is not used for marketing.
+
+
+## Cookies
+
+This website does not use cookies.
+
+
+## Third-Party Analytics
+
+This website does not use third-party analytics.
+
+
+## Contact
+
+If you have any questions about the data collected
+by this website, please create a new issue at
+[github.com/susam/mathb/issues][issues] or contact
+susam (dot) pal (at) gmail (dot) com.
+
+[issues]: https://github.com/susam/mathb/issues

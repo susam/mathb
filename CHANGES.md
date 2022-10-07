@@ -4,12 +4,15 @@ Changelog
 1.2.0 (UNRELEASED)
 ------------------
 
+### Added
+
 - Runtime property `:lock-down` to disable post viewing and post submission.
 - Runtime property `:min-title-length` to specify minimum title length.
 - Runtime property `:min-name-length` to specify minimum name length.
 - Runtime property `:min-code-length` to specify minimum code length.
 - Runtime property `:initial-year` to customize the initial yearin footer.
 - Runtime property `:copyright-owner` to customize the owner name in footer.
+- Link to privacy notice.
 
 
 1.1.0 (2022-09-30)
