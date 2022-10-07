@@ -85,8 +85,8 @@ submit sensitive personal data to this website.
 
 The IP address, referrer data, and user agent
 string are stored in web server log files. This
-data is retained for 14 days. this
-data is automatically deleted.
+data is retained for 14 days. After 14 days, this
+data is deleted automatically.
 
 The post text is saved in text files and made
 available publicly on this website via unique
