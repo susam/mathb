@@ -198,7 +198,7 @@ noscript, #error {
   }
 }
 @media print {
-  header, form, footer, .post #widget {
+  header, form, footer, #date, .post #widget {
     display: none;
   }
   #sheet {
