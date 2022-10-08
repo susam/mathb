@@ -16,6 +16,11 @@ Changelog
 - Show only rendered content in print preview mode.
 
 
+### Changed
+
+- Do not allow code textarea to be dragged to overlap with output sheet.
+
+
 1.1.0 (2022-09-30)
 ------------------
 
