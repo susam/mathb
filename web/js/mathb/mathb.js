@@ -11,6 +11,7 @@ window.onload = function () {
   const copy = document.getElementById('copy')
   const slug = parseInt(window.location.pathname.substring(1))
 
+  let rendering = false
   let timeout = null
 
   const allowedNodes = [
@@ -52,6 +53,11 @@ window.onload = function () {
   }
 
   function renderView() {
+    if (rendering) {
+      return
+    }
+    rendering = true
+
     const titleValue = title.value.trim()
     const nameValue = name.value.trim()
     const codeValue = code.value.trim()
@@ -74,7 +80,9 @@ window.onload = function () {
 
     view.innerHTML = h1 + h2 + body
     window.MathJax.texReset()
-    window.MathJax.typeset()
+    window.MathJax.typesetPromise().then(function () {
+      rendering = false
+    })
   }
 
   // Schedule input handler to process input after a short delay.
