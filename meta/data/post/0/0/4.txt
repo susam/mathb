@@ -37,10 +37,9 @@ This website collects the following data:
 - User agent string sent by your web browser or
   client software while visiting this website. A
   web browser or a client software typically, but
-  not necessarily, sends your device name and
-  version, operating system name and version, and
-  your web browser or client software name and
-  version as the user agent string.
+  not necessarily, sends the names and versions of
+  your device, operating system, and web browser
+  or client software as the user agent string.
 
 
 ## Data Collection
