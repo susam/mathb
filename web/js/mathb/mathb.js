@@ -144,7 +144,6 @@ window.onload = function () {
     code.focus()
 
     if (window.location.pathname !== '/') {
-      widget.style.display = 'block'
       url.value = window.location.href
     }
 

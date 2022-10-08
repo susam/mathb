@@ -13,6 +13,7 @@ Changelog
 - Runtime property `:initial-year` to customize the initial yearin footer.
 - Runtime property `:copyright-owner` to customize the owner name in footer.
 - Link to privacy notice.
+- Show only rendered content in print preview mode.
 
 
 1.1.0 (2022-09-30)

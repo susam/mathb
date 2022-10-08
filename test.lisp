@@ -354,11 +354,6 @@ Bar"))
     (assert (= x 1000))
     (assert (= (gethash "ip1" y) 1000))))
 
-(test-case read-only-p
-  (assert (not (read-only-p nil)))
-  (assert (not (read-only-p '(:read-only nil))))
-  (assert (read-only-p '(:read-only t))))
-
 (test-case dodgy-content-p
   (assert (not (dodgy-content-p nil "foo" "bar" "qux")))
   (assert (not (dodgy-content-p '(:block ("quux")) "foo" "bar" "qux")))

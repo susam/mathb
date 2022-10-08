@@ -118,6 +118,9 @@ noscript, #error {
 #widget {
   display: none;
 }
+.post #widget {
+  display: block;
+}
 @media screen and (min-width: 50em) {
   header h1 {
     display: inline-block;
@@ -191,5 +194,13 @@ noscript, #error {
   noscript, #error {
     color: #f99;
     border-color: #f99;
+  }
+}
+@media print {
+  header, form, footer, .post #widget {
+    display: none;
+  }
+  #sheet {
+    border: 0;
   }
 }
