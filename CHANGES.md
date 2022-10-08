@@ -21,6 +21,12 @@ Changelog
 - Do not allow code textarea to be dragged to overlap with output sheet.
 
 
+### Fixed
+
+- Rendering error when the input contains commands that require
+  additional MathJax extensions.
+
+
 1.1.0 (2022-09-30)
 ------------------
 
