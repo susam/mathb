@@ -472,6 +472,24 @@ Bar"))
     (assert (string= (reject-post-p opt "ip1" 0 "foo" "bar" "abcde" x)
                      "Code must not contain more than 4 characters!"))))
 
+(test-case reject-post-p-title-has-line-break
+  (let ((x (write-to-string (calc-token 123)))
+        (err "Title must not contain newline!")
+        (title))
+    (setf title (format nil "foo~c" #\Return))
+    (assert (string= (reject-post-p nil "ip1" 0 title "" "bar" x) err))
+    (setf title (format nil "foo~c" #\Newline))
+    (assert (string= (reject-post-p nil "ip1" 0 title "" "bar" x) err))))
+
+(test-case reject-post-p-name-has-line-break
+  (let ((x (write-to-string (calc-token 123)))
+        (err "Name must not contain newline!")
+        (name))
+    (setf name (format nil "foo~c" #\Return))
+    (assert (string= (reject-post-p nil "ip1" 0 "" name "bar" x) err))
+    (setf name (format nil "foo~c" #\Newline))
+    (assert (string= (reject-post-p nil "ip1" 0 "" name "bar" x) err))))
+
 (test-case reject-post-p-words
   (let ((x (write-to-string (calc-token 123))))
     (assert (string= (reject-post-p '(:block ("xy")) "ip1" 0 "xy" "yz" "zx" x)

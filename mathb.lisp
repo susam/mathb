@@ -83,7 +83,7 @@
 
 (defun string-trim-whitespace (s)
   "Trim whitespace from given string."
-  (string-trim '(#\space #\tab #\return #\newline) s))
+  (string-trim '(#\Space #\Tab #\Return #\Newline) s))
 
 (defun weekday-name (weekday-index)
   "Given an index, return the corresponding day of week."
@@ -414,6 +414,10 @@
            (format nil "Name ~a!" result))
           ((setf result (bad-length-p code min-code-length max-code-length))
            (format nil "Code ~a!" result))
+          ((or (find #\Return title) (find #\Newline title))
+           (format  nil "Title must not contain newline!"))
+          ((or (find #\Return name) (find #\Newline name))
+           (format  nil "Name must not contain newline!"))
           ((dodgy-content-p options title name code)
            "Dodgy content!")
           ((dodgy-post-p token)
