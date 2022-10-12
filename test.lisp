@@ -140,9 +140,16 @@
   (assert (string= (string-trim-whitespace " ") ""))
   (assert (string= (string-trim-whitespace " x  ") "x"))
   (assert (string= (string-trim-whitespace (format nil "~%x~%")) "x"))
-  (assert (string= (string-trim-whitespace (format nil "x~a" #\tab)) "x"))
-  (assert (string= (string-trim-whitespace (format nil "x~a" #\return)) "x"))
-  (assert (string= (string-trim-whitespace (format nil "x~a" #\newline)) "x")))
+  (assert (string= (string-trim-whitespace (format nil "x~a" #\Tab)) "x"))
+  (assert (string= (string-trim-whitespace (format nil "x~a" #\Return)) "x"))
+  (assert (string= (string-trim-whitespace (format nil "x~a" #\Newline)) "x")))
+
+(test-case fix-lines
+  (assert (string= (fix-lines (format nil "")) ""))
+  (assert (string= (fix-lines (format nil "~c" #\Return)) ""))
+  (assert (string= (fix-lines (format nil "~c~%" #\Return)) (format nil "~%")))
+  (assert (string= (fix-lines (format nil "a~c" #\Return)) (format nil "a")))
+  (assert (string= (fix-lines (format nil "foo~%")) (format nil "foo~%"))))
 
 (test-case weekday-name
   (assert (string= (weekday-name 0) "Mon"))

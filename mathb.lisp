@@ -85,6 +85,10 @@
   "Trim whitespace from given string."
   (string-trim '(#\Space #\Tab #\Return #\Newline) s))
 
+(defun fix-lines (s)
+  "Remove carriage returns from string."
+  (remove #\Return s))
+
 (defun weekday-name (weekday-index)
   "Given an index, return the corresponding day of week."
   (nth weekday-index '("Mon" "Tue" "Wed" "Thu" "Fri" "Sat" "Sun")))
@@ -472,7 +476,7 @@
          (current-time (get-universal-time))
          (title (string-trim-whitespace (or (from-post "title") "")))
          (name (string-trim-whitespace (or (from-post "name") "")))
-         (code (string-trim-whitespace (or (from-post "code") "")))
+         (code (string-trim-whitespace (fix-lines (or (from-post "code") ""))))
          (token (or (from-post "token") ""))
          (reject (reject-post-p options ip current-time title name code token)))
     (if reject

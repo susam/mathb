@@ -21,6 +21,7 @@ Changelog
 - Do not allow code textarea to be dragged to overlap with output sheet.
 - Reject post if title field contains carriage return or line feed character.
 - Reject post if name field contains carriage return or line feed character.
+- Remove carriage returns from code before writing to data file.
 
 
 ### Fixed
