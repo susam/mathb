@@ -13,6 +13,8 @@ help:
 	@echo '  backup       Create live server data backup.'
 	@echo '  follow-log   Follow logs on live server.'
 	@echo '  follow-post  Follow POST logs on live server.'
+	@echo '  post-log     Filter logs to find all successful posts.'
+	@echo '  top-get-log  Filter logs to find most popular pages.'
 	@echo
 	@echo 'Low-level targets:'
 	@echo '  live         Generate live website.'
@@ -109,6 +111,12 @@ follow-log:
 
 follow-post:
 	sudo journalctl -fu mathb | grep POST
+
+post-log:
+	sudo journalctl -u mathb | grep written
+
+top-get-log:
+	sudo journalctl -u mathb | grep ' 200 ' | grep -o 'GET /[0-9]*' | sort | uniq -c | sort -nr | nl | less
 
 
 # Low-Level Targets
