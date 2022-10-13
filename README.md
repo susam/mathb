@@ -28,8 +28,10 @@ Contents
 Quick Start
 -----------
 
-This section explains how to run MathB locally. The steps assume a
-macOS, Debian, or Debian-based Linux distribution.
+This section explains how to run this project locally. The steps
+assume a macOS, Debian, or Debian-based Linux distribution. However,
+it should be possible to adapt these steps for another operating
+system.
 
  1. Install SBCL and Git.
 
@@ -43,7 +45,8 @@ macOS, Debian, or Debian-based Linux distribution.
     following command:
 
     ```sh
-    sudo apt-get update && sudo apt-get install sbcl git
+    sudo apt-get update
+    sudo apt-get install sbcl git
     ```
 
  2. Install Quicklisp with the following commands:
@@ -56,7 +59,7 @@ macOS, Debian, or Debian-based Linux distribution.
 
  3. From here on, we assume that all commands are being run in the
     top-level directory of this project. Set up dependencies necessary
-    to run MathB by running this command within the top-level
+    to run this project by running this command within the top-level
     directory of this project:
 
     ```sh
@@ -66,7 +69,7 @@ macOS, Debian, or Debian-based Linux distribution.
     This creates a `_live` directory within the current directory and
     copies all necessary dependencies to it.
 
- 4. Create MathB data directory:
+ 4. Create data directory:
 
     ```sh
     sudo mkdir -p /opt/data/mathb/
@@ -75,8 +78,8 @@ macOS, Debian, or Debian-based Linux distribution.
     ```
 
     By default, MathB reads post data from and writes post to
-    `/opt/data/mathb/`. The next section explains how to make MathB
-    use a custom data directory path.
+    `/opt/data/mathb/`. The next section explains how to make it use a
+    custom data directory path.
 
  4. Run MathB with the following command:
 
@@ -96,11 +99,11 @@ Data Directory
 
 In the previous section, we created a data directory at
 `/opt/data/mathb/`. By default, MathB writes new posts to and reads
-posts from this directory path. To make MathB use a different path for
+posts from this directory path. To make it use a different path for
 the data directory, set the variable named `*data-directory*` before
-loading MathB. The following steps explain how to do this:
+loading it. The following steps explain how to do this:
 
- 1. Create MathB data directory at a custom path, say, at `~/data`:
+ 1. Create data directory at a custom path, say, at `~/data`:
 
     ```sh
     mkdir -p ~/data/
@@ -168,13 +171,12 @@ provided below.
 
   - `:lock-down` (default is `nil`): A value of `t` makes MathB run in
     lock-down mode, i.e., existing posts cannot be viewed and new
-    posts cannot be submitted. A value of `nil` makes MathB run
-    normally in read-write mode.
+    posts cannot be submitted.
 
   - `:read-only` (default is `nil`): A value of `t` makes MathB run in
     read-only mode, i.e., old posts can be viewed but new posts cannot
-    be made. A value of `nil` makes MathB run normally in read-write
-    mode.
+    be made. If the values of both this property and the previous
+    property are `nil`, then MathB runs normally in read-write mode.
 
   - `:min-title-length` (default is `0`): The minimum number of
     characters allowed in the title field.
@@ -195,8 +197,7 @@ provided below.
     characters allowed in the code field.
 
   - `:global-post-interval` (default is `0`): The minimum interval (in
-    seconds) between two consecutive successful posts allowed on
-    MathB.
+    seconds) required between two consecutive successful posts.
 
     Example: If this value is `10` and one client submits a new post
     at 10:00:00 and another client submits a post at 10:00:07, the
@@ -230,7 +231,7 @@ provided below.
 
   - `:ban` (default is `nil`): A list of IPv4 or IPv6 address
     prefixes. If the address of the remote client (as it appears in
-    the MathB logs) matches any prefix in this list, the post from the
+    the logs) matches any prefix in this list, the post from the
     client is rejected. The prefixes must be expressed as simple
     string literals. CIDRs, globs, regular expressions, etc. are not
     supported. A dollar sign (`$`) at the end of a prefix string
@@ -251,11 +252,11 @@ provided below.
     MathB determines that the post ID of the next post is less than or
     equal to this value, then it rejects the post. Setting this
     property is almost never required. However, it is provided for
-    paranoid administrators of MathB who might worry what would happen
-    if the data file `slug.txt` ever becomes corrupt. This property
-    ensures that in case this data file ever becomes corrupt, MathB
-    would never ever overwrite older posts with IDs less than or equal
-    to the number set for this property.
+    paranoid administrators who might worry what would happen if the
+    data file `slug.txt` ever becomes corrupt. This property ensures
+    that in case this data file ever becomes corrupt, MathB would
+    never ever overwrite old posts with IDs less than or equal to the
+    number set for this property.
 
     Example: Let us assume that the current value in `slug.txt`
     is 1200. Now normally, the next time a client submits a new post,
@@ -264,7 +265,7 @@ provided below.
     assume that due to an unforeseen scenario (say, a bug in MathB or
     a hardware failure), the value in `slug.txt` is corrupted to `12`.
     With a value of `0` for `:protect`, MathB would overwrite an
-    existing post at `post/0/0/12.txt`. However, with a value of say,
+    existing post at `post/0/0/13.txt`. However, with a value of say,
     `100` for `:protect`, MathB would refuse to overwrite the existing
     port.
 
@@ -276,18 +277,18 @@ provided below.
     footer.
 
 If a property name is missing from this file or if the file itself is
-missing, then MathB defaults to the default value of the property
-mentioned within parentheses above.
+missing, then the default value of the property mentioned within
+parentheses above is used.
 
-Whenever MathB rejects a post due to a runtime option, the entire
-input form is returned intact to the client with an error message, so
-that they can fix the errors or wait for the suggested post interval
-and resubmit the post again.
+Whenever a post is rejected due to a runtime option, the entire input
+form is returned intact to the client with an error message, so that
+they can fix the errors or wait for the suggested post interval and
+resubmit the post again.
 
 The property values in `opt.lisp` may be modified at any time, even
 while MathB is running. It is not necessary to restart MathB after
-changing property values in `opt.lisp`. MathB automatically picks up
-the changes while processing the next HTTP POST request.
+changing property values in `opt.lisp`. The changes are picked up
+automatically while processing the next HTTP POST request.
 
 
 Template Files
@@ -306,7 +307,7 @@ clients:
 
 A template file may be modified at any time, even while MathB is
 running. It is not necessary to restart MathB after changing a
-template file. MathB automatically picks up the template changes while
+template file. The changes are picked up automatically while
 processing the next HTTP request.
 
 [`web/html/mathb.html`]: web/html/mathb.html
