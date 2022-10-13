@@ -1,6 +1,6 @@
 Date: 2012-03-25 00:00:00 +0000
 Title: About MathB.in
-Name: 
+Name:
 
 [MathB.in] is a website meant for sharing snippets
 of mathematical text with others on the web. This

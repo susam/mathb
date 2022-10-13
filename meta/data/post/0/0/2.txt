@@ -1,6 +1,6 @@
 Date: 2012-03-25 00:00:00 +0000
 Title: Get Started
-Name: 
+Name:
 
 Inline Mathematics
 ------------------
