@@ -116,10 +116,13 @@ review:
 		while [ "$$reply" = e ]; do \
 			emacs "$$f"; \
 			echo; head "$$f"; printf "\n\n...\n\n"; tail "$$f"; echo; \
-			printf "Action for $$f (d, e, n, q)? "; \
-			read reply; \
-			[ "$$reply" = d ] && mv "$$f" /tmp/deleted; \
-			[ "$$reply" = q ] && exit; \
+			reply=; \
+			while ! printf '%s' "$$reply" | grep -qE '^(e|d|n|q)$$'; do \
+				printf "Action for $$f (d, e, n, q)? "; \
+				read reply; \
+				[ "$$reply" = d ] && mv "$$f" /tmp/deleted; \
+				[ "$$reply" = q ] && exit; \
+			done; \
 		done; \
 	done; echo Done; echo
 
