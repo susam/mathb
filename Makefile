@@ -11,6 +11,7 @@ help:
 	@echo '  http         Reinstall live website and serve with Nginx via HTTP.'
 	@echo '  rm           Uninstall live website.'
 	@echo '  backup       Create live server data backup.'
+	@echo '  review       Review posts listed in /tmp/review.txt.'
 	@echo '  follow-log   Follow logs on live server.'
 	@echo '  follow-post  Follow POST logs on live server.'
 	@echo '  post-log     Filter logs to find all successful posts.'
@@ -105,6 +106,22 @@ backup:
 	ls -1 /opt/cache/mathb-*.tgz | sort -r | tail -n +100 | xargs rm -vf
 	ls -lh /opt/cache/
 	df -h /
+
+review:
+	mkdir -p /tmp/deleted
+	[ -f /tmp/review.txt ]
+	for f in $$(cat /tmp/review.txt); do \
+		reply=e; \
+		echo "Editing $$f ..."; \
+		while [ "$$reply" = e ]; do \
+			emacs "$$f"; \
+			echo; head "$$f"; printf "\n\n...\n\n"; tail "$$f"; echo; \
+			printf "Action for $$f (d, e, n, q)? "; \
+			read reply; \
+			[ "$$reply" = d ] && mv "$$f" /tmp/deleted; \
+			[ "$$reply" = q ] && exit; \
+		done; \
+	done; echo Done; echo
 
 follow-log:
 	sudo journalctl -fu mathb
