@@ -107,7 +107,7 @@ backup:
 	ls -lh /opt/cache/
 	df -h /
 
-review:
+review: checkroot
 	mkdir -p /tmp/deleted
 	[ -f /tmp/review.txt ]
 	for f in $$(cat /tmp/review.txt); do \
