@@ -42,14 +42,14 @@ setup:
 	rm -rf /opt/quicklisp.lisp /opt/quicklisp
 	curl https://beta.quicklisp.org/quicklisp.lisp -o /opt/quicklisp.lisp
 	sbcl --load /opt/quicklisp.lisp \
-	     --eval '(quicklisp-quickstart:install :path "/opt/quicklisp/")' \
-	     --quit
+		--eval '(quicklisp-quickstart:install :path "/opt/quicklisp/")' \
+		--quit
 	chown -R www-data:www-data /opt/quicklisp
 
 https: http wait-http
 	@echo Setting up HTTPS website ...
 	certbot certonly -n --agree-tos -m '$(MAIL)' --webroot \
-	                 -w '/var/www/$(FQDN)' -d '$(FQDN),www.$(FQDN)'
+		-w '/var/www/$(FQDN)' -d '$(FQDN),www.$(FQDN)'
 	(crontab -l | sed '/::::/d'; cat etc/crontab) | crontab
 	ln -snf "$$PWD/etc/nginx/https.$(FQDN)" '/etc/nginx/sites-enabled/$(FQDN)'
 	systemctl restart nginx
