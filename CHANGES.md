@@ -26,8 +26,8 @@ Changelog
 
 ### Fixed
 
-- Rendering error when the input contains commands that require
-  additional MathJax extensions.
+- Rendering error for LaTeX commands that need additional MathJax extensions.
+- Alternate HTML elements in the output not getting sanitized.
 
 
 1.1.0 (2022-09-30)

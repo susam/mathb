@@ -37,7 +37,7 @@ window.onload = function () {
         node.removeAttributeNode(node.attributes[i])
       }
     }
-    for (let i = 0; i < node.childNodes.length; i++) {
+    for (let i = node.childNodes.length - 1; i >= 0; i--) {
       sanitizeDOM(node.childNodes[i])
     }
   }
