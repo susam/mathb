@@ -1,0 +1,5 @@
+/opt/log/mathb/*.log {
+    rotate 14
+    daily
+    missingok
+}

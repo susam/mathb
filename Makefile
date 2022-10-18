@@ -60,6 +60,7 @@ http: rm live mathb
 	@echo Setting up HTTP website ...
 	ln -snf "$$PWD/_live" '/var/www/$(FQDN)'
 	ln -snf "$$PWD/etc/nginx/http.$(FQDN)" '/etc/nginx/sites-enabled/$(FQDN)'
+	ln -snf "$$PWD/etc/logrotate" /etc/logrotate/mathb
 	systemctl restart nginx
 	echo 127.0.0.1 '$(NAME)' >> /etc/hosts
 	@echo Done; echo
@@ -82,6 +83,7 @@ mathb:
 
 rm: checkroot
 	@echo Removing website ...
+	rm -f /etc/logrotate/mathb
 	rm -f '/etc/nginx/sites-enabled/$(FQDN)'
 	rm -f '/var/www/$(FQDN)'
 	systemctl restart nginx
