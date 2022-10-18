@@ -72,10 +72,8 @@ wait-http:
 
 mathb:
 	@echo Setting up mathb ...
-	mkdir -p /opt/cache
-	mkdir -p /opt/data/mathb
-	chown -R www-data:www-data /opt/cache
-	chown -R www-data:www-data /opt/data/mathb
+	mkdir -p /opt/cache/ /opt/data/mathb/ /opt/log/mathb/
+	chown -R www-data:www-data /opt/cache/ /opt/data/mathb/ /opt/log/mathb/
 	systemctl enable "/opt/mathb.in/etc/mathb.service"
 	systemctl daemon-reload
 	systemctl start mathb
@@ -171,9 +169,9 @@ site:
 # -------------------
 
 data:
-	sudo mkdir -p /opt/data/mathb/
+	sudo mkdir -p /opt/data/mathb/ /opt/log/mathb/
 	sudo cp -R meta/data/* /opt/data/mathb/
-	sudo chown -R "$$USER" /opt/data/mathb/
+	sudo chown -R "$$USER" /opt/data/mathb/ /opt/log/mathb/
 
 run:
 	sbcl --load mathb.lisp
