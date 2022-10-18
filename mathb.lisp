@@ -52,17 +52,6 @@
   "Return address of the remote client (not of the local reverse-proxy)."
   (hunchentoot:real-remote-addr))
 
-(defun write-log (fmt &rest args)
-  "Log message with specified arguments."
-  (when *log-mode*
-    (format t "~a - [~a] \"~a ~a\" "
-            (real-ip)
-            (current-utc-time-string)
-            (hunchentoot:request-method*)
-            (hunchentoot:request-uri*))
-    (apply #'format t fmt args)
-    (terpri)))
-
 (defun string-starts-with (prefix string)
   "Test that string starts with the given prefix."
   (and (<= (length prefix) (length string))
@@ -121,6 +110,33 @@
   "Given a key, return its value found in the list of parameters."
   (cdr (assoc key alist :test #'string=)))
 
+
+;;; Tool Definitions
+;;; ----------------
+
+(defvar *data-directory* "/opt/data/mathb/"
+  "Directory where post files and data are written to and read from.")
+
+(defvar *log-directory* "/opt/log/mathb/"
+  "Directory where log files are written to.")
+
+(defun log-file-path ()
+  "Return path to the log file."
+  (format nil "~amathb.log" *log-directory*))
+
+(defun write-log (fmt &rest args)
+  "Log message with specified arguments."
+  (when *log-mode*
+    (write-file (log-file-path)
+     (with-output-to-string (s)
+       (format s "~a - [~a] \"~a ~a\" "
+               (real-ip)
+               (current-utc-time-string)
+               (hunchentoot:request-method*)
+               (hunchentoot:request-uri*))
+       (apply #'format s fmt args)
+       (terpri s)))))
+
 (defun lock (directory)
   "Acquire lock for specified directory and return t iff successful."
   (let ((lock-dir (merge-pathnames "lock/" directory))
@@ -145,13 +161,6 @@
   "Release lock for specified directory."
   (uiop:delete-empty-directory (merge-pathnames "lock/" directory))
   (write-log "Released lock"))
-
-
-;;; Tool Definitions
-;;; ----------------
-
-(defvar *data-directory* "/opt/data/mathb/"
-  "Directory where post files and data are written to and read from.")
 
 (defun read-options (directory)
   "Read options file."
@@ -506,7 +515,9 @@
 (defun start-server ()
   "Start HTTP server."
   (let ((acceptor (make-instance 'hunchentoot:easy-acceptor
-                                 :address "127.0.0.1" :port 4242)))
+                                 :address "127.0.0.1"
+                                 :port 4242
+                                 :access-log-destination (log-file-path))))
     (setf (hunchentoot:acceptor-document-root acceptor) #p"_live/")
     (hunchentoot:start acceptor)))
 

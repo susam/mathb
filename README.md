@@ -12,7 +12,7 @@ Contents
 --------
 
 * [Quick Start](#quick-start)
-* [Data Directory](#data-directory)
+* [Custom Directory Paths](#custom-directory-paths)
 * [Data Files](#data-files)
 * [Runtime Options](#runtime-options)
 * [Templates Files](#template-files)
@@ -72,14 +72,15 @@ system.
  4. Create data directory:
 
     ```sh
-    sudo mkdir -p /opt/data/mathb/
+    sudo mkdir -p /opt/data/mathb/ /opt/log/mathb/
     sudo cp -R meta/data/* /opt/data/mathb/
-    sudo chown -R "$USER" /opt/data/mathb/
+    sudo chown -R "$USER" /opt/data/mathb/ /opt/log/mathb/
     ```
 
     By default, MathB reads post data from and writes post to
-    `/opt/data/mathb/`. The next section explains how to make it use a
-    custom data directory path.
+    `/opt/data/mathb/`. It writes logs to `/opt/log/mathb/` by
+    default. The next section explains how to make it use custom
+    directory paths.
 
  4. Run MathB with the following command:
 
@@ -94,26 +95,30 @@ links and make a new post to confirm that MathB is working as
 expected.
 
 
-Data Directory
---------------
+Custom Directory Paths
+----------------------
 
 In the previous section, we created a data directory at
-`/opt/data/mathb/`. By default, MathB writes new posts to and reads
-posts from this directory path. To make it use a different path for
-the data directory, set the variable named `*data-directory*` before
-loading it. The following steps explain how to do this:
+`/opt/data/mathb/` and a log directory at `/opt/log/mathb/`. By
+default, MathB writes new posts to and reads posts from this directory
+path. To make it use a different path for the data directory, set the
+variable named `*data-directory*` before loading it. Similarly, set
+the variable named `*log-directory*` to specify a different path for
+the log directory. The following steps demonstrate how to do this:
 
  1. Create data directory at a custom path, say, at `~/data`:
 
     ```sh
-    mkdir -p ~/data/
+    mkdir -p ~/data/ ~/log/
     cp -R meta/data/* ~/data/
     ```
 
  2. Run MathB with the following command:
 
     ```sh
-    sbcl --eval '(defvar *data-directory* "~/data/")' --load mathb.lisp
+    sbcl --eval '(defvar *data-directory* "~/data/")' \
+         --eval '(defvar *log-directory* "~/log/")' \
+         --load mathb.lisp
     ```
 
  3. Visit http://localhost:4242/ with a web browser to use MathB.

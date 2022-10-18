@@ -1,6 +1,19 @@
 Changelog
 =========
 
+1.3.0 (DEVELOPING)
+------------------
+
+### Added
+
+- Special variable `*log-directory*` to specify directory to write logs to.
+
+
+### Changed
+
+- Logs are now written to `/opt/log/mathb/` by default.
+
+
 1.2.0 (2022-10-16)
 ------------------
 
@@ -64,6 +77,8 @@ Changelog
 - Responsive layout to adapt the user interface to narrow screens.
 - Use TeXMe to render Markdown + LaTeX.
 - Add post interval features to control flooding.
+- Data is read from `/opt/data/mathb/` by default.
+- Special variable `*data-directory*` to specify default data directory.
 - Control runtime behaviour with `opt.lisp`.
 - Runtime property `:read-only` to run MathB in read-only mode.
 - Runtime property `:max-title-length` to specify maximum title length.
@@ -76,7 +91,7 @@ Changelog
 - Runtime property `:block` to specify blocked strings in post.
 
 
-### Removed
+### Changed
 
 - No more PHP source code. All application code is in Common Lisp now.
 
