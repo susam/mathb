@@ -32,7 +32,10 @@ This website collects the following data:
   typically, but not necessarily, sends the URL of
   the web page or website where you clicked on a
   link to visit this website as the HTTP referrer
-  value.
+  value. If this website is visited directly
+  without clicking on any link, then a web browser
+  or client does not typically send any HTTP
+  referrer data.
 
 - User agent string sent by your web browser or
   client software while visiting this website. A
