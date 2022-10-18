@@ -60,7 +60,7 @@ http: rm live mathb
 	@echo Setting up HTTP website ...
 	ln -snf "$$PWD/_live" '/var/www/$(FQDN)'
 	ln -snf "$$PWD/etc/nginx/http.$(FQDN)" '/etc/nginx/sites-enabled/$(FQDN)'
-	ln -snf "$$PWD/etc/logrotate" /etc/logrotate/mathb
+	ln -snf "$$PWD/etc/logrotate" /etc/logrotate.d/mathb
 	systemctl restart nginx
 	echo 127.0.0.1 '$(NAME)' >> /etc/hosts
 	@echo Done; echo
