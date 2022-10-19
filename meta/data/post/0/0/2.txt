@@ -99,9 +99,10 @@ Markdown
 --------
 
 This website supports GitHub Flavoured Markdown
-(GFM). See the [GitHub Flavoured Markdown
-Specification][G1] for more details on the
-specification.
+(GFM). GFM is a strict superset of the CommonMark
+specification of Markdown. See the [GitHub
+Flavoured Markdown Specification][G1] for more
+details on the specification.
 
 
 TeXMe
@@ -139,6 +140,51 @@ Here is how the above code is rendered in the output:
 
 See [TeXMe: Markdown Priority Environment][T2] to
 learn more about this.
+
+
+Print
+-----
+
+While the primary purpose of this website is to
+allow users to write mathematical snippets, save
+them, and share a link to them with others, the
+stylesheet used in this website takes special care
+to allow printing beautifully rendered pages to
+paper or PDF.
+
+When a page from this website is printed, only the
+rendered content appears in the print. The input
+form, buttons, navigation links, and other user
+interface elements do not appear in the print.
+
+
+Save PDF
+--------
+
+It is possible to turn a post on this website into
+a PDF file using the printing facility of most web
+browsers running on a desktop or laptop. The exact
+steps to save a web page as PDF vary from browser
+to browser but the steps to do so roughly look
+like this:
+
+- Select File > Print from the web browser menu.
+- Then in the print window or dialog box that
+  comes up, deselect/disable the options to print
+  headers and footers.
+- Finally, choose the option to save a PDF.
+
+You can try the above steps right now with this
+page and save this page as PDF.
+
+If everything works as expected, the saved PDF
+should contain only the rendered content with all
+mathematical formulas rendered properly. This
+website has special styling rules to ensure that
+the input form, buttons, navigation links, and
+other user interface elements do not appear in
+saved PDF.
+
 
 [M1]: http://www.mathjax.org/
 [M2]: https://docs.mathjax.org/en/latest/input/tex/macros/
