@@ -48,6 +48,14 @@
   (with-open-file (f filename :direction :output :if-exists :supersede)
     (write-sequence text f)))
 
+(defun append-file (filename text)
+  "Append text to file and close the file."
+  (make-directory filename)
+  (with-open-file (f filename :direction :output
+                              :if-exists :append
+                              :if-does-not-exist :create)
+    (write-sequence text f)))
+
 (defun real-ip ()
   "Return address of the remote client (not of the local reverse-proxy)."
   (hunchentoot:real-remote-addr))
@@ -127,7 +135,7 @@
 (defun write-log (fmt &rest args)
   "Log message with specified arguments."
   (when *log-mode*
-    (write-file (log-file-path)
+    (append-file (log-file-path)
      (with-output-to-string (s)
        (format s "~a - [~a] \"~a ~a\" "
                (real-ip)

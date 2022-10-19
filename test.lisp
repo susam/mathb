@@ -112,6 +112,23 @@
   (write-file "test-tmp/foo/bar/baz/qux.txt" "foo")
   (assert (string= (read-file "test-tmp/foo/bar/baz/qux.txt") "foo")))
 
+(test-case append-file-single-line
+  (append-file "test-tmp/foo.txt" "foo")
+  (assert (string= (read-file "test-tmp/foo.txt") "foo")))
+
+(test-case append-file-multiple-lines
+  (append-file "test-tmp/foo.txt" "foo")
+  (append-file "test-tmp/foo.txt" (format nil "bar~%"))
+  (append-file "test-tmp/foo.txt" "baz")
+  (append-file "test-tmp/foo.txt" (format nil "qux~%"))
+  (assert (string= (read-file "test-tmp/foo.txt")
+                   (format nil "foobar~%bazqux~%"))))
+
+(test-case append-file-nested-directories
+  (append-file "test-tmp/foo/bar/baz/qux.txt" "foo")
+  (append-file "test-tmp/foo/bar/baz/qux.txt" "bar")
+  (assert (string= (read-file "test-tmp/foo/bar/baz/qux.txt") "foobar")))
+
 (test-case write-log
   (write-log "~a, ~a" "hello" "world"))
 
