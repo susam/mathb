@@ -84,7 +84,7 @@ system.
     This creates a `_live` directory within the current directory and
     copies all necessary dependencies to it.
 
- 4. Create data directory:
+ 4. Create data and log directories:
 
     ```sh
     sudo mkdir -p /opt/data/mathb/ /opt/log/mathb/
