@@ -512,7 +512,11 @@
     (hunchentoot:define-easy-handler (post-handler :uri #'post-request-p) ()
       (post-response directory))))
 
-(defmethod hunchentoot:acceptor-status-message (acceptor http-status-code &key)
+(defclass custom-acceptor (hunchentoot:easy-acceptor)
+  ())
+
+(defmethod hunchentoot:acceptor-status-message
+    ((acceptor custom-acceptor) http-status-code &key)
   "Custom error page."
   (let ((html (read-file "web/html/error.html"))
         (reason-phrase (hunchentoot:reason-phrase http-status-code)))
@@ -522,7 +526,7 @@
 
 (defun start-server ()
   "Start HTTP server."
-  (let ((acceptor (make-instance 'hunchentoot:easy-acceptor
+  (let ((acceptor (make-instance 'custom-acceptor
                                  :address "127.0.0.1"
                                  :port 4242
                                  :access-log-destination (log-file-path))))

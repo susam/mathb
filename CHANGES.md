@@ -14,6 +14,11 @@ Changelog
 - Logs are now written to `/opt/log/mathb/` by default.
 
 
+### Fixed
+
+- Warning for `redefining HUNCHENTOOT:ACCEPTOR-STATUS-MESSAGE` during start-up.
+
+
 1.2.0 (2022-10-16)
 ------------------
 
