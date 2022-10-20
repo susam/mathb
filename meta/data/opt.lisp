@@ -8,6 +8,7 @@
  :max-code-length 10000
  :global-post-interval 0
  :client-post-interval 0
+ :expect ()
  :block ("berk" "naff" "xxx")
  :ban nil
  :protect 0

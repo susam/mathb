@@ -365,6 +365,12 @@
          (format nil "must not contain more than ~a character~a"
                  max-length (if (= 1 max-length) "" "s")))))
 
+(defun improper-code-p (options code)
+  "Check if expected tokens are missing from submitted code."
+  (let ((tokens (getf options :expect)))
+    (and tokens
+         (notany (lambda (token) (search token code)) tokens))))
+
 (defun dodgy-content-p (options title name code)
   "Check if post content contains banned words."
   (let ((words (getf options :block))
@@ -439,6 +445,8 @@
            (format  nil "Title must not contain newline!"))
           ((or (find #\Return name) (find #\Newline name))
            (format  nil "Name must not contain newline!"))
+          ((improper-code-p options code)
+           "Improper code!")
           ((dodgy-content-p options title name code)
            "Dodgy content!")
           ((dodgy-post-p token)

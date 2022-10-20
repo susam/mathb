@@ -378,6 +378,15 @@ Bar"))
     (assert (= x 1000))
     (assert (= (gethash "ip1" y) 1000))))
 
+(test-case improper-code-p
+  (assert (not (improper-code-p nil "foo")))
+  (assert (not (improper-code-p '(:expect ("foo")) "foo")))
+  (assert (not (improper-code-p '(:expect ("foo" "bar")) "foo")))
+  (assert (not (improper-code-p '(:expect ("foo" "bar")) "bar")))
+  (assert (not (improper-code-p '(:expect ("foo" "bar")) "foobarbaz")))
+  (assert (improper-code-p '(:expect ("bar")) "foo"))
+  (assert (improper-code-p '(:expect ("bar" "baz")) "foo")))
+
 (test-case dodgy-content-p
   (assert (not (dodgy-content-p nil "foo" "bar" "qux")))
   (assert (not (dodgy-content-p '(:block ("quux")) "foo" "bar" "qux")))
@@ -514,7 +523,12 @@ Bar"))
     (setf name (format nil "foo~c" #\Newline))
     (assert (string= (reject-post-p nil "ip1" 0 "" name "bar" x) err))))
 
-(test-case reject-post-p-words
+(test-case reject-post-p-expect
+  (let ((x (write-to-string (calc-token 123))))
+    (assert (string= (reject-post-p '(:expect ("foo")) "ip1" 0 "" "" "bar" x)
+                     "Improper code!"))))
+
+(test-case reject-post-p-block
   (let ((x (write-to-string (calc-token 123))))
     (assert (string= (reject-post-p '(:block ("xy")) "ip1" 0 "xy" "yz" "zx" x)
                      "Dodgy content!"))))
