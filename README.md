@@ -92,7 +92,7 @@ system.
     sudo chown -R "$USER" /opt/data/mathb/ /opt/log/mathb/
     ```
 
-    By default, MathB reads post data from and writes post to
+    By default, MathB reads post data from and writes posts to
     `/opt/data/mathb/`. It writes logs to `/opt/log/mathb/` by
     default. The next section explains how to make it use custom
     directory paths.

@@ -21,7 +21,7 @@ Common Geometry
   - Submit: 2rem + 4px
   - Padding: 1rem
   - Border: 1px
-  
+
 - HR: 2rem + 1px
   - Top margin: 1rem
   - Border: 1px
@@ -44,14 +44,14 @@ Narrow View Geometry
   - URL: 2rem + 4px
   - Margin: 1rem
   - Copy: 2rem + 4px
-  
+
 - HR: 2rem + 1px
 
 - Header + Form + Margin + Output + HR = 26.5rem + 17px + C + V = 100vh
   - Thus V = 100vh - 26.5rem - 17px - C.
   - Let C = 10 rem
   - Thus V = 100vh - 36.5rem - 17px ~ 100vh - 38rem
-  
+
 
 
 Wide View Geometry
@@ -71,6 +71,6 @@ Wide View Geometry
 
 - Header + Form + HR: 18rem + 13px + C = 100vh
   - Thus C = 100vh - 18rem - 13px ~ 100vh - 19rem
-  
+
 - Header + Output + H$: 11.5rem + 5px + V = 100vh
   - Thus V = 100vh - 11.5rem - 5px ~ 110vh - 12rem
