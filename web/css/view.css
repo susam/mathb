@@ -21,16 +21,9 @@
 #view img {
   max-width: 100%;
 }
-#view pre, #view code, #view samp, #view kbd {
-  color: #009;
+#view pre, #view code {
   font-family: monospace, monospace;
-}
-#view pre kbd {
-  color: #060;
-}
-#view pre, #view blockquote {
-  background: #eee;
-  padding: 0.5em;
+  color: #050;
 }
 #view pre {
   overflow: auto;
@@ -54,10 +47,7 @@
   text-align: left;
 }
 @media (prefers-color-scheme: dark) {
-  #view pre, #view code, #view samp, #view kbd {
-    color: #6cf;
-  }
-  #view pre kbd {
+  #view pre, #view code {
     color: #9c6;
   }
   #view pre, #view blockquote {
