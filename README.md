@@ -240,6 +240,16 @@ provided below.
     for other clients. For example, another client can successfully
     submit their post at 10:00:07 while the first client cannot.
 
+  - `:expect` (default is `nil`): A list of strings. At least one
+    string from this list must occur in the submitted code field.
+
+    Example: If this value is `("\(" "\[")` and the submitted post
+    contains `\[ 1 + 1 = 2. \]` in the code field, then the post is
+    accepted successfully. However, if the submitted code contains
+    only `1 + 1 = 2`, then the post is rejected because neither the
+    string `"\("` nor the string `"\["` occurs in the code field of
+    this submission.
+
   - `:block` (default is `nil`): A list of strings that are not
     allowed in a post. If a post contains any string in this list, the
     post is rejected and the input form is returned intact to the

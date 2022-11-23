@@ -6,6 +6,7 @@ Changelog
 
 ### Added
 
+- Runtime property `:expect` to enforce presence of tokens in code.
 - Special variable `*log-directory*` to specify directory to write logs to.
 
 

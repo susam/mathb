@@ -10,7 +10,7 @@
  :client-post-interval 0
  :expect ()
  :block ("berk" "naff" "xxx")
- :ban nil
+ :ban ()
  :protect 0
  :initial-year 2012
  :copyright-owner "MathB")
