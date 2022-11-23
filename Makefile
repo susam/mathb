@@ -22,7 +22,7 @@ help:
 	@echo '  site         Generate local website.'
 	@echo
 	@echo 'Development targets:'
-	@echo '  data         Create a development data directory for testing.'
+	@echo '  opt          Create directories at /opt for testing.'
 	@echo '  run          Run application.'
 	@echo '  test         Test application code.'
 	@echo '  checks       Validate consistency within configuration.'
@@ -127,16 +127,16 @@ review: checkroot
 	done; echo Done; echo
 
 follow-log:
-	sudo journalctl -fu mathb
+	tail -F /opt/log/mathb/mathb.log
 
 follow-post:
-	sudo journalctl -fu mathb | grep POST
+	tail -F /opt/log/mathb/mathb.log | grep POST
 
 post-log:
-	sudo journalctl -u mathb | grep written
+	tail -F /opt/log/mathb/mathb.log | grep written
 
 top-get-log:
-	sudo journalctl -u mathb | grep ' 200 ' | grep -o 'GET /[0-9]*' | sort | uniq -c | sort -nr | nl | less
+	grep ' 200 ' /opt/log/mathb/mathb.log* | grep -o 'GET /[0-9]*' | sort | uniq -c | sort -nr | nl | less
 
 
 # Low-Level Targets
@@ -168,7 +168,7 @@ site:
 # Development Targets
 # -------------------
 
-data:
+opt:
 	sudo mkdir -p /opt/data/mathb/ /opt/log/mathb/
 	sudo cp -R meta/data/* /opt/data/mathb/
 	sudo chown -R "$$USER" /opt/data/mathb/ /opt/log/mathb/
