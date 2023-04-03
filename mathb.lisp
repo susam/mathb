@@ -203,10 +203,6 @@
        (or (string= (hunchentoot:script-name request) "/")
            (every #'digit-char-p (subseq (hunchentoot:script-name request) 1)))))
 
-(defun current-year ()
-  "Return the current year."
-  (nth-value 5 (get-decoded-time)))
-
 (defun slug-to-path (directory slug)
   "Convert a slug to path, e.g., 1234567 to /directory/post/1/1234/1234567.txt"
   (let* ((short-prefix (floor slug 1000000))
@@ -298,17 +294,12 @@
 
 (defun render-html (html options date title name code error class)
   "Render HTML for a page."
-  (let ((initial-year (getf options :initial-year 2012))
-        (owner (getf options :copyright-owner "MathB")))
-    (setf html (string-replace "{{ date }}" date html))
-    (setf html (string-replace "{{ title }}" title html))
-    (setf html (string-replace "{{ name }}" name html))
-    (setf html (string-replace "{{ code }}" code html))
-    (setf html (string-replace "{{ error }}" error html))
-    (setf html (string-replace "{{ class }}" class html))
-    (setf html (string-replace "{{ initial-year }}" initial-year html))
-    (setf html (string-replace "{{ current-year }}" (current-year) html))
-    (setf html (string-replace "{{ copyright-owner }}" owner html))))
+  (setf html (string-replace "{{ date }}" date html))
+  (setf html (string-replace "{{ title }}" title html))
+  (setf html (string-replace "{{ name }}" name html))
+  (setf html (string-replace "{{ code }}" code html))
+  (setf html (string-replace "{{ error }}" error html))
+  (setf html (string-replace "{{ class }}" class html)))
 
 (defun error-html (reason)
   "Return HTML for an error message."

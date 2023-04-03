@@ -299,13 +299,6 @@ provided below.
     `100` for `:protect`, MathB would refuse to overwrite the existing
     port.
 
-  - `:initial-year` (default is `2012`): The initial year that appears
-    in the copyright message in the footer.
-
-  - `:copyright-owner` (default is `"MathB"`): The name of the
-    copyright owner that appears in the copyright message in the
-    footer.
-
 If a property name is missing from this file or if the file itself is
 missing, then the default value of the property mentioned within
 parentheses above is used.

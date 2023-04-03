@@ -15,6 +15,13 @@ Changelog
 - Logs are now written to `/opt/log/mathb/` by default.
 
 
+### Removed
+
+- Runtime property `:initial-year`.
+- Runtime property `:copyright-owner`.
+- Copyright notice from the footer.
+
+
 ### Fixed
 
 - Warning for `redefining HUNCHENTOOT:ACCEPTOR-STATUS-MESSAGE` during start-up.
