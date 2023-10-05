@@ -40,10 +40,10 @@ $ [y, x], $ where $ 0 < y < x, $ then_
   \sum_{y < n \le x} f(n)
     = & \int_y^x f(t) \, dt + \int_y^x (t - [t]) f'(t) \, dt
        \notag \\
-       & + f(x)([x] - x) - f(y)([y] - y). \label{theorem}
+       & + f(x)([x] - x) - f(y)([y] - y).  \label{theorem}
 \end{align}
 
-_Proof._ Let $ m = [y] $ and $ k = [x]. $ For
+_Proof._ Let $ m = [y] $ and $ k = [x].  $ For
 integers $ n $ and $ n - 1 $ in $ [y, x] $ we have
 \begin{align*}
   \int_{n - 1}^n [t] f'(t) \, dt
@@ -62,7 +62,7 @@ Therefore
 \begin{align}
   \sum_{y < n \le x} f(n)
     & = - \int_{m + 1}^k [t] f'(t) \, dt + k f(k) - m f(m + 1) \notag \\
-    & = - \int_y^x [t] f'(t) \, dt + k f(x) - m f(y). \label{summation}
+    & = - \int_y^x [t] f'(t) \, dt + k f(x) - m f(y).  \label{summation}
 \end{align}
 Integration by parts gives us
 $$

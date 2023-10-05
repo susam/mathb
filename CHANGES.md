@@ -7,7 +7,8 @@ Changelog
 ### Added
 
 - Runtime property `:expect` to enforce presence of tokens in code.
-- Special variable `*log-directory*` to specify directory to write logs to.
+- Special variable `*log-directory*` to specify directory to write
+  logs to.
 
 
 ### Changed
@@ -24,7 +25,8 @@ Changelog
 
 ### Fixed
 
-- Warning for `redefining HUNCHENTOOT:ACCEPTOR-STATUS-MESSAGE` during start-up.
+- Warning for `redefining HUNCHENTOOT:ACCEPTOR-STATUS-MESSAGE` during
+  start-up.
 
 
 1.2.0 (2022-10-16)
@@ -32,27 +34,35 @@ Changelog
 
 ### Added
 
-- Runtime property `:lock-down` to disable post viewing and post submission.
-- Runtime property `:min-title-length` to specify minimum title length.
+- Runtime property `:lock-down` to disable post viewing and post
+  submission.
+- Runtime property `:min-title-length` to specify minimum title
+  length.
 - Runtime property `:min-name-length` to specify minimum name length.
 - Runtime property `:min-code-length` to specify minimum code length.
-- Runtime property `:initial-year` to customize the initial yearin footer.
-- Runtime property `:copyright-owner` to customize the owner name in footer.
+- Runtime property `:initial-year` to customize the initial yearin
+  footer.
+- Runtime property `:copyright-owner` to customize the owner name in
+  footer.
 - Link to privacy notice.
 - Show only rendered content in print preview mode.
 
 
 ### Changed
 
-- Do not allow code textarea to be dragged to overlap with output sheet.
-- Reject post if title field contains carriage return or line feed character.
-- Reject post if name field contains carriage return or line feed character.
+- Do not allow code textarea to be dragged to overlap with output
+  sheet.
+- Reject post if title field contains carriage return or line feed
+  character.
+- Reject post if name field contains carriage return or line feed
+  character.
 - Remove carriage returns from code before writing to data file.
 
 
 ### Fixed
 
-- Rendering error for LaTeX commands that need additional MathJax extensions.
+- Rendering error for LaTeX commands that need additional MathJax
+  extensions.
 - Alternate HTML elements in the output not getting sanitized.
 
 
@@ -62,7 +72,8 @@ Changelog
 ### Added
 
 - Runtime property `:ban` to reject posts from specific IP addresses.
-- Runtime property `:protect` to protect posts in case of data corruption.
+- Runtime property `:protect` to protect posts in case of data
+  corruption.
 - Nginx configuration to work around Hunchentoot memory leakage issue.
 - Show metadata at URL path `/0`.
 
@@ -91,10 +102,12 @@ Changelog
 - Use TeXMe to render Markdown + LaTeX.
 - Add post interval features to control flooding.
 - Data is read from `/opt/data/mathb/` by default.
-- Special variable `*data-directory*` to specify default data directory.
+- Special variable `*data-directory*` to specify default data
+  directory.
 - Control runtime behaviour with `opt.lisp`.
 - Runtime property `:read-only` to run MathB in read-only mode.
-- Runtime property `:max-title-length` to specify maximum title length.
+- Runtime property `:max-title-length` to specify maximum title
+  length.
 - Runtime property `:max-name-length` to specify maximum name length.
 - Runtime property `:max-code-length` to specify maximum code length.
 - Runtime property `:global-post-interval` to specify minimum interval
@@ -106,7 +119,8 @@ Changelog
 
 ### Changed
 
-- No more PHP source code. All application code is in Common Lisp now.
+- No more PHP source code.  All application code is in Common Lisp
+  now.
 
 
 0.2.0 (2020-11-28)

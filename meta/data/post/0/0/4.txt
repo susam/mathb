@@ -3,9 +3,10 @@ Title: Privacy Notice
 Name:
 
 [MathB.in] (this website) is a community website
-maintained by one or more volunteers. This privacy
-notice explains how this website uses the data it
-collects from you when you use this website.
+maintained by one or more volunteers.  This
+privacy notice explains how this website uses the
+data it collects from you when you use this
+website.
 
 [MathB.in]: ./
 
@@ -15,12 +16,12 @@ collects from you when you use this website.
 This website collects the following data:
 
 - The text submitted by you while submitting a new
-  post using this website. This text may contain a
-  post title, your name, and arbitrary code
-  written in LaTeX and Markdown format. This text
+  post using this website.  This text may contain
+  a post title, your name, and arbitrary code
+  written in LaTeX and Markdown format.  This text
   is written by you, so you are in complete
-  control of what you submit in the text. You must
-  not submit sensitive personal data to this
+  control of what you submit in the text.  You
+  must not submit sensitive personal data to this
   website.
 
 - Your Internet Protocol (IP) address used to
@@ -28,17 +29,17 @@ This website collects the following data:
 
 - HTTP referrer URL sent by your web browser or
   client software while connecting to this
-  website. A web browser or a client software
+  website.  A web browser or a client software
   typically, but not necessarily, sends the URL of
   the web page or website where you clicked on a
   link to visit this website as the HTTP referrer
-  value. If this website is visited directly
+  value.  If this website is visited directly
   without clicking on any link, then a web browser
   or client does not typically send any HTTP
   referrer data.
 
 - User agent string sent by your web browser or
-  client software while visiting this website. A
+  client software while visiting this website.  A
   web browser or a client software typically, but
   not necessarily, sends the names and versions of
   your device, operating system, and web browser
@@ -55,7 +56,7 @@ When you submit a new post to this website
 successfully, your text is written to a file on
 the web server and your text is published at a new
 URL that is shown to you immediately after you
-successfully submit the post. If the post
+successfully submit the post.  If the post
 submission fails due to errors, then your text is
 neither saved nor published.
 
@@ -75,25 +76,25 @@ of requests such a combination may send to this
 website.
 
 The post text is saved in a text file for an
-indefinitely long period of time. The post text is
-published at a new URL. This post text is
+indefinitely long period of time.  The post text
+is published at a new URL.  This post text is
 available publicly to anyone who visits this URL.
 This URL is shown to you immediately after you
-successfully submit a new post. You must not
+successfully submit a new post.  You must not
 submit sensitive personal data to this website.
 
 
 ## Data Storage
 
 The IP address, referrer data, and user agent
-string are stored in web server log files. This
-data is retained for 15 days. After 15 days, this
+string are stored in web server log files.  This
+data is retained for 15 days.  After 15 days, this
 data is deleted automatically.
 
 The post text is saved in text files and made
 available publicly on this website via unique
-URLs. Anyone with the URL of your post can view
-the post text. You must not submit sensitive
+URLs.  Anyone with the URL of your post can view
+the post text.  You must not submit sensitive
 personal data to this website.
 
 

@@ -3,8 +3,8 @@ Title: About MathB.in
 Name:
 
 [MathB.in] is a website meant for sharing snippets
-of mathematical text with others on the web. This
-is a pastebin for mathematics. The source code of
+of mathematical text with others on the web.  This
+is a pastebin for mathematics.  The source code of
 MathB.in is available at
 <https://github.com/susam/mathb>.
 
@@ -16,11 +16,11 @@ Posting and Sharing
 
 A new post can be composed by visiting the [home
 page](/) and writing or pasting code in the box on
-the left hand pane of the page. Once a post is
+the left hand pane of the page.  Once a post is
 composed and submitted, the page is saved and it
-becomes accessible with a new unique URL. The new
+becomes accessible with a new unique URL.  The new
 page looks similar to this page and it has a
-unique URL of its own. The URL can be shared with
+unique URL of its own.  The URL can be shared with
 anyone on the web and they will be able to visit
 your post.
 
@@ -29,7 +29,7 @@ Post Format
 -----------
 
 A post can be composed in a mixture of LaTeX and
-Markdown text. For a demonstration of how LaTeX
+Markdown text.  For a demonstration of how LaTeX
 and Markdown is rendered, see the [demo page](1).
 To quickly get started with posting mathematical
 snippets, see the [tutorial](2).
@@ -39,9 +39,9 @@ Usage
 -----
 
 This website is meant for creating mathematical
-snippets. Science and technical posts are also
-welcome on this website. Any other type of post
-should not be posted to this website. Any post
+snippets.  Science and technical posts are also
+welcome on this website.  Any other type of post
+should not be posted to this website.  Any post
 that is not mathematical, scientific, or technical
 in nature will be removed.
 
@@ -51,26 +51,26 @@ History
 
 [MathB.in] is the oldest mathematics pastebin that
 is still online and serving its community of
-users. It isn't the first mathematics pastebin
-though. It's the second. The first pastebin was
-written by Mark A. Stratman. It was hosted at the
+users.  It isn't the first mathematics pastebin
+though.  It's the second.  The first pastebin was
+written by Mark A. Stratman.  It was hosted at the
 domain *mathbin.net* until 2020.
 
 MathB.in was born on Sunday, 25 March 2012, after
-a single night of furious coding. This was a
+a single night of furious coding.  This was a
 result of stumbling upon [math.stackexchange.com]
 the previous night which used MathJax to render
-mathematics formula on the web browser. Thanks to
+mathematics formula on the web browser.  Thanks to
 that chance encounter with MathJax, the rest of
 the Saturday night was spent in coding a new
-mathematics pastebin using MathJax and PHP. After
+mathematics pastebin using MathJax and PHP.  After
 coding all through the night, registering a new
 domain name, and setting up a website, [MathB.in]
 was released early Sunday morning.
 
 The current version of MathB.in no longer runs on
-PHP. It has been rewritten in Common Lisp since
-then. See the blog post [MathB.in Turns 10] for
+PHP.  It has been rewritten in Common Lisp since
+then.  See the blog post [MathB.in Turns 10] for
 more details about the history of MathB.in.
 
 [math.stackexchange.com]: https://math.stackexchange.com/
