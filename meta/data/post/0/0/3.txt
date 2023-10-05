@@ -70,11 +70,11 @@ was released early Sunday morning.
 
 The current version of MathB.in no longer runs on
 PHP.  It has been rewritten in Common Lisp since
-then.  See the blog post [MathB.in Turns 10] for
+then.  See the blog post [MathB.in Turns Ten] for
 more details about the history of MathB.in.
 
 [math.stackexchange.com]: https://math.stackexchange.com/
-[MathB.in Turns 10]: https://susam.net/blog/mathbin-turns-10.html
+[MathB.in Turns Ten]: https://susam.net/blog/mathbin-turns-ten.html
 
 
 Software
