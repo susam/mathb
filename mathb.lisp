@@ -425,7 +425,7 @@
     (cond ((getf options :lock-down)
            "Site is locked down!")
           ((getf options :read-only)
-           "New posts have been disabled temporarily!")
+           "New posts have been disabled!")
           ((setf result (bad-length-p title min-title-length max-title-length))
            (format nil "Title ~a!" result))
           ((setf result (bad-length-p name min-name-length max-name-length))
