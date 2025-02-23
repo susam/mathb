@@ -122,6 +122,9 @@ noscript, #error {
 .post #widget {
   display: block;
 }
+.notice {
+  border: thick double #f00;
+}
 @media screen and (min-width: 50em) {
   header h1 {
     display: inline-block;
@@ -195,6 +198,18 @@ noscript, #error {
   noscript, #error {
     color: #f99;
     border-color: #f99;
+  }
+  .notice {
+    font-size: large;
+    border-color: #f99;
+    margin-bottom: 1em;
+    text-align: center;
+    padding: 0 1em;
+  }
+  .notice p {
+    max-width: 40em;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 @media print {
