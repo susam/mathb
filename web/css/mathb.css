@@ -213,7 +213,7 @@ noscript, #error {
   }
 }
 @media print {
-  header, form, footer, #date, .post #widget {
+  header, form, footer, #date, .post #widget, .notice {
     display: none;
   }
   #sheet {
