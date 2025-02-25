@@ -1,12 +1,10 @@
 MathB
 =====
 
-MathB is a mathematics pastebin software that powers [MathB.in].  It
-is a web-based service meant for sharing snippets of mathematical text
-with others on the world wide web.  Visit https://mathb.in/ to use the
-mathematics pastebin.
+MathB is a mathematics pastebin software that powered `MathB.in` from
+2012 to 2025.  It is a web-based service meant for sharing snippets of
+mathematical text with others on the world wide web.
 
-[MathB.in]: https://mathb.in/
 
 Contents
 --------
@@ -427,27 +425,41 @@ interface elements do not appear in saved PDF.
 History
 -------
 
-[MathB.in] is the oldest mathematics pastebin that is still online and
-serving its community of users.  It isn't the first mathematics
-pastebin though.  It's the second.  The first pastebin was written by
-Mark A. Stratman.  It was hosted at the domain *mathbin.net* until
-2020.
+MathB.in was the longest-running mathematics pastebin, serving its
+community of users for over a decade until its discontinuation in
+March 2025.  It was not the first mathematics pastebin on the world
+wide web.  It was the second.  The first mathematics pastebin on the
+web was created by Mark A. Stratman which was hosted at `mathbin.net`
+until 2020.
 
-MathB.in was born on Sunday, 25 March 2012, after a single night of
-furious coding.  This was a result of stumbling upon
-[math.stackexchange.com] the previous night which used MathJax to
-render mathematics formula on the web browser.  Thanks to that chance
-encounter with MathJax, the rest of the Saturday night was spent in
+MathB.in was launched on Sunday, 25 March 2012, after a single night
+of furious coding.  This was a result of stumbling upon
+[math.stackexchange.com][] the previous night, which used MathJax to
+render mathematical formulas in a web browser.  Thanks to that chance
+encounter with MathJax, the rest of that Saturday night was spent
 coding a new mathematics pastebin using MathJax and PHP.  After coding
-all through the night, registering a new domain name, and setting up a
-website, [MathB.in] was released early Sunday morning.
+through the night, registering a domain name, and setting up a
+website, MathB.in was released early Sunday morning.
 
-The current version of MathB.in no longer runs on PHP.  It has been
-rewritten in Common Lisp since then.  See the blog post [MathB.in
-Turns Ten] for more details about the history of MathB.in.
+Over the years, MathB.in evolved significantly.  It was eventually
+rewritten in Common Lisp, replacing its original PHP implementation.
+For a detailed account of its evolution, see the post [MathB.in Turns
+Ten][].
+
+MathB.in remained a useful tool for IRC communities, students,
+educators, and collaborators for 13 years.  It was eventually shut
+down on Sunday, 16 March 2025.  At the time of its discontinuation, it
+held the distinction of being the longest-running mathematics
+pastebin.  For more details about why this service was discontinued,
+see the post [MathB.in Is Shutting Down][].
+
+Although the original MathB.in service no longer exists, its source
+code is still available as free and open-source software through this
+project.
 
 [math.stackexchange.com]: https://math.stackexchange.com/
 [MathB.in Turns Ten]: https://susam.net/blog/mathbin-turns-ten.html
+[MathB.in Is Shutting Down]: https://susam.net/blog/mathbin-is-shutting-down.html
 
 
 License
@@ -477,11 +489,9 @@ Channels
 
 The author of this project hangs out at the following places online:
 
-- [susam.net](https://susam.net) on the Web
-- [@susam](https://twitter.com/susam) on Twitter
-- [@susam](https://github.com/susam) on GitHub
-- [#susam](https://web.libera.chat/#susam) on Libera
-- [#susam](https://app.element.io/#/room/#susam:matrix.org) on Matrix
+- Website: [susam.net](https://susam.net)
+- GitHub: [@susam](https://github.com/susam) on GitHub
+- Mastodon: [@susam@mastodon.social](https://mastodon.social/@susam)
 
 You are welcome to subscribe to, follow, or join one or more of the
 above channels to receive updates from the author or ask questions
