@@ -428,9 +428,8 @@ History
 MathB.in was the longest-running mathematics pastebin, serving its
 community of users for over a decade until its discontinuation in
 March 2025.  It was not the first mathematics pastebin on the world
-wide web.  It was the second.  The first mathematics pastebin on the
-web was created by Mark A. Stratman which was hosted at `mathbin.net`
-until 2020.
+wide web though.  It was the second one.  The first one was created by
+Mark A. Stratman which was hosted at `mathbin.net` until 2020.
 
 MathB.in was launched on Sunday, 25 March 2012, after a single night
 of furious coding.  This was a result of stumbling upon
@@ -441,10 +440,10 @@ coding a new mathematics pastebin using MathJax and PHP.  After coding
 through the night, registering a domain name, and setting up a
 website, MathB.in was released early Sunday morning.
 
-Over the years, MathB.in evolved significantly.  It was eventually
-rewritten in Common Lisp, replacing its original PHP implementation.
-For a detailed account of its evolution, see the post [MathB.in Turns
-Ten][].
+Over the years, MathB.in received occasional refinements.  It was
+eventually rewritten in Common Lisp, replacing its original PHP
+implementation.  For a detailed account of its evolution, see the post
+[MathB.in Turns Ten][].
 
 MathB.in remained a useful tool for IRC communities, students,
 educators, and collaborators for 13 years.  It was eventually shut

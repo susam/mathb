@@ -14,6 +14,7 @@ Changelog
 ### Changed
 
 - Logs are now written to `/opt/log/mathb/` by default.
+- Change colour to display code from blue to green.
 
 
 ### Removed
