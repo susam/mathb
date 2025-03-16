@@ -1,8 +1,13 @@
 Changelog
 =========
 
-1.3.0 (DEVELOPING)
+1.3.0 (2025-03-16)
 ------------------
+
+This release captures the state of the MathB project as it was on Sun,
+16 March 2025, when the `MathB.in` service powered by this software
+was shut down.
+
 
 ### Added
 
